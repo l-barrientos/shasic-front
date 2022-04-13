@@ -1,0 +1,23 @@
+h1 {
+  color: black;
+  text-align: center;
+}
+.form-floating {
+  margin-left: 24%;
+}
+
+select {
+  width: 50%;
+  margin-left: 24%;
+}
+
+.select-error {
+  font-size: 10.5pt;
+  margin-left: 24%;
+  width: 50%;
+}
+
+button {
+  margin-left: 45%;
+  font-size: 18pt;
+}

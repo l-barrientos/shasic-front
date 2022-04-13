@@ -1,0 +1,65 @@
+@import url("~bootstrap/dist/css/bootstrap.min.css");
+
+:root {
+  --navbar-dark: #22272e;
+  --body-back: #373d46;
+  --main-purple: #9e73d3;
+  --main-purple-hover: #c7b2e2;
+}
+
+.cl-purple {
+  color: var(--main-purple);
+}
+.bg-purple {
+  background-color: var(--main-purple);
+}
+
+.btn-primary {
+  font-size: 18pt;
+  background-color: var(--main-purple);
+  border-color: var(--main-purple);
+  color: var(--navbar-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--main-purple-hover);
+  color: var(--navbar-dark);
+  border-color: var(--main-purple);
+}
+
+.btn-primary:active {
+  background-color: var(--main-purple-hover);
+  color: var(--navbar-dark);
+  border-color: var(--main-purple);
+  box-shadow: 0 0 0 0.25rem rgba(176, 92, 255, 0.5);
+}
+
+.btn-primary:focus {
+  background-color: var(--main-purple-hover);
+  color: var(--navbar-dark);
+  border-color: var(--main-purple);
+  box-shadow: 0 0 0 0.25rem rgba(176, 92, 255, 0.5);
+}
+
+.dropdown-icon {
+  width: 25%;
+  height: 25%;
+}
+
+.invalid-feedback {
+  color: black;
+  padding: 1%;
+  border-radius: 5px;
+  margin-top: 1%;
+}
+.formDiv {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 2%;
+  margin-top: 5%;
+  border-radius: 20px;
+}
+
+body {
+  background-color: var(--body-back);
+}
