@@ -1,0 +1,23 @@
+h1 {
+  color: black;
+  text-align: center;
+}
+
+.form-floating {
+  margin-left: 24%;
+}
+
+button {
+  margin-left: 45%;
+  font-size: 18pt;
+}
+
+a {
+  margin-left: 35%;
+  text-align: center;
+  color: black;
+}
+
+a:hover {
+  color: rgb(62, 60, 60);
+}
