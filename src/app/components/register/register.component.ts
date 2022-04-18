@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
     this.registerForm = formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      fullName: ['', Validators.required],
       userName: ['', Validators.required],
       password: ['', Validators.required],
       repPassword: ['', Validators.required],
@@ -24,12 +25,32 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    document
+      .getElementById('profileImage')
+      ?.addEventListener('change', this.displayImage);
+  }
 
+  /* ***********VALIDATIONS************* */
+
+  /*
+   *
+   *
+   * Standard validation
+   *
+   *
+   */
   get f(): { [key: string]: AbstractControl } {
     return this.registerForm.controls;
   }
 
+  /*
+   *
+   *
+   * Check password and repeated password are equal
+   *
+   *
+   */
   get repPassword(): boolean {
     if (
       this.registerForm.get('password')?.value !=
@@ -41,6 +62,13 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  /*
+   *
+   *
+   * Check valid profile type
+   *
+   *
+   */
   get validProfileType(): boolean {
     if (
       this.registerForm.get('profileType')?.value != 'user' &&
@@ -52,10 +80,41 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  /* ***********FUNCTIONS************* */
+
+  /*
+   *
+   *
+   * Display the image selected in file input
+   *
+   *
+   */
+
+  displayImage() {
+    const e: any = document.getElementById('profileImage');
+    if (e.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (e: any) => {
+        document
+          .querySelector('.selectImage')
+          ?.setAttribute('src', e.target?.result);
+      };
+      reader.readAsDataURL(e.files[0]);
+    }
+  }
+
+  /*
+   *
+   *
+   * Execute the register service
+   *
+   *
+   */
   register() {
     this.submitted = true;
     if (!this.registerForm.valid || !this.repPassword || !this.validProfileType)
       return;
     console.log('registrado');
+    const user = JSON.parse(JSON.stringify(this.registerForm.value));
   }
 }
