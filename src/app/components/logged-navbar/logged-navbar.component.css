@@ -1,0 +1,21 @@
+.navbar-icon {
+  margin-left: 300%;
+  width: 40%;
+}
+
+.search {
+  margin-left: 8%;
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+  width: 25%;
+  padding: 0.5%;
+  border-radius: 20px;
+}
+.search input {
+  font-size: 16pt;
+  width: 80%;
+}
+.search-icon {
+  width: 8%;
+  margin-right: 3%;
+}

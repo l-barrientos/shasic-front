@@ -1,177 +1,185 @@
-<div class="bg-purple formDiv">
-  <form [formGroup]="registerForm" (ngSubmit)="register()">
-    <h1 class="cl-pruple justify-content-center mb-5">Registro</h1>
+<app-unlogged-navbar></app-unlogged-navbar>
+<div class="container">
+  <div class="bg-purple formDiv">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <h1 class="cl-pruple justify-content-center mb-5">Registro</h1>
 
-    <!-- ****************************************** -->
-    <!-- Email -->
-    <div class="form-floating mb-3 col-6">
-      <input
-        type="email"
-        class="form-control"
-        formControlName="email"
-        id="email"
-        placeholder="name@example.com"
-        required
-        [ngClass]="{
-          'is-valid': !f['email'].invalid && submitted,
-          'is-invalid': f['email'].invalid && submitted
-        }"
-      />
-      <div
-        class="invalid-feedback bg-danger"
-        *ngIf="submitted && f['email'].errors"
-      >
-        <div *ngIf="f['email'].errors['required']">Email requerido</div>
-        <div *ngIf="f['email'].errors['email']">Dirección no válida</div>
-      </div>
-      <label for="email">Email</label>
-    </div>
-
-    <!-- ****************************************** -->
-    <!-- UserName -->
-    <div class="form-floating mb-3 col-6">
-      <input
-        type="text"
-        class="form-control"
-        formControlName="userName"
-        id="userName"
-        placeholder="name@example.com"
-        required
-        [ngClass]="{
-          'is-valid': !f['userName'].invalid && submitted,
-          'is-invalid': f['userName'].invalid && submitted
-        }"
-      />
-      <div
-        class="invalid-feedback bg-danger"
-        *ngIf="submitted && f['userName'].errors"
-      >
-        <div *ngIf="f['userName'].errors['required']">
-          Nombre de usuario requerido
+      <!-- ****************************************** -->
+      <!-- Email -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          id="email"
+          placeholder="name@example.com"
+          required
+          [ngClass]="{
+            'is-valid': !f['email'].invalid && submitted,
+            'is-invalid': f['email'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['email'].errors"
+        >
+          <div *ngIf="f['email'].errors['required']">Email requerido</div>
+          <div *ngIf="f['email'].errors['email']">Dirección no válida</div>
         </div>
+        <label for="email">Email</label>
       </div>
-      <label for="userName">Nombre de Usuario</label>
-    </div>
 
-    <!-- ****************************************** -->
-    <!-- FullName -->
-    <div class="form-floating mb-3 col-6">
-      <input
-        type="text"
-        class="form-control"
-        formControlName="fullName"
-        id="fullName"
-        placeholder="Harry Potter"
-        required
-        [ngClass]="{
-          'is-valid': !f['fullName'].invalid && submitted,
-          'is-invalid': f['fullName'].invalid && submitted
-        }"
-      />
-      <div
-        class="invalid-feedback bg-danger"
-        *ngIf="submitted && f['fullName'].errors"
-      >
-        <div *ngIf="f['fullName'].errors['required']">Nombre requerido</div>
+      <!-- ****************************************** -->
+      <!-- UserName -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="userName"
+          id="userName"
+          placeholder="name@example.com"
+          required
+          [ngClass]="{
+            'is-valid': !f['userName'].invalid && submitted,
+            'is-invalid': f['userName'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['userName'].errors"
+        >
+          <div *ngIf="f['userName'].errors['required']">
+            Nombre de usuario requerido
+          </div>
+        </div>
+        <label for="userName">Nombre de Usuario</label>
       </div>
-      <label for="fullName">Nombre</label>
-    </div>
 
-    <!-- ****************************************** -->
-    <!-- Password -->
-    <div class="form-floating col-6">
-      <input
-        type="password"
-        class="form-control"
-        formControlName="password"
-        id="password"
-        placeholder="Password"
-        required
-        [ngClass]="{
-          'is-valid': !f['password'].invalid && submitted,
-          'is-invalid': f['password'].invalid && submitted
-        }"
-      />
-      <div
-        class="invalid-feedback bg-danger"
-        *ngIf="submitted && f['password'].errors"
-      >
-        <div *ngIf="f['password'].errors['required']">Contraseña requerida</div>
+      <!-- ****************************************** -->
+      <!-- FullName -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="fullName"
+          id="fullName"
+          placeholder="Harry Potter"
+          required
+          [ngClass]="{
+            'is-valid': !f['fullName'].invalid && submitted,
+            'is-invalid': f['fullName'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['fullName'].errors"
+        >
+          <div *ngIf="f['fullName'].errors['required']">Nombre requerido</div>
+        </div>
+        <label for="fullName">Nombre</label>
       </div>
-      <label for="password">Contraseña</label>
-    </div>
-    <br />
 
-    <!-- ****************************************** -->
-    <!-- RepPassword -->
+      <!-- ****************************************** -->
+      <!-- Password -->
+      <div class="form-floating col-6">
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          id="password"
+          placeholder="Password"
+          required
+          [ngClass]="{
+            'is-valid': !f['password'].invalid && submitted,
+            'is-invalid': f['password'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['password'].errors"
+        >
+          <div *ngIf="f['password'].errors['required']">
+            Contraseña requerida
+          </div>
+        </div>
+        <label for="password">Contraseña</label>
+      </div>
+      <br />
 
-    <div class="form-floating col-6">
-      <input
-        type="password"
-        class="form-control"
-        formControlName="repPassword"
-        id="repPassword"
-        placeholder="RepPassword"
-        required
+      <!-- ****************************************** -->
+      <!-- RepPassword -->
+
+      <div class="form-floating col-6">
+        <input
+          type="password"
+          class="form-control"
+          formControlName="repPassword"
+          id="repPassword"
+          placeholder="RepPassword"
+          required
+          [ngClass]="{
+            'is-valid': !f['repPassword'].invalid && submitted,
+            'is-invalid':
+              (f['repPassword'].invalid && submitted) ||
+              (!repPassword && submitted)
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['repPassword'].errors"
+        >
+          <div *ngIf="f['repPassword'].errors['required']">
+            Contraseña repetida requerida
+          </div>
+        </div>
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="!repPassword && submitted"
+        >
+          Las contraseñas no coinciden
+        </div>
+        <label for="!repPassword">Repetir contraseña</label>
+      </div>
+      <br />
+
+      <!-- ****************************************** -->
+      <!-- ProfileType -->
+      <select
+        class="form-select"
+        aria-label="Disabled select example"
+        formControlName="profileType"
+        id="profileType"
         [ngClass]="{
-          'is-valid': !f['repPassword'].invalid && submitted,
+          'is-valid': !f['profileType'].invalid && submitted,
           'is-invalid':
-            (f['repPassword'].invalid && submitted) ||
-            (!repPassword && submitted)
+            (f['profileType'].invalid && submitted) ||
+            (!validProfileType && submitted)
         }"
-      />
-      <div
-        class="invalid-feedback bg-danger"
-        *ngIf="submitted && f['repPassword'].errors"
       >
-        <div *ngIf="f['repPassword'].errors['required']">
-          Contraseña repetida requerida
-        </div>
+        <option>Selecciona el tipo de perfil</option>
+        <option value="user">Usuario</option>
+        <option value="artist">Organizador/Artista</option>
+      </select>
+      <div
+        class="invalid-feedback bg-danger select-error"
+        *ngIf="!validProfileType && submitted"
+      >
+        Debes seleccionar un tipo de perfil
       </div>
-      <div class="invalid-feedback bg-danger" *ngIf="!repPassword && submitted">
-        Las contraseñas no coinciden
+      <br />
+
+      <!-- ****************************************** -->
+      <!-- ProfileImage -->
+      <div class="profileImage">
+        <label for="profileImage">
+          <img class="selectImage" src="../../../assets/default-user.png" />
+        </label>
+        <input id="profileImage" type="file" name="newImage" />
       </div>
-      <label for="!repPassword">Repetir contraseña</label>
-    </div>
-    <br />
-
-    <!-- ****************************************** -->
-    <!-- ProfileType -->
-    <select
-      class="form-select"
-      aria-label="Disabled select example"
-      formControlName="profileType"
-      id="profileType"
-      [ngClass]="{
-        'is-valid': !f['profileType'].invalid && submitted,
-        'is-invalid':
-          (f['profileType'].invalid && submitted) ||
-          (!validProfileType && submitted)
-      }"
-    >
-      <option>Selecciona el tipo de perfil</option>
-      <option value="user">Usuario</option>
-      <option value="artist">Organizador/Artista</option>
-    </select>
-    <div
-      class="invalid-feedback bg-danger select-error"
-      *ngIf="!validProfileType && submitted"
-    >
-      Debes seleccionar un tipo de perfil
-    </div>
-    <br />
-
-    <!-- ****************************************** -->
-    <!-- ProfileImage -->
-    <div class="profileImage">
-      <label for="profileImage">
-        <img class="selectImage" src="../../../assets/default-user.png" />
-      </label>
-      <input id="profileImage" type="file" name="newImage" />
-    </div>
-    <br />
-    <div>
-      <button class="btn btn-secondary" type="submit">Sign Up</button>
-    </div>
-  </form>
+      <br />
+      <div>
+        <button class="btn btn-secondary" type="submit">Sign Up</button>
+      </div>
+    </form>
+  </div>
 </div>

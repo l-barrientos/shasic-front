@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-expand-md navbar-purple bg-dark">
+  <div class="container-fluid row">
+    <a class="navbar-brand col-2" routerLink="/home">Shasic</a>
+    <form class="form-inline bg-purple search d-md-block d-none col-2">
+      <img
+        src="../../../assets/search-icon.png"
+        alt="search"
+        class="search-icon"
+      />
+      <input type="text" />
+    </form>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <img
+        class="dropdown-icon"
+        src="../../../assets/dropdown-icon.png"
+        alt="Dropdown icon"
+      />
+    </button>
+    <div class="collapse navbar-collapse col-6" id="navbarSupportedContent">
+      <ul class="nav">
+        <li class="nav-item col-2">
+          <a class="nav-link" routerLink="/chats"
+            ><img
+              src="../../../assets/chats-icon.png"
+              alt="chats"
+              class="navbar-icon"
+          /></a>
+        </li>
+        <li class="nav-item col-2">
+          <a class="nav-link" routerLink="/events"
+            ><img
+              src="../../../assets/events-icon.png"
+              alt="events"
+              class="navbar-icon"
+          /></a>
+        </li>
+        <li class="nav-item col-2">
+          <a class="nav-link" routerLink="/profile"
+            ><img
+              src="../../../assets/profile-icon.png"
+              alt="profile"
+              class="navbar-icon"
+          /></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

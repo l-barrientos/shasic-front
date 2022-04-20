@@ -14,6 +14,14 @@
   background-color: var(--main-purple);
 }
 
+.cl-lightpurple {
+  color: var(--main-purple-hover);
+}
+
+.bg-lightpurple {
+  background-color: var(--main-purple-hover);
+}
+
 .btn-primary {
   font-size: 18pt;
   background-color: var(--main-purple);
@@ -60,6 +68,13 @@
   border-radius: 20px;
 }
 
+.spinner-border {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 33%;
+  width: 200px;
+  height: 200px;
+}
 body {
   background-color: var(--body-back);
 }
