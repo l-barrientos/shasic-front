@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  loginUrl = 'http://localhost:8000/api/user/login';
+  loginUrl = 'http://localhost:8000/api/login';
 
   registerUrl = 'http://localhost:8000/api/user/register';
 

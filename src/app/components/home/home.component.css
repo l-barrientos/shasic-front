@@ -1,11 +1,10 @@
-p {
-  font-size: 75pt;
-  margin-left: 0%;
+.card {
+  margin-top: 2%;
+  margin-left: 3%;
+  text-align: center;
 }
 
-.img {
-  width: 62%;
-  position: absolute;
-  margin-top: -26.2%;
-  margin-left: 21.7%;
+h5 {
+  border-radius: 5px;
+  padding: 1%;
 }

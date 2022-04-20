@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { SharedService } from '../../services/shared.service';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
   submitted = false;
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private sharedService: SharedService,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,6 +38,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.submitted = true;
     if (!this.loginForm.valid) return;
+    this.sharedService.runSpinner(true);
+    let rol: String;
     this.userService
       .login(
         this.loginForm.get('email')?.value,
@@ -41,14 +47,17 @@ export class LoginComponent implements OnInit {
       )
       .subscribe({
         next: (response: any) => {
+          rol = response.rol;
           localStorage.setItem('access_token', response.access_token);
         },
         complete: () => {
-          console.log('complete');
+          this.sharedService.runSpinner(false);
+          rol == 'user' ? this.router.navigate(['/home']) : '';
         },
 
         error: (error) => {
           console.log(error.error);
+          this.sharedService.runSpinner(false);
         },
       });
   }

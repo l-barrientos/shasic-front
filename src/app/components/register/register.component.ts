@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { ArtistService } from '../../services/artist.service';
+import { SharedService } from '../../services/shared.service';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +20,10 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private artistService: ArtistService,
+    private sharedService: SharedService,
+    private router: Router
   ) {
     this.registerForm = formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -48,6 +54,7 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     if (!this.registerForm.valid || !this.repPassword || !this.validProfileType)
       return;
+    this.sharedService.runSpinner(true);
     const user = JSON.parse(
       JSON.stringify({
         email: this.registerForm.get('email')?.value,
@@ -59,6 +66,8 @@ export class RegisterComponent implements OnInit {
 
     if (this.registerForm.get('profileType')?.value == 'user') {
       this.registerUser(user);
+    } else {
+      this.registerArtist(user);
     }
   }
 
@@ -73,13 +82,41 @@ export class RegisterComponent implements OnInit {
   registerUser(user: any) {
     this.userService.register(user).subscribe({
       next: (response: any) => {
+        console.log(response.rol);
+        localStorage.setItem('access_token', response.access_token);
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.log(error.error);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  /*
+   *
+   *
+   * Execute the Artist register service
+   *
+   *
+   */
+
+  registerArtist(artist: any) {
+    this.artistService.register(artist).subscribe({
+      next: (response: any) => {
+        console.log(response.rol);
         localStorage.setItem('access_token', response.access_token);
       },
       complete: () => {
         console.log('complete');
+        this.sharedService.runSpinner(false);
       },
       error: (error) => {
         console.log(error.error);
+        this.sharedService.runSpinner(false);
       },
     });
   }
