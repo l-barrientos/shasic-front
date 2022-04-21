@@ -10,6 +10,7 @@ import { UnloggedNavbarComponent } from './components/unlogged-navbar/unlogged-n
 import { LoggedNavbarComponent } from './components/logged-navbar/logged-navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { HomeComponent } from './components/home/home.component';
+import { FollowedEventsComponent } from './components/followed-events/followed-events.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HomeComponent } from './components/home/home.component';
     LoggedNavbarComponent,
     LandingComponent,
     HomeComponent,
+    FollowedEventsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,124 +1,12 @@
 <app-logged-navbar></app-logged-navbar>
 <div class="container">
   <br />
-  <h3 class="cl-purple">Eventos seguidos</h3>
+  <a routerLink="/followed-events"
+    ><h3 class="cl-purple">Eventos seguidos</h3></a
+  >
 
-  <div class="row">
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-  </div>
+  <div class="row" id="eventsByUser"></div>
   <br /><br />
   <h3 class="cl-purple">Artistas seguidos</h3>
-  <div class="row">
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-    <div class="card col-3" style="width: 18rem">
-      <img
-        class="card-img-top"
-        src="../../../assets/home-concert.png"
-        alt="Card image cap"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">Nombre de concierto</h5>
-        <p class="card-text">
-          25 de Junio de 2022 <br />
-          Gijón, Asturias
-        </p>
-      </div>
-    </div>
-  </div>
+  <div class="row" id="artistsByUser"></div>
 </div>

@@ -18,27 +18,30 @@ select {
 }
 
 button {
-  margin-left: 43%;
   font-size: 18pt;
 }
 
 .profileImage > input {
   display: none;
+  text-align: center;
 }
 
 .selectImage {
   cursor: pointer;
   border-radius: 10px;
-  margin-left: 66%;
   width: 55%;
-  height: 30%;
+  height: 55%;
   transition: width 0.7s, height 0.7s;
 }
 .selectImage:hover {
-  width: 58%;
-  height: 33%;
+  width: 60%;
+  height: 60%;
 }
 
 .formDiv {
   margin-bottom: 5%;
+}
+
+.container {
+  text-align: center;
 }
