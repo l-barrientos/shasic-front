@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  invalidCredentials = false;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -56,7 +57,9 @@ export class LoginComponent implements OnInit {
         },
 
         error: (error) => {
-          console.log(error.error);
+          if (error.error == 'invalidCredentials') {
+            this.invalidCredentials = true;
+          }
           this.sharedService.runSpinner(false);
         },
       });
