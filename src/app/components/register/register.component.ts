@@ -9,6 +9,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +19,14 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
+  userNameUsed = false;
+  emailUsed = false;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private artistService: ArtistService,
     private sharedService: SharedService,
+    private imgService: ImageService,
     private router: Router
   ) {
     this.registerForm = formBuilder.group({
@@ -39,86 +43,6 @@ export class RegisterComponent implements OnInit {
     document
       .getElementById('profileImage')
       ?.addEventListener('change', this.displayImage);
-  }
-
-  /* ***********SERVICES************* */
-
-  /*
-   *
-   *
-   * Execute the register services
-   *
-   *
-   */
-  register() {
-    this.submitted = true;
-    if (!this.registerForm.valid || !this.repPassword || !this.validProfileType)
-      return;
-    this.sharedService.runSpinner(true);
-    const user = JSON.parse(
-      JSON.stringify({
-        email: this.registerForm.get('email')?.value,
-        fullName: this.registerForm.get('fullName')?.value,
-        userName: this.registerForm.get('userName')?.value.toLowerCase(),
-        password: this.registerForm.get('password')?.value,
-      })
-    );
-
-    if (this.registerForm.get('profileType')?.value == 'user') {
-      this.registerUser(user);
-    } else {
-      this.registerArtist(user);
-    }
-  }
-
-  /*
-   *
-   *
-   * Execute the User register service
-   *
-   *
-   */
-
-  registerUser(user: any) {
-    this.userService.register(user).subscribe({
-      next: (response: any) => {
-        console.log(response.rol);
-        localStorage.setItem('access_token', response.access_token);
-      },
-      complete: () => {
-        this.sharedService.runSpinner(false);
-        this.router.navigate(['/home']);
-      },
-      error: (error) => {
-        console.log(error.error);
-        this.sharedService.runSpinner(false);
-      },
-    });
-  }
-
-  /*
-   *
-   *
-   * Execute the Artist register service
-   *
-   *
-   */
-
-  registerArtist(artist: any) {
-    this.artistService.register(artist).subscribe({
-      next: (response: any) => {
-        console.log(response.rol);
-        localStorage.setItem('access_token', response.access_token);
-      },
-      complete: () => {
-        console.log('complete');
-        this.sharedService.runSpinner(false);
-      },
-      error: (error) => {
-        console.log(error.error);
-        this.sharedService.runSpinner(false);
-      },
-    });
   }
 
   /* ***********VALIDATIONS************* */
@@ -168,6 +92,147 @@ export class RegisterComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  /*
+   *
+   *
+   * Check valid file extension on image input
+   *
+   *
+   */
+  get validFileExtension(): boolean {
+    const regex = /(?:jpeg|jpg|png)/i;
+    const input: any = document.getElementById('profileImage');
+    if (input.files[0] && !regex.test(input.files[0].name)) {
+      return false;
+    }
+    return true;
+  }
+
+  /* ***********SERVICES************* */
+
+  /*
+   *
+   *
+   * Execute the register services
+   *
+   *
+   */
+  register() {
+    this.emailUsed = false;
+    this.userNameUsed = false;
+    this.submitted = true;
+    if (
+      !this.registerForm.valid ||
+      !this.repPassword ||
+      !this.validProfileType ||
+      !this.validFileExtension
+    ) {
+      return;
+    }
+    this.sharedService.runSpinner(true);
+    const user = JSON.parse(
+      JSON.stringify({
+        email: this.registerForm.get('email')?.value,
+        fullName: this.registerForm.get('fullName')?.value,
+        userName: this.registerForm.get('userName')?.value.toLowerCase(),
+        password: this.registerForm.get('password')?.value,
+      })
+    );
+
+    if (this.registerForm.get('profileType')?.value == 'user') {
+      this.registerUser(user);
+    } else {
+      this.registerArtist(user);
+    }
+  }
+
+  /*
+   *
+   *
+   * Execute the User register service
+   *
+   *
+   */
+
+  registerUser(user: any) {
+    this.userService.register(user).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('access_token', response.access_token);
+      },
+      complete: () => {
+        const input = document.getElementById(
+          'profileImage'
+        ) as HTMLInputElement;
+        if (input?.files?.length != 0) {
+          this.pushImg('user', input.files?.item(0));
+        }
+
+        this.sharedService.runSpinner(false);
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        if (error.error == 'emailUsed') {
+          this.emailUsed = true;
+        }
+        if (error.error == 'userNameUsed') {
+          this.userNameUsed = true;
+        }
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  /*
+   *
+   *
+   * Execute the Artist register service
+   *
+   *
+   */
+
+  registerArtist(artist: any) {
+    this.artistService.register(artist).subscribe({
+      next: (response: any) => {
+        console.log(response.rol);
+        localStorage.setItem('access_token', response.access_token);
+      },
+      complete: () => {
+        const input = document.getElementById(
+          'profileImage'
+        ) as HTMLInputElement;
+        if (input?.files?.length != 0) {
+          this.pushImg('artist', input.files?.item(0));
+        }
+
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        console.log(error.error);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  /*
+   *
+   *
+   * Execute the Image service to send it
+   *
+   *
+   */
+
+  pushImg(rol: string, img: any) {
+    this.imgService.uploadImage(rol, img).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      complete: () => {},
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 
   /* ***********FUNCTIONS************* */

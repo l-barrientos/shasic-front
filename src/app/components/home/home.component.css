@@ -1,10 +1,20 @@
-.card {
+:host ::ng-deep .card {
   margin-top: 2%;
   margin-left: 3%;
   text-align: center;
 }
 
-h5 {
+:host ::ng-deep h5 {
   border-radius: 5px;
   padding: 1%;
+}
+
+:host ::ng-deep h2 {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+a {
+  text-decoration: none;
 }

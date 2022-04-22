@@ -8,14 +8,15 @@
   margin-top: 0.5%;
   margin-bottom: 0.5%;
   width: 25%;
-  padding: 0.5%;
+  padding: 0.3%;
   border-radius: 20px;
 }
 .search input {
-  font-size: 16pt;
+  font-size: 14pt;
   width: 80%;
 }
 .search-icon {
-  width: 8%;
-  margin-right: 3%;
+  width: 7%;
+  margin-right: 2%;
+  margin-left: 1%;
 }

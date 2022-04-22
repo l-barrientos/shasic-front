@@ -16,7 +16,7 @@
           required
           [ngClass]="{
             'is-valid': !f['email'].invalid && submitted,
-            'is-invalid': f['email'].invalid && submitted
+            'is-invalid': (f['email'].invalid && submitted) || emailUsed
           }"
         />
         <div
@@ -25,6 +25,9 @@
         >
           <div *ngIf="f['email'].errors['required']">Email requerido</div>
           <div *ngIf="f['email'].errors['email']">Dirección no válida</div>
+        </div>
+        <div class="invalid-feedback bg-danger" *ngIf="emailUsed">
+          Dirección email ya usada
         </div>
         <label for="email">Email</label>
       </div>
@@ -41,7 +44,7 @@
           required
           [ngClass]="{
             'is-valid': !f['userName'].invalid && submitted,
-            'is-invalid': f['userName'].invalid && submitted
+            'is-invalid': (f['userName'].invalid && submitted) || userNameUsed
           }"
         />
         <div
@@ -51,6 +54,9 @@
           <div *ngIf="f['userName'].errors['required']">
             Nombre de usuario requerido
           </div>
+        </div>
+        <div class="invalid-feedback bg-danger" *ngIf="userNameUsed">
+          Nombre de usuario ya usado
         </div>
         <label for="userName">Nombre de Usuario</label>
       </div>
@@ -138,7 +144,7 @@
         >
           Las contraseñas no coinciden
         </div>
-        <label for="!repPassword">Repetir contraseña</label>
+        <label for="repPassword">Repetir contraseña</label>
       </div>
       <br />
 
@@ -174,12 +180,21 @@
         <label for="profileImage">
           <img class="selectImage" src="../../../assets/default-user.png" />
         </label>
-        <input id="profileImage" type="file" name="newImage" />
+        <input id="profileImage" type="file" name="newImage" accept="image/*" />
+      </div>
+      <br />
+      <div
+        class="invalid-feedback bg-danger select-error"
+        *ngIf="!validFileExtension"
+      >
+        El archivo debe tener el formato correcto (*.png, *.jpg, *.jpeg)
       </div>
       <br />
       <div>
         <button class="btn btn-secondary" type="submit">Sign Up</button>
       </div>
     </form>
+    <br />
+    <a routerLink="/login">¿Ya tienes cuenta? Inicia sesión aquí</a>
   </div>
 </div>
