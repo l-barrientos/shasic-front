@@ -11,6 +11,7 @@ export class EventService {
     headers: new HttpHeaders(),
   };
   eventsByUserUrl = 'http://localhost:8000/api/userEvents';
+  eventById = 'http://localhost:8000/api/event';
   constructor(private http: HttpClient) {}
 
   getEventsByUser(): Observable<any> {
@@ -21,5 +22,14 @@ export class EventService {
     };
 
     return this.http.get<Event[]>(this.eventsByUserUrl, this.httpOptions);
+  }
+
+  getEventById(id: number): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<Event>(this.eventById + '/' + id, this.httpOptions);
   }
 }

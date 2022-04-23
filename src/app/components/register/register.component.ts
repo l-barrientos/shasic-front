@@ -166,11 +166,11 @@ export class RegisterComponent implements OnInit {
           'profileImage'
         ) as HTMLInputElement;
         if (input?.files?.length != 0) {
+          this.sharedService.runSpinner(true);
           this.pushImg('user', input.files?.item(0));
+        } else {
+          this.sharedService.runSpinner(false);
         }
-
-        this.sharedService.runSpinner(false);
-        this.router.navigate(['/home']);
       },
       error: (error) => {
         if (error.error == 'emailUsed') {
@@ -203,13 +203,19 @@ export class RegisterComponent implements OnInit {
           'profileImage'
         ) as HTMLInputElement;
         if (input?.files?.length != 0) {
+          this.sharedService.runSpinner(true);
           this.pushImg('artist', input.files?.item(0));
+        } else {
+          this.sharedService.runSpinner(false);
         }
-
-        this.sharedService.runSpinner(false);
       },
       error: (error) => {
-        console.log(error.error);
+        if (error.error == 'emailUsed') {
+          this.emailUsed = true;
+        }
+        if (error.error == 'userNameUsed') {
+          this.userNameUsed = true;
+        }
         this.sharedService.runSpinner(false);
       },
     });
@@ -224,13 +230,18 @@ export class RegisterComponent implements OnInit {
    */
 
   pushImg(rol: string, img: any) {
+    this.sharedService.runSpinner(true);
     this.imgService.uploadImage(rol, img).subscribe({
       next: (response) => {
         console.log(response);
       },
-      complete: () => {},
+      complete: () => {
+        if (rol == 'user') this.router.navigate(['/home']);
+        this.sharedService.runSpinner(false);
+      },
       error: (error) => {
         console.log(error);
+        this.sharedService.runSpinner(false);
       },
     });
   }

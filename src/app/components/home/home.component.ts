@@ -4,6 +4,7 @@ import { Event } from '../../models/Event';
 import { SharedService } from '../../services/shared.service';
 import { PublicArtist } from '../../models/PublicArtist';
 import { ArtistService } from '../../services/artist.service';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private sharedService: SharedService,
-    private artistService: ArtistService
+    private artistService: ArtistService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +82,10 @@ export class HomeComponent implements OnInit {
       const cardDiv = document.createElement('div');
       cardDiv.classList.add('card', 'col-3');
       cardDiv.style.width = '18rem';
+
+      cardDiv.onclick = () => {
+        this.router.navigate(['/event/' + ev.id]);
+      };
       const cardImg = document.createElement('img');
       cardImg.src = ev.eventImage;
       cardImg.classList.add('card-img-top');
@@ -114,6 +120,9 @@ export class HomeComponent implements OnInit {
       const cardDiv = document.createElement('div');
       cardDiv.classList.add('card', 'col-3');
       cardDiv.style.width = '18rem';
+      cardDiv.onclick = () => {
+        this.router.navigate(['/artist']);
+      };
       const cardImg = document.createElement('img');
       cardImg.src = '../../../assets/home-concert.png';
       cardImg.classList.add('card-img-top');

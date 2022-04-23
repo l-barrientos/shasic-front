@@ -11,6 +11,7 @@ import { LoggedNavbarComponent } from './components/logged-navbar/logged-navbar.
 import { LandingComponent } from './components/landing/landing.component';
 import { HomeComponent } from './components/home/home.component';
 import { FollowedEventsComponent } from './components/followed-events/followed-events.component';
+import { EventComponent } from './components/event/event.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FollowedEventsComponent } from './components/followed-events/followed-e
     LandingComponent,
     HomeComponent,
     FollowedEventsComponent,
+    EventComponent,
   ],
   imports: [
     BrowserModule,
