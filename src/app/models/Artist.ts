@@ -4,4 +4,5 @@ export class Artist {
   userName: string;
   fullName: string;
   password: string;
+  genre: string | null;
 }

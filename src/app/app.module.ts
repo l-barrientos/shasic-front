@@ -11,6 +11,11 @@ import { LoggedNavbarComponent } from './components/logged-navbar/logged-navbar.
 import { LandingComponent } from './components/landing/landing.component';
 import { HomeComponent } from './components/home/home.component';
 import { FollowedEventsComponent } from './components/followed-events/followed-events.component';
+import { EventComponent } from './components/event/event.component';
+import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
+import { ArtistComponent } from './components/artist/artist.component';
+import { FollowedArtistsComponent } from './components/followed-artists/followed-artists.component';
+import { AllEventsComponent } from './components/all-events/all-events.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +27,11 @@ import { FollowedEventsComponent } from './components/followed-events/followed-e
     LandingComponent,
     HomeComponent,
     FollowedEventsComponent,
+    EventComponent,
+    ArtistHomeComponent,
+    ArtistComponent,
+    FollowedArtistsComponent,
+    AllEventsComponent,
   ],
   imports: [
     BrowserModule,

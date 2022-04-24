@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
           rol = response.rol;
           localStorage.setItem('access_token', response.access_token);
+          localStorage.setItem('rol', response.rol);
         },
         complete: () => {
           this.sharedService.runSpinner(false);

@@ -1,0 +1,61 @@
+:host ::ng-deep h1 {
+  margin-top: 4%;
+  margin-bottom: 5%;
+  font-size: 5em;
+}
+:host ::ng-deep h5 {
+  margin-top: 2%;
+  font-size: 1.5em;
+}
+
+:host ::ng-deep .tickets {
+  color: #fbfbfb;
+  font-size: 1.5em;
+}
+:host ::ng-deep .tickets:hover {
+  color: #c7b2e2;
+}
+
+:host ::ng-deep .searchPeopleBtn {
+  margin-top: 3%;
+  font-size: 18pt;
+  font-weight: bold;
+  padding: 2%;
+}
+
+:host ::ng-deep .eventImg {
+  width: 60%;
+}
+
+:host ::ng-deep .col2 {
+  text-align: center;
+}
+
+:host ::ng-deep .col2 button {
+  font-size: 18pt;
+  font-weight: bold;
+  padding: 2%;
+  margin-top: 2%;
+}
+
+#content {
+  margin-top: 8%;
+}
+
+:host ::ng-deep .band {
+  color: #fbfbfb;
+  font-size: 2em;
+  text-decoration: none;
+  cursor: pointer;
+}
+:host ::ng-deep .bands {
+  margin-bottom: 7%;
+}
+
+:host ::ng-deep .band:hover {
+  color: #c7b2e2;
+}
+
+:host ::ng-deep .details {
+  font-size: 1.2em;
+}
