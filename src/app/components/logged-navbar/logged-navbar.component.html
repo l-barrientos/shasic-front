@@ -35,7 +35,13 @@
           /></a>
         </li>
         <li class="nav-item col-2">
-          <a class="nav-link" routerLink="/followed-events"
+          <a class="nav-link" routerLink="/events/followed"
+            ><img
+              src="../../../assets/events-icon.png"
+              alt="events"
+              class="navbar-icon"
+          /></a>
+          <a *ngIf="rol == 'artist'" class="nav-link" routerLink="/my-events"
             ><img
               src="../../../assets/events-icon.png"
               alt="events"

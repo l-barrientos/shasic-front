@@ -3,6 +3,7 @@
   margin-left: 3%;
   text-align: center;
   transition: box-shadow 0.3s;
+  font-size: 1em;
 }
 :host ::ng-deep .card:hover {
   box-shadow: 9px 9px 19px 9px #000000;

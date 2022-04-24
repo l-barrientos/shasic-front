@@ -8,10 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./logged-navbar.component.css'],
 })
 export class LoggedNavbarComponent implements OnInit {
+  rol: string;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.checkUserNotLogged();
+    this.rol = localStorage.getItem('rol')!;
   }
   checkUserNotLogged() {
     if (!localStorage.getItem('access_token')) {

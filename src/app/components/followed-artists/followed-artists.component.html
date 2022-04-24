@@ -1,0 +1,31 @@
+<app-logged-navbar></app-logged-navbar>
+
+<div class="container">
+  <h1 class="cl-purple">Artistas que sigues</h1>
+  <div *ngIf="artists.length > 0">
+    <div class="row" *ngFor="let artist of artists">
+      <div class="col-xl-6 col-sm-12 sol-md-12">
+        <div class="artistNameDiv">
+          <a class="artistName" routerLink="/artists/{{ artist.userName }}">{{
+            artist.fullName
+          }}</a>
+        </div>
+        <h5 class="text-white">Número de eventos: {{ artist.eventsNum }}</h5>
+        <h5 class="text-white">{{ artist.bio }}</h5>
+      </div>
+      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+        <img
+          class="eventImg rounded img-thumbnail"
+          src="{{ this.setBandImg(artist.profileImage) }}"
+          alt="{{ artist.fullName }}"
+        />
+        <br />
+        <button class="btn btn-primary">SIGUIENDO</button>
+      </div>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="artists.length == 0">
+    <h1 class="text-white">Todavía no sigues a ningún artista</h1>
+  </div>
+</div>

@@ -4,6 +4,8 @@ export class Event {
   eventDate: Date;
   eventLocation: string;
   eventImage: string;
-  ticketsUrl: string;
-  details: string;
+  ticketsUrl: string | null;
+  details: string | null;
+  following: boolean | null;
+  followers: number | null;
 }

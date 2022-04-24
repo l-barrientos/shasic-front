@@ -1,0 +1,57 @@
+<app-logged-navbar></app-logged-navbar>
+<div *ngIf="artist.userName" class="container">
+  <h1 class="cl-purple">{{ artist.fullName }}</h1>
+
+  <div class="row">
+    <div class="col-xl-6 col-md-12 col-md-12">
+      <h2 class="text-white">Info:</h2>
+      <h5 class="text-white">{{ artist.bio }}</h5>
+      <br />
+      <h2 class="text-white">Localización:</h2>
+      <h5 class="text-white">{{ artist.location }}</h5>
+      <br /><br />
+      <h3 class="text-white">Número de eventos: {{ events.length }}</h3>
+      <br /><br />
+      <h3 class="text-white">Contacto:</h3>
+      <h5 class="text-white">{{ artist.email }}</h5>
+    </div>
+    <div class="col-xl-6 col-md-12 col-md-12">
+      <img
+        id="bandImage"
+        class="rounded"
+        src="{{ this.setBandImg(artist.profileImage) }}"
+        alt="{{ artist.fullName }}"
+      />
+    </div>
+  </div>
+  <div *ngIf="events.length > 0">
+    <h1 class="cl-purple" id="titleEvents">Eventos de {{ artist.fullName }}</h1>
+    <div class="row" *ngFor="let ev of events">
+      <div class="col-xl-6 col-sm-12 sol-md-12">
+        <a class="eventName" routerLink="/events/{{ ev.id }}">{{
+          ev.eventName
+        }}</a>
+        <h5 class="text-white">
+          {{ this.formatDate(ev.eventDate) }}
+        </h5>
+        <h5 class="text-white">{{ ev.eventLocation }}</h5>
+        <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
+      </div>
+      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+        <img
+          class="eventImg rounded img-thumbnail"
+          src="{{ ev.eventImage }}"
+          alt="{{ ev.eventName }}"
+        />
+        <br />
+        <button class="btn btn-primary">SIGUIENDO</button>
+      </div>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="events.length == 0">
+    <h1 class="text-white" id="titleEvents">
+      {{ artist.fullName }} no tiene eventos todavía
+    </h1>
+  </div>
+</div>

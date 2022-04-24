@@ -160,6 +160,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(user).subscribe({
       next: (response: any) => {
         localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('rol', 'user');
       },
       complete: () => {
         const input = document.getElementById(
@@ -195,8 +196,8 @@ export class RegisterComponent implements OnInit {
   registerArtist(artist: any) {
     this.artistService.register(artist).subscribe({
       next: (response: any) => {
-        console.log(response.rol);
         localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('rol', 'artist');
       },
       complete: () => {
         const input = document.getElementById(

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { Router } from '@angular/router';
 
@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./unlogged-navbar.component.css'],
 })
 export class UnloggedNavbarComponent implements OnInit {
-  constructor(private sharedService: SharedService, private router: Router) {}
+  constructor(
+    private sharedService: SharedService,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.checkUserLogged();
@@ -30,5 +34,8 @@ export class UnloggedNavbarComponent implements OnInit {
         },
       });
     }
+  }
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 }

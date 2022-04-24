@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/Event';
 import { SharedService } from '../../services/shared.service';
@@ -12,25 +12,35 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  artistsFollowed: PublicArtist[] = [];
+  allArtists: PublicArtist[] = [];
+  eventsFollowed: Event[] = [];
+  allEvents: Event[] = [];
   constructor(
     private eventService: EventService,
     private sharedService: SharedService,
     private artistService: ArtistService,
-    private router: Router
+    private router: Router,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.getEventsByUser();
     this.getArtistsByUser();
+    this.getAllEvents();
+    this.getAllArtists();
   }
 
   getEventsByUser() {
     this.sharedService.runSpinner(true);
     this.eventService.getEventsByUser().subscribe({
-      next: (response) => {
-        response.length > 0
-          ? this.createEventCards('eventsByUser', response)
-          : this.notFollowedEvents();
+      next: (response: Event[]) => {
+        response.forEach((ev) => {
+          ev.eventDate = new Date(ev.eventDate);
+        });
+        this.eventsFollowed = response.sort(
+          (objA, objB) => objA.eventDate.getTime() - objB.eventDate.getTime()
+        );
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -46,9 +56,7 @@ export class HomeComponent implements OnInit {
     this.sharedService.runSpinner(true);
     this.artistService.getArtistsByUser().subscribe({
       next: (response) => {
-        response.length > 0
-          ? this.createArtistCards('artistsByUser', response)
-          : this.notFollowedArtists();
+        this.artistsFollowed = response;
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -60,7 +68,55 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  createEventCards(parentDiv: string, events: Event[]) {
+  getAllEvents() {
+    this.sharedService.runSpinner(true);
+    this.eventService.getAllEvents().subscribe({
+      next: (response) => {
+        response.forEach((ev: Event) => {
+          ev.eventDate = new Date(ev.eventDate);
+        });
+        this.allEvents = response.sort(
+          (objA: Event, objB: Event) =>
+            objA.eventDate.getTime() - objB.eventDate.getTime()
+        );
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        console.log(error);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  getAllArtists() {
+    this.sharedService.runSpinner(true);
+    this.artistService.getAllArtists().subscribe({
+      next: (response) => {
+        this.allArtists = response.sort(
+          (objA: any, objB: any) => objA.followers - objB.followers
+        );
+      },
+    });
+  }
+
+  showError(parentDiv: string) {
+    let h2 = document.createElement('h2');
+    h2.classList.add('text-danger');
+    h2.innerHTML = 'Se ha producido un error';
+    document.getElementById(parentDiv)?.append(h2);
+  }
+
+  setBandImg(img: string) {
+    return img == 'default' ? '../../assets/default-band.jpg' : img;
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
+  formatDate(inputDate: Date) {
     const months = [
       'Enero',
       'Febrero',
@@ -75,90 +131,16 @@ export class HomeComponent implements OnInit {
       'Noviembre',
       'Diciembre',
     ];
-    let cont = 0;
-    events.forEach((ev) => {
-      if (cont == 4) return;
-      cont++;
-      const cardDiv = document.createElement('div');
-      cardDiv.classList.add('card', 'col-3');
-      cardDiv.style.width = '18rem';
-
-      cardDiv.onclick = () => {
-        this.router.navigate(['/event/' + ev.id]);
-      };
-      const cardImg = document.createElement('img');
-      cardImg.src = ev.eventImage;
-      cardImg.classList.add('card-img-top');
-      const cardBodyDiv = document.createElement('div');
-      cardBodyDiv.classList.add('card-body');
-      const cardTitle = document.createElement('h5');
-      cardTitle.classList.add('card-title', 'bg-lightpurple');
-      cardTitle.innerHTML = ev.eventName;
-      const cardText = document.createElement('p');
-      cardText.classList.add('card-text');
-      const eventDate = new Date(ev.eventDate);
-      cardText.innerHTML =
-        eventDate.getDate() +
-        ' de ' +
-        months[eventDate.getMonth()] +
-        ' del ' +
-        eventDate.getFullYear() +
-        '<br>' +
-        ev.eventLocation;
-
-      cardBodyDiv.append(cardTitle, cardText);
-      cardDiv.append(cardImg, cardBodyDiv);
-      document.getElementById(parentDiv)?.append(cardDiv);
-    });
+    const date = new Date(inputDate);
+    return (
+      date.getDate() +
+      ' de ' +
+      months[date.getMonth()] +
+      ' del ' +
+      date.getFullYear()
+    );
   }
-
-  createArtistCards(parentDiv: string, artists: PublicArtist[]) {
-    let cont = 0;
-    artists.forEach((ar) => {
-      if (cont == 4) return;
-      cont++;
-      const cardDiv = document.createElement('div');
-      cardDiv.classList.add('card', 'col-3');
-      cardDiv.style.width = '18rem';
-      cardDiv.onclick = () => {
-        this.router.navigate(['/artist']);
-      };
-      const cardImg = document.createElement('img');
-      cardImg.src = '../../../assets/home-concert.png';
-      cardImg.classList.add('card-img-top');
-      const cardBodyDiv = document.createElement('div');
-      cardBodyDiv.classList.add('card-body');
-      const cardTitle = document.createElement('h5');
-      cardTitle.classList.add('card-title', 'bg-lightpurple');
-      cardTitle.innerHTML = ar.fullName;
-      const cardText = document.createElement('p');
-      cardText.classList.add('card-text');
-      cardText.innerHTML = 'Número de eventos: ' + ar.eventsNum;
-
-      cardBodyDiv.append(cardTitle, cardText);
-      cardDiv.append(cardImg, cardBodyDiv);
-      document.getElementById(parentDiv)?.append(cardDiv);
-    });
-  }
-
-  notFollowedEvents() {
-    let h2 = document.createElement('h2');
-    h2.classList.add('cl-lightpurple');
-    h2.innerHTML = 'Todavía no sigues ningún evento...';
-    document.getElementById('eventsByUser')?.append(h2);
-  }
-
-  notFollowedArtists() {
-    let h2 = document.createElement('h2');
-    h2.classList.add('cl-lightpurple');
-    h2.innerHTML = 'Todavía no sigues a ningún artista...';
-    document.getElementById('artistsByUser')?.append(h2);
-  }
-
-  showError(parentDiv: string) {
-    let h2 = document.createElement('h2');
-    h2.classList.add('text-danger');
-    h2.innerHTML = 'Se ha producido un error';
-    document.getElementById(parentDiv)?.append(h2);
+  navigate(target: string) {
+    this.router.navigate([target]);
   }
 }

@@ -50,9 +50,9 @@
 }
 
 .navbar {
+  z-index: 99;
   position: sticky;
   top: 0px;
-  z-index: 998;
 }
 .dropdown-icon {
   width: 25%;
