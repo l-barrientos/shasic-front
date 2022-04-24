@@ -2,6 +2,15 @@
   margin-top: 2%;
   margin-left: 3%;
   text-align: center;
+  transition: box-shadow 0.3s;
+}
+:host ::ng-deep .card:hover {
+  box-shadow: 9px 9px 19px 9px #000000;
+  cursor: pointer;
+}
+
+:host ::ng-deep .card img {
+  height: 250px;
 }
 
 :host ::ng-deep h5 {

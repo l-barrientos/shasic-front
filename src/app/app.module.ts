@@ -12,6 +12,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import { HomeComponent } from './components/home/home.component';
 import { FollowedEventsComponent } from './components/followed-events/followed-events.component';
 import { EventComponent } from './components/event/event.component';
+import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { EventComponent } from './components/event/event.component';
     HomeComponent,
     FollowedEventsComponent,
     EventComponent,
+    ArtistHomeComponent,
   ],
   imports: [
     BrowserModule,

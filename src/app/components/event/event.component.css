@@ -1,11 +1,11 @@
 :host ::ng-deep h1 {
   margin-top: -5%;
-  margin-bottom: 3%;
-  font-size: 40pt;
+  margin-bottom: 5%;
+  font-size: 5em;
 }
 :host ::ng-deep h5 {
   margin-top: 2%;
-  font-size: 14pt;
+  font-size: 1.5em;
 }
 
 :host ::ng-deep a h5:hover {
@@ -20,12 +20,11 @@
 }
 
 :host ::ng-deep .eventImg {
-  width: 35%;
-  margin-top: -38%;
+  width: 56%;
 }
 
 :host ::ng-deep .col2 {
-  text-align: right;
+  text-align: center;
 }
 
 :host ::ng-deep .col2 button {
@@ -33,7 +32,6 @@
   font-weight: bold;
   padding: 2%;
   margin-top: 2%;
-  margin-right: 12%;
 }
 
 #content {
@@ -42,11 +40,15 @@
 
 :host ::ng-deep .band {
   color: #fbfbfb;
-  font-size: 22pt;
+  font-size: 2em;
   text-decoration: none;
   cursor: pointer;
 }
 
 :host ::ng-deep .band:hover {
   color: #c7b2e2;
+}
+
+:host ::ng-deep .details {
+  font-size: 1.2em;
 }
