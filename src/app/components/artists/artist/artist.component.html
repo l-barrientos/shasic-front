@@ -15,13 +15,32 @@
       <h3 class="text-white">Contacto:</h3>
       <h5 class="text-white">{{ artist.email }}</h5>
     </div>
-    <div class="col-xl-6 col-md-12 col-md-12">
+    <div class="col-xl-6 col-md-12 col-md-12 col2">
       <img
         id="bandImage"
         class="rounded"
         src="{{ this.setBandImg(artist.profileImage) }}"
         alt="{{ artist.fullName }}"
       />
+      <br />
+      <div *ngIf="artist.following">
+        <button
+          (click)="unfollowArtist(artist.id)"
+          class="btn btn-primary"
+          id="followButton"
+        >
+          SIGUIENDO
+        </button>
+      </div>
+      <div *ngIf="!artist.following">
+        <button
+          (click)="followArtist(artist.id)"
+          class="btn btn-primary"
+          id="followButton"
+        >
+          SEGUIR
+        </button>
+      </div>
     </div>
   </div>
   <div *ngIf="events.length > 0">
@@ -35,7 +54,6 @@
           {{ this.formatDate(ev.eventDate) }}
         </h5>
         <h5 class="text-white">{{ ev.eventLocation }}</h5>
-        <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
       </div>
       <div class="col-xl-6 col-sm-12 sol-md-12 col2">
         <img
@@ -43,8 +61,6 @@
           src="{{ ev.eventImage }}"
           alt="{{ ev.eventName }}"
         />
-        <br />
-        <button class="btn btn-primary">SIGUIENDO</button>
       </div>
       <hr />
     </div>

@@ -1,53 +1,59 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
-import { EventService } from '../../services/event.service';
+import { ActivatedRoute } from '@angular/router';
+import { PublicArtist } from '../../models/PublicArtist';
 import { Event } from '../../models/Event';
+import { EventService } from '../../services/event.service';
 
 @Component({
-  selector: 'app-all-events',
-  templateUrl: './all-events.component.html',
-  styleUrls: ['./all-events.component.css'],
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css'],
 })
-export class AllEventsComponent implements OnInit {
+export class SearchComponent implements OnInit {
+  artists: PublicArtist[] = [];
   events: Event[] = [];
+
   constructor(
     private sharedService: SharedService,
-    private eventService: EventService,
-    private cdRef: ChangeDetectorRef
+    private actRoute: ActivatedRoute,
+    private cdRef: ChangeDetectorRef,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
-    this.getAllEvents();
+    this.getResults();
   }
 
-  /***********SERVICES*********/
-
-  getAllEvents() {
+  getResults() {
     this.sharedService.runSpinner(true);
-    this.eventService.getAllEvents().subscribe({
+    const query = this.actRoute.snapshot.queryParamMap.get('q');
+    if (query == null) return;
+    this.sharedService.getResults(query).subscribe({
       next: (response) => {
-        response.forEach((ev: any) => {
-          ev.eventDate = new Date(ev.eventDate);
-        });
-        this.events = response.sort(
-          (objA: any, objB: any) =>
-            objA.eventDate.getTime() - objB.eventDate.getTime()
-        );
+        this.artists = response.artists;
+        this.events = response.events;
       },
       complete: () => {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });
   }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+  }
+
   followEvent(id: number) {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton' + id)!.innerHTML = '· · ·';
     this.eventService.followEvent(id).subscribe({
       next: (response) => {
-        this.getAllEvents();
+        this.getResults();
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -63,7 +69,7 @@ export class AllEventsComponent implements OnInit {
     document.getElementById('followButton' + id)!.innerHTML = '· · ·';
     this.eventService.unfollowEvent(id).subscribe({
       next: (response) => {
-        this.getAllEvents();
+        this.getResults();
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -75,10 +81,6 @@ export class AllEventsComponent implements OnInit {
   }
 
   /********HELPERS ******/
-
-  ngAfterViewChecked() {
-    this.cdRef.detectChanges();
-  }
 
   formatDate(inputDate: Date) {
     const months = [

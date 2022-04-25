@@ -1,0 +1,43 @@
+<app-logged-navbar></app-logged-navbar>
+<div class="container">
+  <h1 class="cl-purple">Eventos que sigues</h1>
+  <div *ngIf="events.length > 0">
+    <div class="row" *ngFor="let ev of events">
+      <div class="col-xl-6 col-sm-12 sol-md-12">
+        <a class="eventName" routerLink="/events/{{ ev.id }}">{{
+          ev.eventName
+        }}</a>
+        <h5 class="text-white">{{ this.formatDate(ev.eventDate) }}</h5>
+        <h5 class="text-white">{{ ev.eventLocation }}</h5>
+        <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
+      </div>
+      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+        <img
+          class="eventImg rounded img-thumbnail"
+          src="{{ ev.eventImage }}"
+          alt="{{ ev.eventName }}"
+        />
+        <br />
+        <div *ngIf="ev.following">
+          <button
+            (click)="unfollowEvent(ev.id)"
+            class="btn btn-primary"
+            id="followButton{{ ev.id }}"
+          >
+            SIGUIENDO
+          </button>
+        </div>
+        <div *ngIf="!ev.following">
+          <button
+            (click)="followEvent(ev.id)"
+            class="btn btn-primary"
+            id="followButton{{ ev.id }}"
+          >
+            SEGUIR
+          </button>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

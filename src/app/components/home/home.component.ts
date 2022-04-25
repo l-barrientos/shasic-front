@@ -84,7 +84,6 @@ export class HomeComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
-        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });
@@ -95,8 +94,14 @@ export class HomeComponent implements OnInit {
     this.artistService.getAllArtists().subscribe({
       next: (response) => {
         this.allArtists = response.sort(
-          (objA: any, objB: any) => objA.followers - objB.followers
+          (objA: any, objB: any) => objB.followers - objA.followers
         );
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
       },
     });
   }

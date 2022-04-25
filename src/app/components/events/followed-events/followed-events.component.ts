@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { SharedService } from '../../services/shared.service';
-import { EventService } from '../../services/event.service';
-import { Event } from '../../models/Event';
+import { SharedService } from '../../../services/shared.service';
+import { EventService } from '../../../services/event.service';
+import { Event } from '../../../models/Event';
 import { Router } from '@angular/router';
 
 @Component({
