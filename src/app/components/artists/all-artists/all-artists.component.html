@@ -1,1 +1,47 @@
-<p>all-artists works!</p>
+<app-logged-navbar></app-logged-navbar>
+<div class="container">
+  <h1 class="cl-purple">Artistas populares</h1>
+  <div *ngIf="artists.length > 0">
+    <div class="row" *ngFor="let artist of artists">
+      <div class="col-xl-6 col-sm-12 sol-md-12">
+        <div class="artistNameDiv">
+          <a class="artistName" routerLink="/artists/{{ artist.userName }}">{{
+            artist.fullName
+          }}</a>
+        </div>
+        <h5 class="text-white">Número de eventos: {{ artist.eventsNum }}</h5>
+        <h5 class="text-white">{{ artist.bio }}</h5>
+      </div>
+      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+        <img
+          class="eventImg rounded img-thumbnail"
+          src="{{ this.setBandImg(artist.profileImage) }}"
+          alt="{{ artist.fullName }}"
+        />
+        <br />
+        <div *ngIf="artist.following">
+          <button
+            (click)="unfollowArtist(artist.id)"
+            class="btn btn-primary"
+            id="followButton{{ artist.id }}"
+          >
+            SIGUIENDO
+          </button>
+        </div>
+        <div *ngIf="!artist.following">
+          <button
+            (click)="followArtist(artist.id)"
+            class="btn btn-primary"
+            id="followButton{{ artist.id }}"
+          >
+            SEGUIR
+          </button>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+  <div *ngIf="artists.length == 0">
+    <h1 class="text-white">Todavía no sigues a ningún artista</h1>
+  </div>
+</div>

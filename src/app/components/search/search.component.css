@@ -3,7 +3,7 @@ h1 {
   margin-bottom: 4%;
 }
 
-:host ::ng-deep .artistParentDiv {
+:host ::ng-deep .eventParentDiv {
   margin-top: 4%;
   margin-left: 15%;
   margin-right: 15%;
@@ -31,7 +31,7 @@ h1 {
   color: rgb(139, 147, 147);
 }
 
-:host ::ng-deep .artistImg {
+:host ::ng-deep .eventImg {
   width: 45%;
 }
 
@@ -50,17 +50,13 @@ h1 {
   margin-left: 5%;
   margin-right: 5%;
 }
-:host ::ng-deep .artistName {
+:host ::ng-deep .eventName {
   color: #fbfbfb;
   text-decoration: none;
   font-size: 3em;
 }
 
-:host ::ng-deep .artistName:hover {
+:host ::ng-deep .eventName:hover {
   color: #c7b2e2;
   cursor: pointer;
-}
-
-:host ::ng-deep .artistNameDiv {
-  margin-bottom: 7%;
 }

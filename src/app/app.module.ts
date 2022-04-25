@@ -17,6 +17,7 @@ import { ArtistComponent } from './components/artists/artist/artist.component';
 import { FollowedArtistsComponent } from './components/artists/followed-artists/followed-artists.component';
 import { AllEventsComponent } from './components/events/all-events/all-events.component';
 import { AllArtistsComponent } from './components/artists/all-artists/all-artists.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AllArtistsComponent } from './components/artists/all-artists/all-artist
     FollowedArtistsComponent,
     AllEventsComponent,
     AllArtistsComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
