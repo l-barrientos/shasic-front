@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventService } from '../../services/event.service';
-import { SharedService } from '../../services/shared.service';
-import { Event } from '../../models/Event';
-import { PublicArtist } from '../../models/PublicArtist';
+import { EventService } from '../../../services/event.service';
+import { SharedService } from '../../../services/shared.service';
+import { Event } from '../../../models/Event';
+import { PublicArtist } from '../../../models/PublicArtist';
 import { GoogleMap } from '@angular/google-maps';
 
 @Component({

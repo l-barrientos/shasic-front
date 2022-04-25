@@ -1,43 +1,61 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { SharedService } from '../../services/shared.service';
-import { EventService } from '../../services/event.service';
-import { Event } from '../../models/Event';
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { SharedService } from '../../../services/shared.service';
+import { EventService } from '../../../services/event.service';
+import { Event } from '../../../models/Event';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-followed-events',
-  templateUrl: './followed-events.component.html',
-  styleUrls: ['./followed-events.component.css'],
+  selector: 'app-all-events',
+  templateUrl: './all-events.component.html',
+  styleUrls: ['./all-events.component.css'],
 })
-export class FollowedEventsComponent implements OnInit {
+export class AllEventsComponent implements OnInit {
   events: Event[] = [];
   constructor(
     private sharedService: SharedService,
     private eventService: EventService,
+    private cdRef: ChangeDetectorRef,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getEventsByUser();
+    this.getAllEvents();
   }
 
-  getEventsByUser() {
+  /***********SERVICES*********/
+
+  getAllEvents() {
     this.sharedService.runSpinner(true);
-    this.eventService.getEventsByUser().subscribe({
-      next: (response: Event[]) => {
-        response.forEach((ev) => {
+    this.eventService.getAllEvents().subscribe({
+      next: (response) => {
+        response.forEach((ev: any) => {
           ev.eventDate = new Date(ev.eventDate);
         });
         this.events = response.sort(
-          (objA, objB) => objA.eventDate.getTime() - objB.eventDate.getTime()
+          (objA: any, objB: any) =>
+            objA.eventDate.getTime() - objB.eventDate.getTime()
         );
       },
       complete: () => {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
-        this.showError('eventsByUser');
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+  followEvent(id: number) {
+    this.sharedService.runSpinner(true);
+    document.getElementById('followButton' + id)!.innerHTML = '· · ·';
+    this.eventService.followEvent(id).subscribe({
+      next: (response) => {
+        this.getAllEvents();
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
         this.sharedService.runSpinner(false);
       },
     });
@@ -48,7 +66,7 @@ export class FollowedEventsComponent implements OnInit {
     document.getElementById('followButton' + id)!.innerHTML = '· · ·';
     this.eventService.unfollowEvent(id).subscribe({
       next: (response) => {
-        this.getEventsByUser();
+        this.getAllEvents();
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -59,15 +77,12 @@ export class FollowedEventsComponent implements OnInit {
     });
   }
 
-  showError(parentDiv: string) {
-    const h2 = document.createElement('h2');
-    h2.classList.add('text-danger');
-    h2.innerHTML = 'Se ha producido un error';
-    document.getElementById(parentDiv)?.append(h2);
-  }
+  /********HELPERS ******/
+
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
   }
+
   formatDate(inputDate: Date) {
     const months = [
       'Enero',
@@ -91,5 +106,9 @@ export class FollowedEventsComponent implements OnInit {
       ' del ' +
       date.getFullYear()
     );
+  }
+
+  navigateEv(id: any): void {
+    this.router.navigate(['/events', id]);
   }
 }

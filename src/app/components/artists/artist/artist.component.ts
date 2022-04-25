@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ArtistService } from '../../services/artist.service';
-import { PublicArtist } from '../../models/PublicArtist';
-import { Event } from '../../models/Event';
-import { SharedService } from '../../services/shared.service';
+import { ArtistService } from '../../../services/artist.service';
+import { PublicArtist } from '../../../models/PublicArtist';
+import { Event } from '../../../models/Event';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-artist',
@@ -58,6 +58,38 @@ export class ArtistComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  followArtist(id: number) {
+    this.sharedService.runSpinner(true);
+    document.getElementById('followButton')!.innerHTML = '· · ·';
+    this.artistService.followArtist(id).subscribe({
+      next: (response) => {
+        this.artist.following = response.following;
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  unfollowArtist(id: number) {
+    this.sharedService.runSpinner(true);
+    document.getElementById('followButton')!.innerHTML = '· · ·';
+    this.artistService.unfollowArtist(id).subscribe({
+      next: (response) => {
+        this.artist.following = response.following;
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
         this.sharedService.runSpinner(false);
       },
     });

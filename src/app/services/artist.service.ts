@@ -12,6 +12,8 @@ export class ArtistService {
   registerUrl = 'http://localhost:8000/api/artist/register';
   artistsByUserUrl = 'http://localhost:8000/api/userArtists';
   artistByName = 'http://localhost:8000/api/artist/';
+  followArtistUrl = 'http://localhost:8000/api/followArtist/';
+  unfollowArtistUrl = 'http://localhost:8000/api/unfollowArtist/';
   httpOptions = {
     headers: new HttpHeaders(),
   };
@@ -59,5 +61,23 @@ export class ArtistService {
       this.artistByName + name,
       this.httpOptions
     );
+  }
+
+  followArtist(id: number): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get(this.followArtistUrl + id, this.httpOptions);
+  }
+
+  unfollowArtist(id: number): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.delete(this.unfollowArtistUrl + id, this.httpOptions);
   }
 }

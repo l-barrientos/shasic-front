@@ -20,7 +20,15 @@
           alt="{{ artist.fullName }}"
         />
         <br />
-        <button class="btn btn-primary">SIGUIENDO</button>
+        <div>
+          <button
+            (click)="unfollowArtist(artist.id)"
+            class="btn btn-primary"
+            id="followButton{{ artist.id }}"
+          >
+            SIGUIENDO
+          </button>
+        </div>
       </div>
       <hr />
     </div>
