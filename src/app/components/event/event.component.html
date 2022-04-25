@@ -1,6 +1,5 @@
 <app-logged-navbar></app-logged-navbar>
 <div class="container">
-  <!--ESPECIFIC EVEVENT--------------------------------->
   <div *ngIf="event.eventName" class="row">
     <h1 class="cl-purple">{{ event.eventName }}</h1>
     <div class="col-xl-6 col-sm-12 sol-md-12">
@@ -53,8 +52,5 @@
         </button>
       </div>
     </div>
-  </div>
-  <div *ngIf="loadAll">
-    <app-all-events></app-all-events>
   </div>
 </div>

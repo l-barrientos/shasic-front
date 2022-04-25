@@ -9,6 +9,7 @@ import { EventComponent } from './components/event/event.component';
 import { ArtistHomeComponent } from './components/artist-home/artist-home.component';
 import { ArtistComponent } from './components/artist/artist.component';
 import { FollowedArtistsComponent } from './components/followed-artists/followed-artists.component';
+import { AllEventsComponent } from './components/all-events/all-events.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -18,26 +19,9 @@ const routes: Routes = [
   { path: 'artist-home', component: ArtistHomeComponent },
   { path: 'events/followed', component: FollowedEventsComponent },
   { path: 'artists/followed', component: FollowedArtistsComponent },
-  {
-    path: 'events',
-    component: EventComponent,
-    children: [
-      {
-        path: ':id',
-        component: EventComponent,
-      },
-    ],
-  },
-  {
-    path: 'artists',
-    component: ArtistComponent,
-    children: [
-      {
-        path: ':userName',
-        component: ArtistComponent,
-      },
-    ],
-  },
+  { path: 'events', component: AllEventsComponent },
+  { path: 'events/:id', component: EventComponent },
+  { path: 'artists/:userName', component: ArtistComponent },
 ];
 
 @NgModule({

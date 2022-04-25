@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/Event';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-events',
@@ -13,7 +14,9 @@ export class AllEventsComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private eventService: EventService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private router: Router,
+    private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -103,5 +106,9 @@ export class AllEventsComponent implements OnInit {
       ' del ' +
       date.getFullYear()
     );
+  }
+
+  navigateEv(id: any): void {
+    this.router.navigate(['/events', id]);
   }
 }

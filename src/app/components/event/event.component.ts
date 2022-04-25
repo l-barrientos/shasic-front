@@ -34,38 +34,10 @@ export class EventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (
-      this.router.url.substring(this.router.url.lastIndexOf('/') + 1) !=
-      'events'
-    ) {
-      this.getEventById();
-    } else {
-      this.loadAll = true;
-    }
+    this.getEventById();
   }
 
   /***********SERVICES*********/
-
-  getAllEvents() {
-    this.sharedService.runSpinner(true);
-    this.eventService.getAllEvents().subscribe({
-      next: (response) => {
-        response.forEach((ev: Event) => {
-          ev.eventDate = new Date(ev.eventDate);
-        });
-        this.allEvents = response.sort(
-          (objA: Event, objB: Event) =>
-            objA.eventDate.getTime() - objB.eventDate.getTime()
-        );
-      },
-      complete: () => {
-        this.sharedService.runSpinner(false);
-      },
-      error: (error) => {
-        this.sharedService.runSpinner(false);
-      },
-    });
-  }
 
   getEventById() {
     this.sharedService.runSpinner(true);

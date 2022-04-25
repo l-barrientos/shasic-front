@@ -1,102 +1,112 @@
 <app-logged-navbar></app-logged-navbar>
 <div class="container">
   <br />
-  <a routerLink="/events/followed"
-    ><h3 class="cl-purple">Eventos seguidos</h3></a
-  >
-  <div class="row" id="eventsByUser" *ngIf="eventsFollowed.length > 0">
-    <div
-      *ngFor="let event of eventsFollowed | slice: 0:4; let i = index"
-      class="card col-xl-3 col-md-3 col-sm-6"
-      (click)="this.navigate('/events/' + event.id)"
-    >
-      <img
-        class="card-img-top"
-        src="{{ event.eventImage }}"
-        alt="{{ event.eventName }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
-        <p class="card-text">
-          {{ this.formatDate(event.eventDate) }} <br />
-          Seguidores: {{ event.followers }}
-        </p>
-      </div>
-    </div>
-  </div>
-  <h2 class="cl-lightpurple" *ngIf="eventsFollowed.length == 0">
-    Todavía no sigues ningún evento...
-  </h2>
-  <br /><br />
-  <a routerLink="/artists/followed"
-    ><h3 class="cl-purple">Artistas seguidos</h3></a
-  >
 
-  <div class="row" id="artistByUser" *ngIf="artistsFollowed.length > 0">
-    <div
-      *ngFor="let artist of artistsFollowed | slice: 0:4; let i = index"
-      class="card col-xl-3 col-md-3 col-sm-6"
-      (click)="this.navigate('/artists/' + artist.userName)"
+  <!-- Followed events -->
+  <div *ngIf="eventsFollowed.length > 0">
+    <a routerLink="/events/followed"
+      ><h3 class="cl-purple">Eventos seguidos</h3></a
     >
-      <img
-        class="card-img-top"
-        src="{{ this.setBandImg(artist.profileImage) }}"
-        alt="{{ artist.fullName }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">{{ artist.fullName }}</h5>
-        <p class="card-text">
-          Número de eventos: {{ artist.eventsNum }} <br />
-          Seguidores: {{ artist.followers }}
-        </p>
+    <div class="row" id="eventsByUser">
+      <div
+        *ngFor="let event of eventsFollowed | slice: 0:4; let i = index"
+        class="card col-xl-3 col-md-3 col-sm-6"
+        (click)="this.navigate('/events/' + event.id)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ event.eventImage }}"
+          alt="{{ event.eventName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
+          <p class="card-text">
+            {{ this.formatDate(event.eventDate) }} <br />
+            Seguidores: {{ event.followers }}
+          </p>
+        </div>
       </div>
     </div>
+    <br /><br />
   </div>
-  <h2 class="cl-lightpurple" *ngIf="artistsFollowed.length == 0">
-    Todavía no sigues a ningún artista...
-  </h2>
-  <br /><br />
-  <a routerLink="/events"><h3 class="cl-purple">Próximos eventos</h3></a>
-  <div class="row" id="eventsByUser" *ngIf="allEvents.length > 0">
-    <div
-      *ngFor="let event of allEvents | slice: 0:4; let i = index"
-      class="card col-xl-3 col-md-3 col-sm-6"
-      (click)="this.navigate('/events/' + event.id)"
-    >
-      <img
-        class="card-img-top"
-        src="{{ event.eventImage }}"
-        alt="{{ event.eventName }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
-        <p class="card-text">
-          {{ this.formatDate(event.eventDate) }} <br />
-          Seguidores: {{ event.followers }}
-        </p>
-      </div>
-    </div>
-  </div>
-  <br /><br />
-  <a routerLink="/artists"><h3 class="cl-purple">Artistas populares</h3></a>
 
-  <div class="row" id="allArtists">
-    <div
-      *ngFor="let artist of allArtists | slice: 0:4; let i = index"
-      class="card col-xl-3 col-md-3 col-sm-6"
-      (click)="this.navigate('/artists/' + artist.userName)"
+  <!-- Followed artists -->
+  <div *ngIf="artistsFollowed.length > 0">
+    <a routerLink="/artists/followed"
+      ><h3 class="cl-purple">Artistas seguidos</h3></a
     >
-      <img
-        class="card-img-top"
-        src="{{ this.setBandImg(artist.profileImage) }}"
-        alt="{{ artist.fullName }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title bg-lightpurple">{{ artist.fullName }}</h5>
-        <p class="card-text">
-          Número de eventos: {{ artist.eventsNum }} <br />
-          Seguidores: {{ artist.followers }}
-        </p>
+
+    <div class="row" id="artistByUser">
+      <div
+        *ngFor="let artist of artistsFollowed | slice: 0:4; let i = index"
+        class="card col-xl-3 col-md-3 col-sm-6"
+        (click)="this.navigate('/artists/' + artist.userName)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ this.setBandImg(artist.profileImage) }}"
+          alt="{{ artist.fullName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ artist.fullName }}</h5>
+          <p class="card-text">
+            Número de eventos: {{ artist.eventsNum }} <br />
+            Seguidores: {{ artist.followers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+  </div>
+
+  <!-- Next events -->
+  <div *ngIf="allEvents.length > 0">
+    <a routerLink="/events"><h3 class="cl-purple">Próximos eventos</h3></a>
+    <div class="row" id="eventsByUser">
+      <div
+        *ngFor="let event of allEvents | slice: 0:4; let i = index"
+        class="card col-xl-3 col-md-3 col-sm-6"
+        (click)="this.navigate('/events/' + event.id)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ event.eventImage }}"
+          alt="{{ event.eventName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
+          <p class="card-text">
+            {{ this.formatDate(event.eventDate) }} <br />
+            Seguidores: {{ event.followers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+  </div>
+
+  <!-- Poppular artists -->
+  <div *ngIf="allArtists.length > 0">
+    <a routerLink="/artists"><h3 class="cl-purple">Artistas populares</h3></a>
+
+    <div class="row" id="allArtists">
+      <div
+        *ngFor="let artist of allArtists | slice: 0:4; let i = index"
+        class="card col-xl-3 col-md-3 col-sm-6"
+        (click)="this.navigate('/artists/' + artist.userName)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ this.setBandImg(artist.profileImage) }}"
+          alt="{{ artist.fullName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ artist.fullName }}</h5>
+          <p class="card-text">
+            Número de eventos: {{ artist.eventsNum }} <br />
+            Seguidores: {{ artist.followers }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
