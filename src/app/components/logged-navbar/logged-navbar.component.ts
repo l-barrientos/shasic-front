@@ -29,9 +29,14 @@ export class LoggedNavbarComponent implements OnInit {
   query() {
     event?.preventDefault();
     const input = document.getElementById('searchInput') as HTMLInputElement;
-    this.router.navigate(['/search'], {
-      relativeTo: this.actRoute,
-      queryParams: { q: input.value },
-    });
+    if (input.value) {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/search'], {
+          relativeTo: this.actRoute,
+          queryParams: { q: input.value },
+        });
+      });
+    }
   }
 }

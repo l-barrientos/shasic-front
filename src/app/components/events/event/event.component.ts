@@ -64,7 +64,7 @@ export class EventComponent implements OnInit {
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.eventService.followEvent(id).subscribe({
       next: (response) => {
-        this.event.following = response.following;
+        this.getEventById();
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -80,7 +80,7 @@ export class EventComponent implements OnInit {
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.eventService.unfollowEvent(id).subscribe({
       next: (response) => {
-        this.event.following = response.following;
+        this.getEventById();
       },
       complete: () => {
         this.sharedService.runSpinner(false);

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PublicArtist } from '../../models/PublicArtist';
 import { Event } from '../../models/Event';
 import { EventService } from '../../services/event.service';
+import { ArtistService } from '../../services/artist.service';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,8 @@ export class SearchComponent implements OnInit {
     private sharedService: SharedService,
     private actRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
-    private eventService: EventService
+    private eventService: EventService,
+    private artistService: ArtistService
   ) {}
 
   ngOnInit(): void {
@@ -105,5 +107,56 @@ export class SearchComponent implements OnInit {
       ' del ' +
       date.getFullYear()
     );
+  }
+  followArtist(id: number) {
+    this.sharedService.runSpinner(true);
+    document.getElementById('followButton' + id)!.innerHTML = '· · ·';
+    this.artistService.followArtist(id).subscribe({
+      next: (response) => {
+        this.getResults();
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  unfollowArtist(id: number) {
+    this.sharedService.runSpinner(true);
+    document.getElementById('followButton' + id)!.innerHTML = '· · ·';
+    this.artistService.unfollowArtist(id).subscribe({
+      next: (response) => {
+        this.getResults();
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  setBandImg(img: string) {
+    return img == 'default' ? '../../assets/default-band.jpg' : img;
+  }
+
+  checkBoxArtists() {
+    if (this.events.length > 0 && this.artists.length > 0) {
+      const checkBox: any = document.getElementById('aritstsCheckBox');
+      return checkBox.checked;
+    }
+    return true;
+  }
+
+  checkBoxEvents() {
+    if (this.events.length > 0 && this.artists.length > 0) {
+      const checkBox: any = document.getElementById('eventsCheckBox');
+      return checkBox.checked;
+    }
+    return true;
   }
 }

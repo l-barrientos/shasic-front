@@ -8,43 +8,43 @@ h1 {
   width: 90%;
 }
 
-:host ::ng-deep .eventParentDiv {
+.eventParentDiv {
   margin-top: 4%;
   margin-left: 15%;
   margin-right: 15%;
 }
 
-:host ::ng-deep h2 {
+h2 {
   margin-bottom: 2%;
 }
 
-:host ::ng-deep a h5:hover {
+a h5:hover {
   color: #c7b2e2;
 }
 
-:host ::ng-deep .searchPeopleBtn {
+.searchPeopleBtn {
   margin-top: 15%;
   font-size: 18pt;
   font-weight: bold;
   padding: 2%;
 }
 
-:host ::ng-deep hr {
+hr {
   margin-top: 3%;
   margin-bottom: 3%;
   height: 3px;
   color: rgb(139, 147, 147);
 }
 
-:host ::ng-deep .eventImg {
+.eventImg {
   width: 45%;
 }
 
-:host ::ng-deep .col2 {
+.col2 {
   text-align: center;
 }
 
-:host ::ng-deep .col2 button {
+.col2 button {
   font-size: 18pt;
   font-weight: bold;
   padding: 2%;
@@ -55,18 +55,18 @@ h1 {
   margin-left: 5%;
   margin-right: 5%;
 }
-:host ::ng-deep .eventName {
+.eventName {
   color: #fbfbfb;
   text-decoration: none;
   font-size: 3em;
 }
 
-:host ::ng-deep .eventName:hover {
+.eventName:hover {
   color: #c7b2e2;
   cursor: pointer;
 }
 
-:host ::ng-deep #titleEvents {
+#titleEvents {
   font-size: 3.5em;
   margin-bottom: 6%;
   margin-top: 5%;

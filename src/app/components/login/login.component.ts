@@ -54,7 +54,9 @@ export class LoginComponent implements OnInit {
         },
         complete: () => {
           this.sharedService.runSpinner(false);
-          rol == 'user' ? this.router.navigate(['/home']) : '';
+          rol == 'user'
+            ? this.router.navigate(['/home'])
+            : this.router.navigate(['/artist-home']);
         },
 
         error: (error) => {
