@@ -1,8 +1,33 @@
 <app-logged-navbar></app-logged-navbar>
+<div id="checkBoxes" *ngIf="events.length > 0 && artists.length > 0">
+  <div class="form-check form-switch">
+    <input
+      class="form-check-input"
+      checked
+      type="checkbox"
+      id="aritstsCheckBox"
+      (change)="checkBoxArtists()"
+    />
+    <label class="form-check-label cl-lightpurple" for="aritstsCheckBox"
+      >Artistas</label
+    >
+  </div>
+  <div class="form-check form-switch">
+    <input
+      class="form-check-input"
+      checked
+      type="checkbox"
+      id="eventsCheckBox"
+      (change)="checkBoxEvents()"
+    />
+    <label class="form-check-label cl-lightpurple" for="eventsCheckBox"
+      >Eventos</label
+    >
+  </div>
+</div>
 <div class="container">
   <!-- EVENTS -->
-
-  <div *ngIf="events.length > 0">
+  <div id="eventsContent" *ngIf="events.length > 0 && checkBoxEvents()">
     <h1 class="cl-purple">Eventos</h1>
     <div class="row" *ngFor="let ev of events">
       <div class="col-xl-6 col-sm-12 sol-md-12">
@@ -11,6 +36,9 @@
         }}</a>
         <h5 class="text-white">{{ this.formatDate(ev.eventDate) }}</h5>
         <h5 class="text-white">{{ ev.eventLocation }}</h5>
+        <h5 class="text-white">
+          Personas siguiendo este evento: {{ ev.followers }}
+        </h5>
         <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
       </div>
       <div class="col-xl-6 col-sm-12 sol-md-12 col2">
@@ -42,4 +70,56 @@
       <hr />
     </div>
   </div>
+
+  <!-- ARTISTS -->
+  <div id="artistsContent" *ngIf="artists.length > 0 && checkBoxArtists()">
+    <h1 class="cl-purple">Artistas</h1>
+    <div class="row" *ngFor="let artist of artists">
+      <div class="col-xl-6 col-sm-12 sol-md-12">
+        <div class="artistNameDiv">
+          <a class="artistName" routerLink="/artists/{{ artist.userName }}">{{
+            artist.fullName
+          }}</a>
+        </div>
+        <h5 class="text-white">Número de seguidores: {{ artist.followers }}</h5>
+        <h5 class="text-white">Número de eventos: {{ artist.eventsNum }}</h5>
+        <h5 class="text-white">{{ artist.bio }}</h5>
+      </div>
+      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+        <img
+          class="eventImg rounded img-thumbnail"
+          src="{{ this.setBandImg(artist.profileImage) }}"
+          alt="{{ artist.fullName }}"
+        />
+        <br />
+        <div *ngIf="artist.following">
+          <button
+            (click)="unfollowArtist(artist.id)"
+            class="btn btn-primary"
+            id="followButton{{ artist.id }}"
+          >
+            SIGUIENDO
+          </button>
+        </div>
+        <div *ngIf="!artist.following">
+          <button
+            (click)="followArtist(artist.id)"
+            class="btn btn-primary"
+            id="followButton{{ artist.id }}"
+          >
+            SEGUIR
+          </button>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+
+  <h2
+    id="noResults"
+    class="text-white"
+    *ngIf="events.length == 0 && artists.length == 0"
+  >
+    Tu búsqueda no ha tenido resultados :(
+  </h2>
 </div>

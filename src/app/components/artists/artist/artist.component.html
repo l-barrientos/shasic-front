@@ -4,12 +4,13 @@
 
   <div class="row">
     <div class="col-xl-6 col-md-12 col-md-12">
-      <h2 class="text-white">Info:</h2>
-      <h5 class="text-white">{{ artist.bio }}</h5>
+      <h2 class="text-white" *ngIf="artist.bio">Info:</h2>
+      <h5 class="text-white" *ngIf="artist.bio">{{ artist.bio }}</h5>
       <br />
-      <h2 class="text-white">Localización:</h2>
-      <h5 class="text-white">{{ artist.location }}</h5>
+      <h2 class="text-white" *ngIf="artist.location">Localización:</h2>
+      <h5 class="text-white" *ngIf="artist.location">{{ artist.location }}</h5>
       <br /><br />
+      <h3 class="text-white">Número de seguidores: {{ artist.followers }}</h3>
       <h3 class="text-white">Número de eventos: {{ events.length }}</h3>
       <br /><br />
       <h3 class="text-white">Contacto:</h3>
@@ -64,10 +65,5 @@
       </div>
       <hr />
     </div>
-  </div>
-  <div *ngIf="events.length == 0">
-    <h1 class="text-white" id="titleEvents">
-      {{ artist.fullName }} no tiene eventos todavía
-    </h1>
   </div>
 </div>

@@ -24,6 +24,7 @@ export class UnloggedNavbarComponent implements OnInit {
       this.sharedService.autoLogin().subscribe({
         next: (response) => {
           if (response.rol == 'user') this.router.navigate(['/home']);
+          if (response.rol == 'artist') this.router.navigate(['/artist-home']);
         },
         complete: () => {
           this.sharedService.runSpinner(false);

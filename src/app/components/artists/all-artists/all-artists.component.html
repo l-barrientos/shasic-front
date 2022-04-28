@@ -9,6 +9,7 @@
             artist.fullName
           }}</a>
         </div>
+        <h5 class="text-white">Número de seguidores: {{ artist.followers }}</h5>
         <h5 class="text-white">Número de eventos: {{ artist.eventsNum }}</h5>
         <h5 class="text-white">{{ artist.bio }}</h5>
       </div>
@@ -40,8 +41,5 @@
       </div>
       <hr />
     </div>
-  </div>
-  <div *ngIf="artists.length == 0">
-    <h1 class="text-white">Todavía no sigues a ningún artista</h1>
   </div>
 </div>

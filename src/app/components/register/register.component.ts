@@ -170,6 +170,7 @@ export class RegisterComponent implements OnInit {
           this.sharedService.runSpinner(true);
           this.pushImg('user', input.files?.item(0));
         } else {
+          this.router.navigate(['/home']);
           this.sharedService.runSpinner(false);
         }
       },
@@ -207,6 +208,7 @@ export class RegisterComponent implements OnInit {
           this.sharedService.runSpinner(true);
           this.pushImg('artist', input.files?.item(0));
         } else {
+          this.router.navigate(['/artist-home']);
           this.sharedService.runSpinner(false);
         }
       },
@@ -238,6 +240,7 @@ export class RegisterComponent implements OnInit {
       },
       complete: () => {
         if (rol == 'user') this.router.navigate(['/home']);
+        if (rol == 'artist') this.router.navigate(['/artist-home']);
         this.sharedService.runSpinner(false);
       },
       error: (error) => {

@@ -1,7 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-expand-md navbar-purple bg-dark">
   <div class="container-fluid row">
-    <a class="navbar-brand col-2" routerLink="/home">Shasic</a>
+    <a *ngIf="rol == 'user'" class="navbar-brand col-2" routerLink="/home"
+      >Shasic</a
+    >
+    <a
+      *ngIf="rol == 'artist'"
+      class="navbar-brand col-2"
+      routerLink="/artist-home"
+      >Shasic</a
+    >
+
     <form
+      *ngIf="rol == 'user'"
       class="form-inline bg-purple search d-md-block d-none col-2"
       (ngSubmit)="query()"
     >
@@ -32,15 +42,21 @@
     <div class="collapse navbar-collapse col-6" id="navbarSupportedContent">
       <ul class="nav">
         <li class="nav-item col-2">
-          <a class="nav-link" routerLink="/chats"
+          <a class="nav-link" *ngIf="rol == 'user'" routerLink="/chats"
             ><img
               src="../../../assets/chats-icon.png"
               alt="chats"
               class="navbar-icon"
           /></a>
+          <a *ngIf="rol == 'artist'" class="nav-link" routerLink="/new-event"
+            ><button class="btn btn-primary">CREAR EVENTO</button>
+          </a>
         </li>
         <li class="nav-item col-2">
-          <a class="nav-link" routerLink="/events/followed"
+          <a
+            *ngIf="rol == 'user'"
+            class="nav-link"
+            routerLink="/events/followed"
             ><img
               src="../../../assets/events-icon.png"
               alt="events"
@@ -51,14 +67,25 @@
               src="../../../assets/events-icon.png"
               alt="events"
               class="navbar-icon"
+              style="width: 25%"
           /></a>
         </li>
         <li class="nav-item col-2">
-          <a class="nav-link" routerLink="/profile"
+          <a class="nav-link" *ngIf="rol == 'user'" routerLink="/profile"
             ><img
               src="../../../assets/profile-icon.png"
               alt="profile"
               class="navbar-icon"
+          /></a>
+          <a
+            class="nav-link"
+            *ngIf="rol == 'artist'"
+            routerLink="/artist-profile"
+            ><img
+              src="../../../assets/profile-icon.png"
+              alt="profile"
+              class="navbar-icon"
+              style="width: 25%"
           /></a>
         </li>
       </ul>

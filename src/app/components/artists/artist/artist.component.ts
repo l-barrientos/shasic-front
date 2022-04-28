@@ -68,7 +68,7 @@ export class ArtistComponent implements OnInit {
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.artistService.followArtist(id).subscribe({
       next: (response) => {
-        this.artist.following = response.following;
+        this.getArtistInfo();
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -84,7 +84,7 @@ export class ArtistComponent implements OnInit {
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.artistService.unfollowArtist(id).subscribe({
       next: (response) => {
-        this.artist.following = response.following;
+        this.getArtistInfo();
       },
       complete: () => {
         this.sharedService.runSpinner(false);

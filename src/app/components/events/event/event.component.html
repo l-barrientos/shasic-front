@@ -13,16 +13,16 @@
       </div>
       <h5 class="text-white">{{ this.formatDate(event.eventDate) }}</h5>
       <h5 class="text-white">{{ event.eventLocation }}</h5>
-      <a
-        class="tickets"
-        *ngIf="event.ticketsUrl != null"
-        href="{{ event.ticketsUrl }}"
+      <a class="tickets" *ngIf="event.ticketsUrl" href="{{ event.ticketsUrl }}"
         >Comprar entradas</a
       >
-      <div class="text-white" *ngIf="event.details != null">
+      <div class="text-white" *ngIf="event.details">
         <h5>Detalles:</h5>
         <p class="details">{{ event.details }}</p>
       </div>
+      <h5 class="text-white">
+        Personas siguiendo este evento: {{ event.followers }}
+      </h5>
 
       <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
     </div>
