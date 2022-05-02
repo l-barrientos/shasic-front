@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArtistService } from '../../../services/artist.service';
-import { PublicArtist } from '../../../models/PublicArtist';
+import { Artist } from '../../../models/Artist';
 import { Event } from '../../../models/Event';
 import { SharedService } from '../../../services/shared.service';
 
@@ -11,7 +11,7 @@ import { SharedService } from '../../../services/shared.service';
   styleUrls: ['./artist.component.css'],
 })
 export class ArtistComponent implements OnInit {
-  artist: PublicArtist = {
+  artist: Artist = {
     id: 0,
     userName: '',
     email: '',
@@ -22,6 +22,7 @@ export class ArtistComponent implements OnInit {
     following: null,
     followers: 0,
     location: null,
+    password: null,
   };
   events: Event[] = [];
   constructor(

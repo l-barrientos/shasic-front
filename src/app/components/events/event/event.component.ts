@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { SharedService } from '../../../services/shared.service';
 import { Event } from '../../../models/Event';
-import { PublicArtist } from '../../../models/PublicArtist';
+import { Artist } from '../../../models/Artist';
 import { GoogleMap } from '@angular/google-maps';
 
 @Component({
@@ -24,7 +24,7 @@ export class EventComponent implements OnInit {
     following: null,
     followers: null,
   };
-  artists: PublicArtist[] = [];
+  artists: Artist[] = [];
   allEvents: Event[] = [];
   constructor(
     private router: Router,

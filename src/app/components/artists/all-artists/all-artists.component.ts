@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PublicArtist } from '../../../models/PublicArtist';
+import { Artist } from '../../../models/Artist';
 import { SharedService } from '../../../services/shared.service';
 import { ArtistService } from '../../../services/artist.service';
 
@@ -9,7 +9,7 @@ import { ArtistService } from '../../../services/artist.service';
   styleUrls: ['./all-artists.component.css'],
 })
 export class AllArtistsComponent implements OnInit {
-  artists: PublicArtist[] = [];
+  artists: Artist[] = [];
   constructor(
     private sharedService: SharedService,
     private artistService: ArtistService
