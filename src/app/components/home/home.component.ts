@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/Event';
 import { SharedService } from '../../services/shared.service';
-import { PublicArtist } from '../../models/PublicArtist';
+import { Artist } from '../../models/Artist';
 import { ArtistService } from '../../services/artist.service';
 import { NavigationExtras, Router } from '@angular/router';
 
@@ -12,8 +12,8 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  artistsFollowed: PublicArtist[] = [];
-  allArtists: PublicArtist[] = [];
+  artistsFollowed: Artist[] = [];
+  allArtists: Artist[] = [];
   eventsFollowed: Event[] = [];
   allEvents: Event[] = [];
   constructor(

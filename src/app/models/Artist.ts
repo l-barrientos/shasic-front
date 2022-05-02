@@ -1,8 +1,8 @@
-export class Artist {
-  id: number;
-  email: string;
-  userName: string;
-  fullName: string;
-  password: string;
-  genre: string | null;
+import { Profile } from './Profile';
+export class Artist extends Profile {
+  eventsNum: number | null;
+  bio: string | null;
+  following: boolean | null;
+  followers: number | null;
+  location: string | null;
 }

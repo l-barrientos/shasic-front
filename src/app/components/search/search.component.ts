@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { ActivatedRoute } from '@angular/router';
-import { PublicArtist } from '../../models/PublicArtist';
+import { Artist } from '../../models/Artist';
 import { Event } from '../../models/Event';
 import { EventService } from '../../services/event.service';
 import { ArtistService } from '../../services/artist.service';
@@ -12,7 +12,7 @@ import { ArtistService } from '../../services/artist.service';
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnInit {
-  artists: PublicArtist[] = [];
+  artists: Artist[] = [];
   events: Event[] = [];
 
   constructor(

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Artist } from '../models/Artist';
-import { PublicArtist } from '../models/PublicArtist';
 
 @Injectable({
   providedIn: 'root',
@@ -29,38 +28,32 @@ export class ArtistService {
     });
   }
 
-  getAllArtists(): Observable<PublicArtist[]> {
+  getAllArtists(): Observable<Artist[]> {
     this.httpOptions = {
       headers: new HttpHeaders({
         access_token: localStorage.getItem('access_token')!,
       }),
     };
 
-    return this.http.get<PublicArtist[]>(this.allArtistsUrl, this.httpOptions);
+    return this.http.get<Artist[]>(this.allArtistsUrl, this.httpOptions);
   }
-  getArtistsByUser(): Observable<PublicArtist[]> {
+  getArtistsByUser(): Observable<Artist[]> {
     this.httpOptions = {
       headers: new HttpHeaders({
         access_token: localStorage.getItem('access_token')!,
       }),
     };
 
-    return this.http.get<PublicArtist[]>(
-      this.artistsByUserUrl,
-      this.httpOptions
-    );
+    return this.http.get<Artist[]>(this.artistsByUserUrl, this.httpOptions);
   }
 
-  getArtistByName(name: string): Observable<PublicArtist> {
+  getArtistByName(name: string): Observable<Artist> {
     this.httpOptions = {
       headers: new HttpHeaders({
         access_token: localStorage.getItem('access_token')!,
       }),
     };
-    return this.http.get<PublicArtist>(
-      this.artistByName + name,
-      this.httpOptions
-    );
+    return this.http.get<Artist>(this.artistByName + name, this.httpOptions);
   }
 
   followArtist(id: number): Observable<any> {
