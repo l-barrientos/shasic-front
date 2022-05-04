@@ -12,6 +12,7 @@ import { FollowedArtistsComponent } from './components/artists/followed-artists/
 import { AllEventsComponent } from './components/events/all-events/all-events.component';
 import { AllArtistsComponent } from './components/artists/all-artists/all-artists.component';
 import { SearchComponent } from './components/search/search.component';
+import { EventChatsComponent } from './components/event-chats/event-chats.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'artists', component: AllArtistsComponent },
   { path: 'artists/:userName', component: ArtistComponent },
   { path: 'search', component: SearchComponent },
+  { path: 'event-chats/:id', component: EventChatsComponent },
 ];
 
 @NgModule({
