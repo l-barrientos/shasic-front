@@ -1,3 +1,4 @@
+import { Artist } from './Artist';
 export class Event {
   id: number;
   eventName: string;
@@ -8,4 +9,5 @@ export class Event {
   details: string | null;
   following: boolean | null;
   followers: number | null;
+  artists: Artist[] | null;
 }

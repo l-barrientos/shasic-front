@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.showError('eventsByUser');
         this.sharedService.runSpinner(false);
       },
@@ -62,6 +63,7 @@ export class HomeComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.showError('artistsByUser');
         this.sharedService.runSpinner(false);
       },
@@ -84,6 +86,7 @@ export class HomeComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });
@@ -101,6 +104,7 @@ export class HomeComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });

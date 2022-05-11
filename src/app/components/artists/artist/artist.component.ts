@@ -18,13 +18,12 @@ export class ArtistComponent implements OnInit {
     fullName: '',
     profileImage: '',
     bio: null,
-    eventsNum: null,
+    events: [],
     following: null,
     followers: 0,
     location: null,
     password: null,
   };
-  events: Event[] = [];
   constructor(
     private router: Router,
     private artistService: ArtistService,
@@ -43,16 +42,14 @@ export class ArtistComponent implements OnInit {
     );
     this.artistService.getArtistByName(userName).subscribe({
       next: (response: any) => {
-        this.artist = response.artist;
+        this.artist = response;
         response.events.forEach((ev: Event) => {
           ev.eventDate = new Date(ev.eventDate);
         });
-        this.events = response.events.sort(
+        this.artist.events = response.events.sort(
           (objA: any, objB: any) =>
             objA.eventDate.getTime() - objB.eventDate.getTime()
         );
-
-        this.events = response.events;
       },
       complete: () => {
         this.sharedService.runSpinner(false);

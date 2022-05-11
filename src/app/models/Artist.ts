@@ -1,8 +1,9 @@
 import { Profile } from './Profile';
+import { Event } from './Event';
 export class Artist extends Profile {
-  eventsNum: number | null;
+  location: string | null;
   bio: string | null;
   following: boolean | null;
   followers: number | null;
-  location: string | null;
+  events: Event[] | null;
 }
