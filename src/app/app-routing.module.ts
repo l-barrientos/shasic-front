@@ -12,19 +12,38 @@ import { FollowedArtistsComponent } from './components/artists/followed-artists/
 import { AllEventsComponent } from './components/events/all-events/all-events.component';
 import { AllArtistsComponent } from './components/artists/all-artists/all-artists.component';
 import { SearchComponent } from './components/search/search.component';
+import { EventChatsComponent } from './components/chats/event-chats/event-chats.component';
+import { UserChatsComponent } from './components/chats/user-chats/user-chats.component';
+import { ChatComponent } from './components/chats/chat/chat.component';
+import { NewEventComponent } from './components/events/new-event/new-event.component';
 
 const routes: Routes = [
+  // Unlogged User
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
+  //Home
   { path: 'home', component: HomeComponent },
   { path: 'artist-home', component: ArtistHomeComponent },
-  { path: 'events/followed', component: FollowedEventsComponent },
-  { path: 'artists/followed', component: FollowedArtistsComponent },
+
+  //Events
   { path: 'events', component: AllEventsComponent },
+  { path: 'events/followed', component: FollowedEventsComponent },
   { path: 'events/:id', component: EventComponent },
+  { path: 'events/new', component: NewEventComponent },
+
+  //Artists
   { path: 'artists', component: AllArtistsComponent },
+  { path: 'artists/followed', component: FollowedArtistsComponent },
   { path: 'artists/:userName', component: ArtistComponent },
+
+  //Chats
+  { path: 'event-chats/:id', component: EventChatsComponent },
+  { path: 'chats', component: UserChatsComponent },
+  { path: 'chats/:userName', component: ChatComponent },
+
+  //Search
   { path: 'search', component: SearchComponent },
 ];
 

@@ -17,6 +17,7 @@ export class EventComponent implements OnInit {
     id: 0,
     eventName: '',
     eventDate: new Date(),
+    artists: [],
     eventImage: '',
     eventLocation: '',
     ticketsUrl: '',
@@ -24,8 +25,6 @@ export class EventComponent implements OnInit {
     following: null,
     followers: null,
   };
-  artists: Artist[] = [];
-  allEvents: Event[] = [];
   constructor(
     private router: Router,
     private eventService: EventService,
@@ -46,14 +45,15 @@ export class EventComponent implements OnInit {
     );
     this.eventService.getEventById(id).subscribe({
       next: (response) => {
-        this.event = response.event;
-        this.artists = response.artists;
+        this.event = response;
+        this.event.artists = response.artists;
       },
 
       complete: () => {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });

@@ -10,7 +10,9 @@
           }}</a>
         </div>
         <h5 class="text-white">Número de seguidores: {{ artist.followers }}</h5>
-        <h5 class="text-white">Número de eventos: {{ artist.eventsNum }}</h5>
+        <h5 class="text-white">
+          Número de eventos: {{ artist.events?.length }}
+        </h5>
         <h5 class="text-white">{{ artist.bio }}</h5>
       </div>
       <div class="col-xl-6 col-sm-12 sol-md-12 col2">

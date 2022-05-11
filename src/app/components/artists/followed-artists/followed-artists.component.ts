@@ -32,7 +32,6 @@ export class FollowedArtistsComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
-        console.log(error);
         this.sharedService.runSpinner(false);
       },
     });

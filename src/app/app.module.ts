@@ -18,6 +18,10 @@ import { FollowedArtistsComponent } from './components/artists/followed-artists/
 import { AllEventsComponent } from './components/events/all-events/all-events.component';
 import { AllArtistsComponent } from './components/artists/all-artists/all-artists.component';
 import { SearchComponent } from './components/search/search.component';
+import { EventChatsComponent } from './components/chats/event-chats/event-chats.component';
+import { UserChatsComponent } from './components/chats/user-chats/user-chats.component';
+import { ChatComponent } from './components/chats/chat/chat.component';
+import { NewEventComponent } from './components/events/new-event/new-event.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { SearchComponent } from './components/search/search.component';
     AllEventsComponent,
     AllArtistsComponent,
     SearchComponent,
+    EventChatsComponent,
+    UserChatsComponent,
+    ChatComponent,
+    NewEventComponent,
   ],
   imports: [
     BrowserModule,
