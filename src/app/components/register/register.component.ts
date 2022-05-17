@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       fullName: ['', Validators.required],
       userName: ['', Validators.required],
-      password: ['', Validators.required, Validators.pattern],
+      password: ['', [Validators.required, Validators.pattern]],
       repPassword: ['', Validators.required],
       profileType: ['Selecciona el tipo de perfil'],
     });
