@@ -1,0 +1,24 @@
+h1 {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+
+.profileImage {
+  width: 100px;
+  height: 80px;
+}
+
+.userEntry {
+  padding: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.userEntry:hover {
+  cursor: pointer;
+  background-color: #c7b2e2;
+}
+
+.userDesc {
+  margin-top: 4%;
+}
