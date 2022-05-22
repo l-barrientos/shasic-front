@@ -1,1 +1,26 @@
 <app-logged-navbar></app-logged-navbar>
+<div class="container">
+  <div *ngIf="users.length > 0">
+    <h1 class="cl-purple">Busca acompañante para el evento</h1>
+
+    <div
+      *ngFor="let user of users"
+      class="row bg-purple userEntry"
+      (click)="this.createChat(user.id)"
+    >
+      <img
+        class="profileImage col-4"
+        src="{{ this.setUserImg(user.profileImage) }}"
+        alt="{{ user.userName }} profile image"
+      />
+      <h4 class="text-white col-3">{{ user.fullName }}</h4>
+      <p *ngIf="user.description != null" class="userDesc col-4">
+        {{ this.reduceUserDesc(user.description) }}
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="users.length == 0">
+    <h1 class="text-white">Todavía nadie sigue este evento :(</h1>
+  </div>
+</div>

@@ -43,7 +43,6 @@ export class ArtistService {
         access_token: localStorage.getItem('access_token')!,
       }),
     };
-
     return this.http.get<Artist[]>(this.artistsByUserUrl, this.httpOptions);
   }
 
