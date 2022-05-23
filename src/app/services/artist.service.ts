@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Artist } from '../models/Artist';
+import { BACK_URL } from '../helpers/GlobalConstants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtistService {
-  allArtistsUrl = 'http://localhost:8000/api/artists';
-  registerUrl = 'http://localhost:8000/api/artist/register';
-  artistsByUserUrl = 'http://localhost:8000/api/userArtists';
-  artistByName = 'http://localhost:8000/api/artist/';
-  followArtistUrl = 'http://localhost:8000/api/followArtist/';
-  unfollowArtistUrl = 'http://localhost:8000/api/unfollowArtist/';
+  allArtistsUrl = BACK_URL + '/artists';
+  registerUrl = BACK_URL + '/artist/register';
+  artistsByUserUrl = BACK_URL + '/userArtists';
+  artistByName = BACK_URL + '/artist/';
+  followArtistUrl = BACK_URL + '/followArtist/';
+  unfollowArtistUrl = BACK_URL + '/unfollowArtist/';
   httpOptions = {
     headers: new HttpHeaders(),
   };

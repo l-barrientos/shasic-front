@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { BACK_URL } from '../helpers/GlobalConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,8 @@ export class SharedService {
   httpOptions = {
     headers: new HttpHeaders(),
   };
-  autoLoginUrl = 'http://localhost:8000/api/autoLogin';
-  queryUrl = 'http://localhost:8000/api/search';
+  autoLoginUrl = BACK_URL + '/autoLogin';
+  queryUrl = BACK_URL + '/search';
   private spinner = new BehaviorSubject(false);
   sharedSpinner = this.spinner.asObservable();
   constructor(private http: HttpClient) {}

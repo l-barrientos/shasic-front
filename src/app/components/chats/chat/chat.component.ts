@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
+import { Router } from '@angular/router';
+import { User } from '../../../models/User';
+import { Message } from 'src/app/models/Message';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +17,93 @@ import { ChatService } from '../../../services/chat.service';
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit {
-  constructor(private chatService: ChatService) {}
+  targetUser: User = {
+    id: 0,
+    userName: '',
+    fullName: '',
+    password: null,
+    email: '',
+    description: null,
+    profileImage: '../../assets/default-user.png',
+  };
+  messages: Message[] = [];
+  chatId: number;
+  currentUserName: string;
+  @ViewChild('chatBox') private myScrollContainer: ElementRef;
+  constructor(
+    private router: Router,
+    private chatService: ChatService,
+    private sharedService: SharedService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.chatService.getMessages('msg');
+    this.getChatInfo();
+  }
+
+  getChatInfo() {
+    this.sharedService.runSpinner(true);
+    const targetUserName = this.router.url.substring(
+      this.router.url.lastIndexOf('/') + 1
+    );
+    this.chatService.getChatInfo(targetUserName).subscribe({
+      next: (response: any) => {
+        this.currentUserName = response.currentUserName;
+        this.targetUser = response.targetUser;
+        this.chatId = response.chatId;
+        this.getAllMessages(this.chatId);
+        this.updateMessages(this.chatId);
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        console.log(error);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  getAllMessages(chatId: number) {
+    this.messages = this.chatService.getAllMessages(chatId);
+  }
+
+  updateMessages(chatId: number) {
+    this.messages = this.chatService.updateMessages(chatId, this.messages);
+  }
+
+  sendMsg() {
+    event?.preventDefault();
+    const textInput = document.getElementById('inputMsg') as HTMLInputElement;
+    if (textInput.value != '' && textInput.value.trim() != '') {
+      const newMsg = {
+        author: this.currentUserName,
+        text: textInput.value,
+        date: new Date().toString(),
+      };
+      this.chatService.pushMessage(this.chatId, newMsg);
+      textInput.value = '';
+    }
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop =
+        this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
+  }
+
+  formatDate(input: Date | string) {
+    const date = new Date(input);
+    return date.getHours() + ':' + date.getMinutes();
+  }
+
+  setUserImg(img: string) {
+    return img == 'default' ? '../../assets/default-user.png' : img;
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+    this.scrollToBottom();
   }
 }
