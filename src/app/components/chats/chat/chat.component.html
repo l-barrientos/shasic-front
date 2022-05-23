@@ -1,1 +1,32 @@
-<p>chat works!</p>
+<app-logged-navbar></app-logged-navbar>
+<div class="container">
+  <div class="row chatHeader bg-purple">
+    <img
+      class="col-2"
+      src="{{ this.setUserImg(targetUser.profileImage) }}"
+      alt="{{ targetUser.userName }} profile image"
+    />
+    <h3 class="col-4">{{ targetUser.fullName }}</h3>
+  </div>
+  <div class="chatBox" #chatBox>
+    <table class="table table-borderless">
+      <tr class="row" *ngFor="let msg of messages">
+        <div *ngIf="msg.author == this.currentUserName" class="msgOwn">
+          <div class="msgText">
+            <p class="text-white">{{ msg.text }}</p>
+            <p class="text-dark time">{{ this.formatDate(msg.date) }}</p>
+          </div>
+        </div>
+        <div *ngIf="msg.author != this.currentUserName" class="msgExt">
+          <div class="msgText">
+            <p class="text-white">{{ msg.text }}</p>
+            <p class="cl-lightpurple time">{{ this.formatDate(msg.date) }}</p>
+          </div>
+        </div>
+      </tr>
+    </table>
+  </div>
+  <form (submit)="this.sendMsg()">
+    <input type="text" name="inputMsg" id="inputMsg" class="col-12" />
+  </form>
+</div>

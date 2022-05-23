@@ -32,7 +32,6 @@ export class EventChatsComponent implements OnInit {
     this.userService.getEventUsers(id).subscribe({
       next: (response) => {
         this.users = response;
-        console.log(response);
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -44,14 +43,19 @@ export class EventChatsComponent implements OnInit {
     });
   }
 
-  createChat(userId: number) {
+  createChat(targetUserName: string) {
     this.sharedService.runSpinner(true);
-    this.chatService.newChat(userId).subscribe({
+    this.chatService.newChat(targetUserName).subscribe({
       next: (response: any) => {
-        console.log(response);
         if (response.status == 'alreadyExisted') {
+          this.router.navigate(['/chats/' + targetUserName]);
         } else {
-          this.chatService.newFirebaseChat(response.chatId);
+          this.chatService.newFirebaseChat(
+            response.chatId,
+            response.createdBy,
+            targetUserName
+          );
+          this.router.navigate(['/chats/' + targetUserName]);
         }
       },
       complete: () => {

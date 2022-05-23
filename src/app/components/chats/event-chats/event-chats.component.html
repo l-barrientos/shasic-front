@@ -6,15 +6,18 @@
     <div
       *ngFor="let user of users"
       class="row bg-purple userEntry"
-      (click)="this.createChat(user.id)"
+      (click)="this.createChat(user.userName)"
     >
       <img
         class="profileImage col-4"
         src="{{ this.setUserImg(user.profileImage) }}"
         alt="{{ user.userName }} profile image"
       />
-      <h4 class="text-white col-3">{{ user.fullName }}</h4>
-      <p *ngIf="user.description != null" class="userDesc col-4">
+      <div class="col-4">
+        <h4 class="text-white">{{ user.fullName }}</h4>
+        <span>@{{ user.userName }}</span>
+      </div>
+      <p *ngIf="user.description != null" class="userDesc col-3">
         {{ this.reduceUserDesc(user.description) }}
       </p>
     </div>
