@@ -16,12 +16,18 @@ import { EventChatsComponent } from './components/chats/event-chats/event-chats.
 import { UserChatsComponent } from './components/chats/user-chats/user-chats.component';
 import { ChatComponent } from './components/chats/chat/chat.component';
 import { NewEventComponent } from './components/events/new-event/new-event.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ArtistProfileComponent } from './components/artist-profile/artist-profile.component';
 
 const routes: Routes = [
   // Unlogged User
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
+  //Profile
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'artist-profile', component: ArtistProfileComponent },
 
   //Home
   { path: 'home', component: HomeComponent },

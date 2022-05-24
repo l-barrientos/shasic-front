@@ -10,6 +10,7 @@ import { Message } from '../models/Message';
 export class ChatService {
   newChatUrl = BACK_URL + '/newChat/';
   chatInfoUrl = BACK_URL + '/getChatInfo/';
+  openedChatsUrl = BACK_URL + '/getOpenedChats';
   loaded = false;
   httpOptions = {
     headers: new HttpHeaders(),
@@ -85,9 +86,35 @@ export class ChatService {
     return msgArray;
   }
 
+  /**
+   * Push new message to firebase database
+   * @param chatId
+   * @param msg
+   */
   pushMessage(chatId: number, msg: Message) {
     const chatRef = this.angularFireDatabase.database.ref('chats/' + chatId);
     chatRef.push(msg);
+  }
+
+  getPreviewMessages(chats: any[]): any[] {
+    chats.forEach((chat: any) => {
+      const chatRef = this.angularFireDatabase.database
+        .ref('chats/' + chat.chatId)
+        .limitToLast(1);
+
+      chatRef.on('value', (snapshot: any) => {
+        snapshot.forEach((element: any) => {
+          if (
+            element.val().hasOwnProperty('text') &&
+            element.val().hasOwnProperty('author') &&
+            element.val().hasOwnProperty('date')
+          ) {
+            chat.lastMsg = element.val();
+          }
+        });
+      });
+    });
+    return chats;
   }
 
   /* API-REST */
@@ -122,5 +149,15 @@ export class ChatService {
     };
 
     return this.http.get(this.chatInfoUrl + targetUserName, this.httpOptions);
+  }
+
+  getOpenedChats() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+
+    return this.http.get(this.openedChatsUrl, this.httpOptions);
   }
 }

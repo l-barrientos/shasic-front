@@ -10,6 +10,7 @@ export class UserService {
   loginUrl = BACK_URL + '/login';
   registerUrl = BACK_URL + '/user/register';
   eventUsersUrl = BACK_URL + '/eventUsers/';
+  userProfileUrl = BACK_URL + '/getUserProfile';
 
   httpOptions = {
     headers: new HttpHeaders(),
@@ -40,5 +41,14 @@ export class UserService {
       this.eventUsersUrl + eventId,
       this.httpOptions
     );
+  }
+
+  getUserProfile() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<User>(this.userProfileUrl, this.httpOptions);
   }
 }
