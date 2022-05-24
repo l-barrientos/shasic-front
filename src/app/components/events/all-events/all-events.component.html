@@ -1,9 +1,9 @@
-<app-logged-navbar></app-logged-navbar>
+<app-user-logged-navbar></app-user-logged-navbar>
 <div class="container">
   <h1 class="cl-purple">Próximos eventos</h1>
   <div *ngIf="events.length > 0">
     <div class="row" *ngFor="let ev of events">
-      <div class="col-xl-6 col-sm-12 sol-md-12">
+      <div class="col-xl-6 col-sm-12 col-md-12">
         <a class="eventName" routerLink="/events/{{ ev.id }}">{{
           ev.eventName
         }}</a>
@@ -19,7 +19,7 @@
           BUSCA A ALGUIEN
         </button>
       </div>
-      <div class="col-xl-6 col-sm-12 sol-md-12 col2">
+      <div class="col-xl-6 col-sm-12 col-md-12 col2">
         <img
           class="eventImg rounded img-thumbnail"
           src="{{ ev.eventImage }}"

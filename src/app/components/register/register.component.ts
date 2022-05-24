@@ -47,23 +47,15 @@ export class RegisterComponent implements OnInit {
 
   /* ***********VALIDATIONS************* */
 
-  /*
-   *
-   *
-   * Standard validation
-   *
-   *
+  /**
+   * Standar validation
    */
   get f(): { [key: string]: AbstractControl } {
     return this.registerForm.controls;
   }
 
-  /*
-   *
-   *
+  /**
    * Check password and repeated password are equal
-   *
-   *
    */
   get repPassword(): boolean {
     if (
@@ -76,12 +68,8 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  /*
-   *
-   *
+  /**
    * Check valid profile type
-   *
-   *
    */
   get validProfileType(): boolean {
     if (
@@ -94,12 +82,8 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  /*
-   *
-   *
+  /**
    * Check valid file extension on image input
-   *
-   *
    */
   get validFileExtension(): boolean {
     const regex = /(?:jpeg|jpg|png)/i;
@@ -112,12 +96,9 @@ export class RegisterComponent implements OnInit {
 
   /* ***********SERVICES************* */
 
-  /*
-   *
-   *
+  /**
    * Execute the register services
-   *
-   *
+   * @returns
    */
   register() {
     this.emailUsed = false;
@@ -148,12 +129,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  /*
-   *
-   *
+  /**
    * Execute the User register service
-   *
-   *
+   * @param user
    */
 
   registerUser(user: any) {
@@ -186,12 +164,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  /*
-   *
-   *
+  /**
    * Execute the Artist register service
-   *
-   *
+   * @param artist
    */
 
   registerArtist(artist: any) {
@@ -224,12 +199,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  /*
-   *
-   *
+  /**
    * Execute the Image service to send it
-   *
-   *
+   * @param rol
+   * @param img
    */
 
   pushImg(rol: string, img: any) {
@@ -252,12 +225,8 @@ export class RegisterComponent implements OnInit {
 
   /* ***********FUNCTIONS************* */
 
-  /*
-   *
-   *
+  /**
    * Display the image selected in file input
-   *
-   *
    */
 
   displayImage() {

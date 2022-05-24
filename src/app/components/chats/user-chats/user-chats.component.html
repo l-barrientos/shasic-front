@@ -1,1 +1,49 @@
-<p>user-chats works!</p>
+<app-user-logged-navbar></app-user-logged-navbar>
+<div class="container">
+  <div *ngIf="chatsOpened.length > 0">
+    <h1 class="cl-purple">Chats abiertos</h1>
+
+    <div
+      *ngFor="let chat of chatsOpened"
+      class="row bg-purple userEntry"
+      routerLink="/chats/{{ chat.userName }}"
+    >
+      <img
+        class="profileImage col-4"
+        src="{{ this.setUserImg(chat.profileImage) }}"
+        alt="{{ chat.userName }} profile image"
+      />
+      <div class="col-3">
+        <h4 class="text-white">{{ chat.fullName }}</h4>
+        <span>@{{ chat.userName }}</span>
+      </div>
+      <p
+        *ngIf="
+          chat.lastMsg != null &&
+          chat.lastMsg.text != '' &&
+          chat.lastMsg.author == chat.userName
+        "
+        class="lastMsgReceived col-4"
+      >
+        • {{ this.reducePreviewMsg(chat.lastMsg.text) }}
+      </p>
+      <p
+        *ngIf="
+          chat.lastMsg != null &&
+          chat.lastMsg.text != '' &&
+          chat.lastMsg.author != chat.userName
+        "
+        class="lastMsgSent col-4"
+      >
+        ✓ {{ this.reducePreviewMsg(chat.lastMsg.text) }}
+      </p>
+      <p *ngIf="chat.lastMsg == null" class="lastMsgNone col-4 text-warning">
+        Saluda a {{ chat.fullName }}!!
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="chatsOpened.length == 0">
+    <h1 class="text-white">Todavía no tienes ningún chat abierto :(</h1>
+  </div>
+</div>

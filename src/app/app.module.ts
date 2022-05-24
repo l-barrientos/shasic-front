@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UnloggedNavbarComponent } from './components/unlogged-navbar/unlogged-navbar.component';
-import { LoggedNavbarComponent } from './components/logged-navbar/logged-navbar.component';
+import { UnloggedNavbarComponent } from './components/navbars/unlogged-navbar/unlogged-navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { HomeComponent } from './components/home/home.component';
 import { FollowedEventsComponent } from './components/events/followed-events/followed-events.component';
@@ -31,6 +30,10 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { environment } from 'src/environments/environment';
+import { UserLoggedNavbarComponent } from './components/navbars/user-logged-navbar/user-logged-navbar.component';
+import { ArtistLoggedNavbarComponent } from './components/navbars/artist-logged-navbar/artist-logged-navbar.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ArtistProfileComponent } from './components/artist-profile/artist-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,6 @@ import { environment } from 'src/environments/environment';
     LoginComponent,
     RegisterComponent,
     UnloggedNavbarComponent,
-    LoggedNavbarComponent,
     LandingComponent,
     HomeComponent,
     FollowedEventsComponent,
@@ -53,6 +55,10 @@ import { environment } from 'src/environments/environment';
     UserChatsComponent,
     ChatComponent,
     NewEventComponent,
+    UserLoggedNavbarComponent,
+    ArtistLoggedNavbarComponent,
+    UserProfileComponent,
+    ArtistProfileComponent,
   ],
   imports: [
     BrowserModule,

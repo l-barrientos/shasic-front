@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../../services/shared.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-logged-navbar',
-  templateUrl: './logged-navbar.component.html',
-  styleUrls: ['./logged-navbar.component.css'],
+  selector: 'app-user-logged-navbar',
+  templateUrl: './user-logged-navbar.component.html',
+  styleUrls: ['./user-logged-navbar.component.css'],
 })
-export class LoggedNavbarComponent implements OnInit {
-  rol: string;
+export class UserLoggedNavbarComponent implements OnInit {
   constructor(private router: Router, private actRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.checkUserNotLogged();
-    this.rol = localStorage.getItem('rol')!;
     if (this.actRoute.snapshot.queryParamMap.get('q')) {
       let input: any = document.getElementById('searchInput')!;
       if (input != null) {
@@ -26,6 +23,7 @@ export class LoggedNavbarComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
   query() {
     event?.preventDefault();
     const input = document.getElementById('searchInput') as HTMLInputElement;
