@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'events', component: AllEventsComponent },
   { path: 'events/followed', component: FollowedEventsComponent },
   { path: 'events/:id', component: EventComponent },
-  { path: 'events/new', component: NewEventComponent },
+  { path: 'new-event', component: NewEventComponent },
 
   //Artists
   { path: 'artists', component: AllArtistsComponent },

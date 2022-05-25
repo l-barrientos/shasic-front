@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { BACK_URL } from '../helpers/GlobalConstants';
 import { Message } from '../models/Message';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  newChatUrl = BACK_URL + '/newChat/';
-  chatInfoUrl = BACK_URL + '/getChatInfo/';
-  openedChatsUrl = BACK_URL + '/getOpenedChats';
+  newChatUrl = environment.apiUrl + '/newChat/';
+  chatInfoUrl = environment.apiUrl + '/getChatInfo/';
+  openedChatsUrl = environment.apiUrl + '/getOpenedChats';
   loaded = false;
   httpOptions = {
     headers: new HttpHeaders(),

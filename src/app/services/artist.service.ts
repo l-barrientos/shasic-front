@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Artist } from '../models/Artist';
-import { BACK_URL } from '../helpers/GlobalConstants';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtistService {
-  allArtistsUrl = BACK_URL + '/artists';
-  registerUrl = BACK_URL + '/artist/register';
-  artistsByUserUrl = BACK_URL + '/userArtists';
-  artistByName = BACK_URL + '/artist/';
-  followArtistUrl = BACK_URL + '/followArtist/';
-  unfollowArtistUrl = BACK_URL + '/unfollowArtist/';
+  allArtistsUrl = environment.apiUrl + '/artists';
+  registerUrl = environment.apiUrl + '/artist/register';
+  artistsByUserUrl = environment.apiUrl + '/userArtists';
+  artistByName = environment.apiUrl + '/artist/';
+  followArtistUrl = environment.apiUrl + '/followArtist/';
+  unfollowArtistUrl = environment.apiUrl + '/unfollowArtist/';
+  artistsIdsUrl = environment.apiUrl + '/artistsIds';
   httpOptions = {
     headers: new HttpHeaders(),
   };
@@ -72,5 +73,14 @@ export class ArtistService {
       }),
     };
     return this.http.delete(this.unfollowArtistUrl + id, this.httpOptions);
+  }
+
+  getAllArtistsIds(): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<[]>(this.artistsIdsUrl, this.httpOptions);
   }
 }

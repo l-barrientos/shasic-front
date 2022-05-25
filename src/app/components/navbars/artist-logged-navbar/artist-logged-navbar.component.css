@@ -1,6 +1,12 @@
+.nav-item {
+  margin-left: 12%;
+}
+.nav-link {
+  text-align: center;
+}
+
 .navbar-icon {
-  margin-left: 300%;
-  width: 40%;
+  width: 35%;
 }
 
 .search {
@@ -22,5 +28,6 @@
 }
 
 button {
+  margin-top: 5%;
   padding: 2%;
 }

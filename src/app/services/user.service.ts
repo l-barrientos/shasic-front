@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/User';
-import { BACK_URL } from '../helpers/GlobalConstants';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  loginUrl = BACK_URL + '/login';
-  registerUrl = BACK_URL + '/user/register';
-  eventUsersUrl = BACK_URL + '/eventUsers/';
-  userProfileUrl = BACK_URL + '/getUserProfile';
+  loginUrl = environment.apiUrl + '/login';
+  registerUrl = environment.apiUrl + '/user/register';
+  eventUsersUrl = environment.apiUrl + '/eventUsers/';
+  userProfileUrl = environment.apiUrl + '/getUserProfile';
 
   httpOptions = {
     headers: new HttpHeaders(),
