@@ -35,6 +35,13 @@ import { ArtistLoggedNavbarComponent } from './components/navbars/artist-logged-
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ArtistProfileComponent } from './components/artist-profile/artist-profile.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,8 +78,15 @@ import { ArtistProfileComponent } from './components/artist-profile/artist-profi
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatFileInputModule,
   ],
-  providers: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,1 +1,193 @@
 <app-artist-logged-navbar></app-artist-logged-navbar>
+<div class="artistsChoosen">
+  <h3 class="text-white">Artistas añadidos</h3>
+  <div class="text-danger" *ngIf="artistsChoosen.length == 0 && submitted">
+    <p class="col-10">Debes añadir al menos un artista</p>
+  </div>
+  <div class="row artistChos" *ngFor="let artist of artistsChoosen">
+    <span class="text-white col-10">{{ artist.fullName }} </span>
+    <span class="col-2 removeArt" (click)="removeChoosenArtist(artist.id)"
+      >❌</span
+    >
+  </div>
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#artistsModal"
+  >
+    Añadir Artista
+  </button>
+</div>
+<div class="container">
+  <h1 class="cl-purple justify-content-center mb-5">Nuevo Evento</h1>
+  <form [formGroup]="newEventForm" (ngSubmit)="newEvent()">
+    <div class="inputsDiv">
+      <!-- ****************************************** -->
+      <!-- Date -->
+      <div class="f col-6 datepicker">
+        <mat-form-field appearance="fill" class="example-form-field">
+          <mat-label>Escoge una fecha</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepicker"
+            class="form-control"
+            formControlName="date"
+            id="date"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancelar</button>
+              <button mat-raised-button color="primary" matDatepickerApply>
+                Seleccionar
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="this.submitted && f['date'].errors"
+        >
+          <div *ngIf="f['date'].errors['required']">Fecha requerida</div>
+        </div>
+      </div>
+
+      <!-- ****************************************** -->
+      <!-- Name -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name"
+          id="name"
+          placeholder="Unexpectance"
+          required
+          [ngClass]="{
+            'is-valid': !f['name'].invalid && submitted,
+            'is-invalid': f['name'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['name'].errors"
+        >
+          <div *ngIf="f['name'].errors['required']">Nombre requerido</div>
+        </div>
+        <label for="name">Nombre</label>
+      </div>
+
+      <!-- ****************************************** -->
+      <!-- Location -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="location"
+          id="location"
+          placeholder="Gijón, Asturias"
+          required
+          [ngClass]="{
+            'is-valid': !f['location'].invalid && submitted,
+            'is-invalid': f['location'].invalid && submitted
+          }"
+        />
+        <div
+          class="invalid-feedback bg-danger"
+          *ngIf="submitted && f['location'].errors"
+        >
+          <div *ngIf="f['location'].errors['required']">
+            Localización requerida
+          </div>
+        </div>
+        <label for="location">Localización</label>
+      </div>
+
+      <!-- ****************************************** -->
+      <!-- Tickets Url -->
+      <div class="form-floating mb-3 col-6">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="ticketsUrl"
+          id="ticketsUrl"
+          placeholder="https://www.entradas.com"
+        />
+        <label for="ticketsUrl">Link de venta de entradas</label>
+      </div>
+
+      <!-- ****************************************** -->
+      <!-- Details -->
+      <div class="form-floating col-6">
+        <textarea
+          class="form-control"
+          id="details"
+          formControlName="details"
+          rows="10"
+          style="height: 120px"
+          placeholder="Posibles detalles del evento"
+        ></textarea>
+        <label for="details">Detalles</label>
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="exampleFormControlFile1">Example file input</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="exampleFormControlFile1"
+        />
+      </div> -->
+    </div>
+    <div>
+      <button class="btn btn-secondary" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>
+
+<!-- Artist modal -->
+<div
+  class="modal fade"
+  id="artistsModal"
+  tabindex="-1"
+  aria-labelledby="artistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="artistModalLabel">Añadir un artista</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          name="filterArtist"
+          id="filterArtist"
+          class="form-control"
+          (keydown)="filterArtists()"
+          (keyup)="filterArtists()"
+        />
+        <div *ngFor="let artist of filteredArtists">
+          <div (click)="addChoosenArtist(artist)" class="addArtist">
+            <b>{{ artist.fullName }}</b
+            ><br />
+            <span>@{{ artist.userName }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" id="addedStatus">
+        <b class="text-success">Artista añadido ✓</b>
+      </div>
+    </div>
+  </div>
+</div>

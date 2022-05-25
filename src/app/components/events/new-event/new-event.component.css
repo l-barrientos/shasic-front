@@ -1,0 +1,72 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+.container {
+  text-align: center;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+}
+
+::ng-deep .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+mat-datepicker-toggle {
+  color: white !important;
+}
+
+.datepicker {
+  margin-bottom: 3%;
+  color: white;
+}
+
+h1 {
+  margin-top: 3%;
+}
+
+.inputsDiv {
+  margin-left: 33%;
+}
+
+.btn-secondary {
+  font-size: 16pt;
+}
+
+.artistsChoosen {
+  position: absolute;
+  margin-left: 12%;
+  margin-top: 4%;
+  font-size: 14pt;
+}
+
+.artistChos {
+  margin-bottom: 4%;
+}
+
+.removeArt:hover {
+  cursor: pointer;
+}
+.addArtist {
+  margin-top: 2%;
+}
+
+.addArtist:hover {
+  cursor: pointer;
+}
+#addedStatus {
+  display: none;
+  text-align: center;
+}

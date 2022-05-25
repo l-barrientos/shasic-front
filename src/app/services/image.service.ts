@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BACK_URL } from '../helpers/GlobalConstants';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  artistUrl = BACK_URL + '/artist/img';
-  userUrl = BACK_URL + '/user/img';
-  eventUrl = BACK_URL + '/event/img';
+  artistUrl = environment.apiUrl + '/artist/img';
+  userUrl = environment.apiUrl + '/user/img';
+  eventUrl = environment.apiUrl + '/event/img';
   httpOptions = {
     headers: new HttpHeaders(),
   };

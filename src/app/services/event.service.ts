@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Event } from '../models/Event';
-import { BACK_URL } from '../helpers/GlobalConstants';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +11,11 @@ export class EventService {
   httpOptions = {
     headers: new HttpHeaders(),
   };
-  allEventsUrl = BACK_URL + '/events';
-  eventsByUserUrl = BACK_URL + '/userEvents';
-  eventByIdUrl = BACK_URL + '/event/';
-  followEventUrl = BACK_URL + '/followEvent/';
-  unfollowEventUrl = BACK_URL + '/unfollowEvent/';
+  allEventsUrl = environment.apiUrl + '/events';
+  eventsByUserUrl = environment.apiUrl + '/userEvents';
+  eventByIdUrl = environment.apiUrl + '/event/';
+  followEventUrl = environment.apiUrl + '/followEvent/';
+  unfollowEventUrl = environment.apiUrl + '/unfollowEvent/';
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {

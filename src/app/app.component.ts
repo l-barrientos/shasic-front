@@ -7,7 +7,7 @@ import { SharedService } from './services/shared.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'proyecto-front';
+  title = 'Shasic';
 
   showSpinner = false;
   constructor(
