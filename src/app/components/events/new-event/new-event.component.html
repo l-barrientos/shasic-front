@@ -1,12 +1,12 @@
 <app-artist-logged-navbar></app-artist-logged-navbar>
-<div class="artistsChoosen">
+<div class="artistsChosen">
   <h3 class="text-white">Artistas añadidos</h3>
-  <div class="text-danger" *ngIf="artistsChoosen.length == 0 && submitted">
+  <div class="text-danger" *ngIf="artistsChosen.length == 0 && submitted">
     <p class="col-10">Debes añadir al menos un artista</p>
   </div>
-  <div class="row artistChos" *ngFor="let artist of artistsChoosen">
+  <div class="row artistChos" *ngFor="let artist of artistsChosen">
     <span class="text-white col-10">{{ artist.fullName }} </span>
-    <span class="col-2 removeArt" (click)="removeChoosenArtist(artist.id)"
+    <span class="col-2 removeArt" (click)="removeChosenArtist(artist.id)"
       >❌</span
     >
   </div>
@@ -31,6 +31,7 @@
           <input
             matInput
             [matDatepicker]="datepicker"
+            [min]="MIN_DATE"
             class="form-control"
             formControlName="date"
             id="date"
@@ -49,11 +50,11 @@
             </mat-datepicker-actions>
           </mat-datepicker>
         </mat-form-field>
-        <div
-          class="invalid-feedback bg-danger"
-          *ngIf="this.submitted && f['date'].errors"
-        >
+        <div class="bg-danger" *ngIf="this.submitted && f['date'].errors">
           <div *ngIf="f['date'].errors['required']">Fecha requerida</div>
+        </div>
+        <div class="bg-danger" *ngIf="this.submitted && !checkDate">
+          La fecha debe de ser futura
         </div>
       </div>
 
@@ -78,7 +79,7 @@
         >
           <div *ngIf="f['name'].errors['required']">Nombre requerido</div>
         </div>
-        <label for="name">Nombre</label>
+        <label for="name">Nombre <span class="aster">*</span></label>
       </div>
 
       <!-- ****************************************** -->
@@ -104,7 +105,7 @@
             Localización requerida
           </div>
         </div>
-        <label for="location">Localización</label>
+        <label for="location">Localización <span class="aster">*</span></label>
       </div>
 
       <!-- ****************************************** -->
@@ -134,17 +135,25 @@
         <label for="details">Detalles</label>
       </div>
 
-      <!-- <div class="form-group">
-        <label for="exampleFormControlFile1">Example file input</label>
+      <div class="mb-3 imgInput">
         <input
+          class="form-control"
           type="file"
-          class="form-control-file"
-          id="exampleFormControlFile1"
+          id="eventImage"
+          accept="image/png, image/jpg, image/jpeg"
+          (change)="(validFileExtension)"
         />
-      </div> -->
+
+        <div *ngIf="!imagePicked && submitted" class="bg-danger">
+          Portada de evento requerida
+        </div>
+        <div *ngIf="!validFileExtension" class="bg-danger">
+          El archivo debe tener el formato correcto (*.png, *.jpg, *.jpeg)
+        </div>
+      </div>
     </div>
     <div>
-      <button class="btn btn-secondary" type="submit">Guardar</button>
+      <button class="btn btn-secondary" type="submit">Crear Evento</button>
     </div>
   </form>
 </div>
@@ -178,7 +187,10 @@
           (keyup)="filterArtists()"
         />
         <div *ngFor="let artist of filteredArtists">
-          <div (click)="addChoosenArtist(artist)" class="addArtist">
+          <div
+            (click)="addChosenArtist(artist); filterArtists()"
+            class="addArtist"
+          >
             <b>{{ artist.fullName }}</b
             ><br />
             <span>@{{ artist.userName }}</span>

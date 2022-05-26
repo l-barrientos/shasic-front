@@ -10,6 +10,8 @@ import { ArtistService } from '../../../services/artist.service';
 import { SharedService } from '../../../services/shared.service';
 import { ImageService } from '../../../services/image.service';
 import { Router } from '@angular/router';
+import { Event } from '../../../models/Event';
+import { ObjectUnsubscribedError } from 'rxjs';
 
 @Component({
   selector: 'app-new-event',
@@ -17,12 +19,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./new-event.component.css'],
 })
 export class NewEventComponent implements OnInit {
+  MIN_DATE = new Date();
   newEventForm: FormGroup;
   submitted = false;
   artistsImported: any[] = [];
-  artistsChoosen: any[] = [];
+  artistsChosen: any[] = [];
   filteredArtists: any[] = [];
-  validFileExtension = false;
   addedStatus = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -37,6 +39,7 @@ export class NewEventComponent implements OnInit {
       name: ['', Validators.required],
       location: ['', Validators.required],
       date: ['', Validators.required],
+      eventImage: [''],
       ticketsUrl: [''],
       details: [''],
     });
@@ -49,13 +52,13 @@ export class NewEventComponent implements OnInit {
     this.sharedService.runSpinner(true);
     this.artistService.getAllArtistsIds().subscribe({
       next: (response) => {
-        console.log(response);
         this.artistsImported = response;
       },
       complete: () => {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
+        this.sharedService.runSpinner(false);
         console.log(error);
       },
     });
@@ -63,26 +66,130 @@ export class NewEventComponent implements OnInit {
 
   newEvent() {
     this.submitted = true;
+    if (
+      !this.newEventForm.valid ||
+      !this.checkDate ||
+      !this.validFileExtension ||
+      this.artistsChosen.length == 0
+    ) {
+      return;
+    }
+    this.sharedService.runSpinner(true);
+    const event: Event = {
+      eventName: this.newEventForm.value.name,
+      eventDate: this.newEventForm.value.date
+        .toISOString()
+        .slice(0, 19)
+        .replace('T', ' '),
+      eventLocation: this.newEventForm.value.location,
+      ticketsUrl: this.newEventForm.value.ticketsUrl,
+      details: this.newEventForm.value.details,
+      artists: this.artistsChosen,
+      id: 0,
+      eventImage: null,
+      followers: null,
+      following: null,
+    };
+    this.eventService.newEvent(event).subscribe({
+      next: (response: any) => {
+        const input = document.getElementById('eventImage') as HTMLInputElement;
+        this.pushImg(response.id, input.files?.item(0));
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+        console.log(error);
+      },
+    });
   }
 
+  pushImg(eventId: number, img: any) {
+    this.sharedService.runSpinner(true);
+    this.imgService.uploadImage('event', img, eventId).subscribe({
+      complete: () => {
+        this.sharedService.runSpinner(false);
+        this.router.navigate(['/artist-home']);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+        console.log(error);
+      },
+    });
+  }
+  /* VALIDATONS */
+
+  /**
+   * Standard validator
+   */
   get f(): { [key: string]: AbstractControl } {
     return this.newEventForm.controls;
   }
 
+  /**
+   * Check event date is not a past date
+   */
+  get checkDate(): boolean {
+    if (
+      this.newEventForm.value.date != null &&
+      this.newEventForm.value.date < this.MIN_DATE
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Check valid file extension on image input
+   */
+  get validFileExtension(): boolean {
+    const regex = /(?:jpeg|jpg|png)/i;
+    const input: any = document.getElementById('eventImage');
+    if (input.files[0] && !regex.test(input.files[0].name)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Check if an image has been picked
+   */
+  get imagePicked(): boolean {
+    const input: any = document.getElementById('eventImage');
+    if (!input.files[0]) {
+      return false;
+    }
+    return true;
+  }
+
+  /* FUNCTIONS */
+
+  /**
+   * Filter from the imported artists
+   */
   filterArtists() {
     const input = document.getElementById('filterArtist')! as HTMLInputElement;
     if (input.value.trim() != '') {
-      this.filteredArtists = this.artistsImported.filter((objA) =>
-        objA.userName.includes(input.value)
-      );
+      this.filteredArtists = this.artistsImported
+        .filter(
+          (objA) =>
+            objA.userName.includes(input.value) &&
+            !this.artistsChosen.some((objB) => objB.id == objA.id)
+        )
+        .slice(0, 9);
     } else {
       this.filteredArtists = [];
     }
   }
 
-  async addChoosenArtist(artist: any) {
-    if (!this.artistsChoosen.some((obj) => obj.id == artist.id)) {
-      this.artistsChoosen.push(artist);
+  /**
+   * Add an artists to the chosen artists list
+   * @param artist
+   */
+  async addChosenArtist(artist: any) {
+    if (!this.artistsChosen.some((obj) => obj.id == artist.id)) {
+      this.artistsChosen.push(artist);
       const addedStatus = document.getElementById(
         'addedStatus'
       )! as HTMLInputElement;
@@ -91,8 +198,13 @@ export class NewEventComponent implements OnInit {
       addedStatus.style.display = 'none';
     }
   }
-  removeChoosenArtist(id: number) {
-    this.artistsChoosen = this.artistsChoosen.filter((obj) => obj.id != id);
+
+  /**
+   * Remove an artist form the chosen artists list
+   * @param id
+   */
+  removeChosenArtist(id: number) {
+    this.artistsChosen = this.artistsChosen.filter((obj) => obj.id != id);
   }
 
   delay(ms: number) {

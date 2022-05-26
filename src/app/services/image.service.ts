@@ -8,17 +8,23 @@ import { environment } from '../../environments/environment';
 export class ImageService {
   artistUrl = environment.apiUrl + '/artist/img';
   userUrl = environment.apiUrl + '/user/img';
-  eventUrl = environment.apiUrl + '/event/img';
+  eventUrl = environment.apiUrl + '/event/img/';
   httpOptions = {
     headers: new HttpHeaders(),
   };
   constructor(private http: HttpClient) {}
 
-  uploadImage(rol: string, img: any) {
-    const token = localStorage.getItem('access_token')!;
+  /**
+   *
+   * @param rol
+   * @param img
+   * @param eventId (only for Events)
+   * @returns
+   */
+  uploadImage(rol: string, img: any, eventId: number = 0) {
     this.httpOptions = {
       headers: new HttpHeaders({
-        access_token: token,
+        access_token: localStorage.getItem('access_token')!,
       }),
     };
     const formData = new FormData();
@@ -29,7 +35,7 @@ export class ImageService {
     } else if (rol == 'artist') {
       url = this.artistUrl;
     } else if (rol == 'event') {
-      url = this.eventUrl;
+      url = this.eventUrl + eventId;
     }
     return this.http.post(url, formData, this.httpOptions);
   }

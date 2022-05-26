@@ -4,10 +4,10 @@ export class Event {
   eventName: string;
   eventDate: Date;
   eventLocation: string;
-  eventImage: string;
+  eventImage: string | null;
   ticketsUrl: string | null;
   details: string | null;
   following: boolean | null;
   followers: number | null;
-  artists: Artist[] | null;
+  artists: Artist[] | any[] | null;
 }
