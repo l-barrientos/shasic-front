@@ -16,6 +16,7 @@ export class EventService {
   eventByIdUrl = environment.apiUrl + '/event/';
   followEventUrl = environment.apiUrl + '/followEvent/';
   unfollowEventUrl = environment.apiUrl + '/unfollowEvent/';
+  newEventUrl = environment.apiUrl + '/newEvent';
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {
@@ -62,5 +63,25 @@ export class EventService {
       }),
     };
     return this.http.delete(this.unfollowEventUrl + id, this.httpOptions);
+  }
+
+  newEvent(event: Event) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.post(
+      this.newEventUrl,
+      {
+        eventName: event.eventName,
+        eventDate: event.eventDate,
+        eventLocation: event.eventLocation,
+        ticketsUrl: event.ticketsUrl,
+        details: event.details,
+        artists: event.artists,
+      },
+      this.httpOptions
+    );
   }
 }

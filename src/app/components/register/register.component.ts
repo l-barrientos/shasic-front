@@ -208,9 +208,6 @@ export class RegisterComponent implements OnInit {
   pushImg(rol: string, img: any) {
     this.sharedService.runSpinner(true);
     this.imgService.uploadImage(rol, img).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
       complete: () => {
         if (rol == 'user') this.router.navigate(['/home']);
         if (rol == 'artist') this.router.navigate(['/artist-home']);
