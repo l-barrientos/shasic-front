@@ -1,33 +1,14 @@
-.nav-item {
-  margin-left: 12%;
-}
 .nav-link {
   text-align: center;
 }
+.nav-item {
+  margin-left: 8%;
+}
 
 .navbar-icon {
-  width: 35%;
-}
-
-.search {
-  margin-left: 8%;
-  margin-top: 0.5%;
-  margin-bottom: 0.5%;
-  width: 25%;
-  padding: 0.3%;
-  border-radius: 20px;
-}
-.search input {
-  font-size: 14pt;
-  width: 80%;
-}
-.search-icon {
-  width: 7%;
-  margin-right: 2%;
-  margin-left: 1%;
+  width: 60px;
 }
 
 button {
-  margin-top: 5%;
   padding: 2%;
 }

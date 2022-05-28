@@ -18,7 +18,7 @@
         <span>@{{ user.userName }}</span>
       </div>
       <p *ngIf="user.description != null" class="userDesc col-3">
-        {{ this.reduceUserDesc(user.description) }}
+        {{ this.reduceUserDesc(user.description, 50) }}
       </p>
     </div>
   </div>

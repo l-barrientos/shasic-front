@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SharedService } from '../../../services/shared.service';
 import { EventService } from '../../../services/event.service';
 import { Event } from '../../../models/Event';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-all-events',
@@ -11,12 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AllEventsComponent implements OnInit {
   events: Event[] = [];
+  formatDate = ShasicUtils.formatDate;
   constructor(
     private sharedService: SharedService,
     private eventService: EventService,
-    private cdRef: ChangeDetectorRef,
-    private router: Router,
-    private actRoute: ActivatedRoute
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -32,9 +31,10 @@ export class AllEventsComponent implements OnInit {
         response.forEach((ev: any) => {
           ev.eventDate = new Date(ev.eventDate);
         });
-        this.events = response.sort(
-          (objA: any, objB: any) =>
-            objA.eventDate.getTime() - objB.eventDate.getTime()
+        let yest = new Date();
+        yest.setDate(yest.getDate() - 1);
+        this.events = ShasicUtils.sortByDate(response).filter(
+          (objA) => objA.eventDate > yest
         );
       },
       complete: () => {
@@ -42,6 +42,7 @@ export class AllEventsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -57,6 +58,7 @@ export class AllEventsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -73,6 +75,7 @@ export class AllEventsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -81,30 +84,5 @@ export class AllEventsComponent implements OnInit {
 
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
-  }
-
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
   }
 }

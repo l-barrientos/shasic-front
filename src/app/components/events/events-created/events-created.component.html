@@ -1,9 +1,9 @@
-<app-user-logged-navbar></app-user-logged-navbar>
+<app-artist-logged-navbar></app-artist-logged-navbar>
 <div class="container">
   <div>
-    <h1 class="cl-purple">Eventos que sigues</h1>
+    <h1 class="cl-purple">Eventos que has creado</h1>
     <h2 *ngIf="events.length == 0" class="text-white" id="titleEvents">
-      Todavía no sigues a ningún evento
+      Todavía no has creado ningún evento
     </h2>
   </div>
   <div *ngIf="events.length > 0">
@@ -18,10 +18,10 @@
           Personas siguiendo este evento: {{ ev.followers }}
         </h5>
         <button
-          class="btn btn-warning searchPeopleBtn"
-          routerLink="/event-chats/{{ ev.id }}"
+          class="btn btn-primary editButton"
+          routerLink="/edit-event/{{ ev.id }}"
         >
-          BUSCA A ALGUIEN
+          EDITAR EVENTO
         </button>
       </div>
       <div class="col-xl-6 col-sm-12 sol-md-12 col2">
@@ -31,15 +31,6 @@
           alt="{{ ev.eventName }}"
         />
         <br />
-        <div>
-          <button
-            (click)="unfollowEvent(ev.id)"
-            class="btn btn-primary"
-            id="followButton{{ ev.id }}"
-          >
-            SIGUIENDO
-          </button>
-        </div>
       </div>
       <hr />
     </div>

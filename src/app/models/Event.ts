@@ -9,5 +9,5 @@ export class Event {
   details: string | null;
   following: boolean | null;
   followers: number | null;
-  artists: Artist[] | any[] | null;
+  artists: any[] | null;
 }

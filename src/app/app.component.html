@@ -1,5 +1,27 @@
 <div *ngIf="showSpinner" class="spinner-border cl-purple" role="status">
   <span class="visually-hidden"></span>
 </div>
+<div class="alert alert-danger" *ngIf="showError" role="alert">
+  ⚠ Se ha producido un error
+</div>
 
 <router-outlet></router-outlet>
+
+<div class="footer row">
+  <div class="col-xl-4 col-md-4 col-sm-12">
+    <a href="https://www.linkedin.com/in/luis-barrientos-vincelle/"
+      ><img src="../assets/linkedin.png" alt="Linkedin"
+    /></a>
+  </div>
+  <div class="cl-purple col-xl-4 col-md-4 col-sm-12">
+    <p>Desarrollado por Luis Barrientos</p>
+  </div>
+  <!-- <a class="col-xl-4 col-md-4 col-sm-12" href="https://afa-formacion.com/"
+    ><img src="../assets/afa.png" alt="AFA Formación"
+  /></a> -->
+  <div class="col-xl-4 col-md-4 col-sm-12">
+    <a href="https://github.com/luisjin9"
+      ><img src="../assets/github.png" alt="GitHub"
+    /></a>
+  </div>
+</div>

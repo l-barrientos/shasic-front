@@ -27,6 +27,11 @@
     </table>
   </div>
   <form (submit)="this.sendMsg()">
-    <input type="text" name="inputMsg" id="inputMsg" class="col-12" />
+    <div class="input-group mb-3">
+      <input type="text" name="inputMsg" id="inputMsg" class="form-control" />
+      <div class="input-group-append">
+        <button class="btn btn-secondary sendBtn" type="submit">Enviar</button>
+      </div>
+    </div>
   </form>
 </div>

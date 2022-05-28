@@ -1,4 +1,9 @@
-<app-user-logged-navbar></app-user-logged-navbar>
+<div *ngIf="rol == 'user'">
+  <app-user-logged-navbar></app-user-logged-navbar>
+</div>
+<div *ngIf="rol == 'artist'">
+  <app-artist-logged-navbar></app-artist-logged-navbar>
+</div>
 <div class="container">
   <div *ngIf="event.eventName" class="row">
     <h1 class="cl-purple">{{ event.eventName }}</h1>
@@ -27,8 +32,16 @@
       <button
         class="btn btn-warning searchPeopleBtn"
         routerLink="/event-chats/{{ event.id }}"
+        *ngIf="rol == 'user'"
       >
         BUSCA A ALGUIEN
+      </button>
+      <button
+        class="btn btn-primary searchPeopleBtn"
+        routerLink="/edit-event/{{ event.id }}"
+        *ngIf="rol == 'artist'"
+      >
+        EDITAR EVENTO
       </button>
     </div>
     <div class="col-xl-6 col-sm-12 sol-md-12 col2">
@@ -38,7 +51,7 @@
         alt="{{ event.eventName }}"
       />
       <br />
-      <div *ngIf="event.following">
+      <div *ngIf="event.following && rol == 'user'">
         <button
           (click)="unfollowEvent(event.id)"
           class="btn btn-primary"
@@ -47,7 +60,7 @@
           SIGUIENDO
         </button>
       </div>
-      <div *ngIf="!event.following">
+      <div *ngIf="!event.following && rol == 'user'">
         <button
           (click)="followEvent(event.id)"
           class="btn btn-primary"

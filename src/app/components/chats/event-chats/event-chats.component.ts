@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/User';
 import { ChatService } from '../../../services/chat.service';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-event-chats',
@@ -12,6 +13,8 @@ import { ChatService } from '../../../services/chat.service';
 })
 export class EventChatsComponent implements OnInit {
   users: User[] = [];
+  setUserImg = ShasicUtils.setUserImg;
+  reduceUserDesc = ShasicUtils.reduceString;
   constructor(
     private sharedService: SharedService,
     private router: Router,
@@ -39,6 +42,7 @@ export class EventChatsComponent implements OnInit {
       error: (error) => {
         this.sharedService.runSpinner(false);
         console.log(error);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -50,12 +54,16 @@ export class EventChatsComponent implements OnInit {
         if (response.status == 'alreadyExisted') {
           this.router.navigate(['/chats/' + targetUserName]);
         } else {
-          this.chatService.newFirebaseChat(
-            response.chatId,
-            response.createdBy,
-            targetUserName
-          );
-          this.router.navigate(['/chats/' + targetUserName]);
+          try {
+            this.chatService.newFirebaseChat(
+              response.chatId,
+              response.createdBy,
+              targetUserName
+            );
+            this.router.navigate(['/chats/' + targetUserName]);
+          } catch {
+            this.sharedService.showError(6000);
+          }
         }
       },
       complete: () => {
@@ -64,20 +72,11 @@ export class EventChatsComponent implements OnInit {
       error: (error) => {
         this.sharedService.runSpinner(false);
         console.log(error);
+        this.sharedService.showError(6000);
       },
     });
   }
 
-  reduceUserDesc(desc: string): string {
-    if (desc != null && desc.length > 50) {
-      return desc.substring(0, 50) + '...';
-    }
-    return desc;
-  }
-
-  setUserImg(img: string) {
-    return img == 'default' ? '../../assets/default-user.png' : img;
-  }
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
   }

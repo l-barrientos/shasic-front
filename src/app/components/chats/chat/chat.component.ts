@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../models/User';
 import { Message } from 'src/app/models/Message';
 import { SharedService } from '../../../services/shared.service';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-chat',
@@ -29,6 +30,7 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   chatId: number;
   currentUserName: string;
+  setUserImg = ShasicUtils.setUserImg;
   @ViewChild('chatBox') private myScrollContainer: ElementRef;
   constructor(
     private router: Router,
@@ -60,16 +62,25 @@ export class ChatComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
 
   getAllMessages(chatId: number) {
-    this.messages = this.chatService.getAllMessages(chatId);
+    try {
+      this.messages = this.chatService.getAllMessages(chatId);
+    } catch {
+      this.sharedService.showError(6000);
+    }
   }
 
   updateMessages(chatId: number) {
-    this.messages = this.chatService.updateMessages(chatId, this.messages);
+    try {
+      this.messages = this.chatService.updateMessages(chatId, this.messages);
+    } catch {
+      this.sharedService.showError(6000);
+    }
   }
 
   sendMsg() {
@@ -81,7 +92,11 @@ export class ChatComponent implements OnInit {
         text: textInput.value,
         date: new Date().toString(),
       };
-      this.chatService.pushMessage(this.chatId, newMsg);
+      try {
+        this.chatService.pushMessage(this.chatId, newMsg);
+      } catch {
+        this.sharedService.showError(6000);
+      }
       textInput.value = '';
     }
   }
@@ -96,10 +111,6 @@ export class ChatComponent implements OnInit {
   formatDate(input: Date | string) {
     const date = new Date(input);
     return date.getHours() + ':' + date.getMinutes();
-  }
-
-  setUserImg(img: string) {
-    return img == 'default' ? '../../assets/default-user.png' : img;
   }
 
   ngAfterViewChecked() {

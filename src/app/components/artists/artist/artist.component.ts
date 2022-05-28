@@ -4,6 +4,7 @@ import { ArtistService } from '../../../services/artist.service';
 import { Artist } from '../../../models/Artist';
 import { Event } from '../../../models/Event';
 import { SharedService } from '../../../services/shared.service';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-artist',
@@ -24,6 +25,8 @@ export class ArtistComponent implements OnInit {
     location: null,
     password: null,
   };
+  formatDate = ShasicUtils.formatDate;
+  setArtistImg = ShasicUtils.setArtistImg;
   constructor(
     private router: Router,
     private artistService: ArtistService,
@@ -57,6 +60,7 @@ export class ArtistComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -65,14 +69,13 @@ export class ArtistComponent implements OnInit {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.artistService.followArtist(id).subscribe({
-      next: (response) => {
-        this.getArtistInfo();
-      },
       complete: () => {
+        this.getArtistInfo();
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -81,45 +84,15 @@ export class ArtistComponent implements OnInit {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.artistService.unfollowArtist(id).subscribe({
-      next: (response) => {
-        this.getArtistInfo();
-      },
       complete: () => {
+        this.getArtistInfo();
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
-  }
-
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
-  }
-
-  setBandImg(img: string) {
-    return img == 'default' ? '../../assets/default-band.jpg' : img;
   }
 
   ngAfterViewChecked() {

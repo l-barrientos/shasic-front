@@ -3,6 +3,7 @@ import { SharedService } from '../../../services/shared.service';
 import { EventService } from '../../../services/event.service';
 import { Event } from '../../../models/Event';
 import { Router } from '@angular/router';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-followed-events',
@@ -11,10 +12,10 @@ import { Router } from '@angular/router';
 })
 export class FollowedEventsComponent implements OnInit {
   events: Event[] = [];
+  formatDate = ShasicUtils.formatDate;
   constructor(
     private sharedService: SharedService,
     private eventService: EventService,
-    private router: Router,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -37,8 +38,8 @@ export class FollowedEventsComponent implements OnInit {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
-        this.showError('eventsByUser');
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -47,49 +48,18 @@ export class FollowedEventsComponent implements OnInit {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton' + id)!.innerHTML = '· · ·';
     this.eventService.unfollowEvent(id).subscribe({
-      next: (response) => {
-        this.getEventsByUser();
-      },
       complete: () => {
+        this.getEventsByUser();
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
 
-  showError(parentDiv: string) {
-    const h2 = document.createElement('h2');
-    h2.classList.add('text-danger');
-    h2.innerHTML = 'Se ha producido un error';
-    document.getElementById(parentDiv)?.append(h2);
-  }
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
-  }
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
   }
 }

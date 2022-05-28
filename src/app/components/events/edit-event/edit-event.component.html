@@ -20,8 +20,8 @@
   </button>
 </div>
 <div class="container">
-  <h1 class="cl-purple justify-content-center mb-5">Nuevo Evento</h1>
-  <form [formGroup]="newEventForm" (ngSubmit)="newEvent()">
+  <h1 class="cl-purple justify-content-center mb-5">Editar Evento</h1>
+  <form [formGroup]="updateEventForm" (ngSubmit)="updateEvent()">
     <div class="inputsDiv">
       <!-- ****************************************** -->
       <!-- Date -->
@@ -145,16 +145,20 @@
           (change)="(validFileExtension)"
         />
 
-        <div *ngIf="!imagePicked && submitted" class="bg-danger">
-          Portada de evento requerida
-        </div>
         <div *ngIf="!validFileExtension" class="bg-danger">
           El archivo debe tener el formato correcto (*.png, *.jpg, *.jpeg)
         </div>
       </div>
     </div>
     <div>
-      <button class="btn btn-secondary" type="submit">Crear Evento</button>
+      <button
+        class="btn btn-danger"
+        type="button"
+        (click)="refreshForm(this.event)"
+      >
+        Cancelar
+      </button>
+      <button class="btn btn-secondary" type="submit">Guardar Cambios</button>
     </div>
   </form>
 </div>

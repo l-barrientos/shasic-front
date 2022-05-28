@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Artist } from '../../../models/Artist';
 import { SharedService } from '../../../services/shared.service';
 import { ArtistService } from '../../../services/artist.service';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-all-artists',
@@ -10,6 +11,7 @@ import { ArtistService } from '../../../services/artist.service';
 })
 export class AllArtistsComponent implements OnInit {
   artists: Artist[] = [];
+  setArtistImg = ShasicUtils.setArtistImg;
   constructor(
     private sharedService: SharedService,
     private artistService: ArtistService
@@ -32,6 +34,7 @@ export class AllArtistsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -48,6 +51,7 @@ export class AllArtistsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -64,11 +68,8 @@ export class AllArtistsComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
-  }
-
-  setBandImg(img: string) {
-    return img == 'default' ? '../../assets/default-band.jpg' : img;
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { User } from '../../../models/User';
 import { SharedService } from '../../../services/shared.service';
 import { ChatService } from '../../../services/chat.service';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-user-chats',
@@ -10,6 +11,8 @@ import { ChatService } from '../../../services/chat.service';
 })
 export class UserChatsComponent implements OnInit {
   chatsOpened: any[] = [];
+  setUserImg = ShasicUtils.setUserImg;
+  reducePreviewMsg = ShasicUtils.reduceString;
   constructor(
     private cdRef: ChangeDetectorRef,
     private sharedService: SharedService,
@@ -27,28 +30,23 @@ export class UserChatsComponent implements OnInit {
         this.chatsOpened = response;
       },
       complete: () => {
-        this.chatsOpened = this.chatService.getPreviewMessages(
-          this.chatsOpened
-        );
+        try {
+          this.chatsOpened = this.chatService.getPreviewMessages(
+            this.chatsOpened
+          );
+        } catch {
+          this.sharedService.showError(6000);
+        }
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         console.log(error);
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
 
-  reducePreviewMsg(msg: string): string {
-    if (msg != null && msg.length > 30) {
-      return msg.substring(0, 30) + '...';
-    }
-    return msg;
-  }
-
-  setUserImg(img: string) {
-    return img == 'default' ? '../../assets/default-user.png' : img;
-  }
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
   }
