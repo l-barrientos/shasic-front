@@ -62,6 +62,8 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           if (error.error == 'invalidCredentials') {
             this.invalidCredentials = true;
+          } else {
+            this.sharedService.showError(6000);
           }
           this.sharedService.runSpinner(false);
         },

@@ -10,6 +10,7 @@ import { SharedService } from '../../services/shared.service';
 import { UserService } from '../../services/user.service';
 import { ImageService } from '../../services/image.service';
 import { Router } from '@angular/router';
+import { ShasicUtils } from '../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,6 +36,7 @@ export class UserProfileComponent implements OnInit {
   validFileExtension = false;
   imageSelected = false;
   wrongPassword = false;
+  setUserImg = ShasicUtils.setUserImg;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -76,6 +78,7 @@ export class UserProfileComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -135,10 +138,6 @@ export class UserProfileComponent implements OnInit {
       };
       reader.readAsDataURL(e.files[0]);
     }
-  }
-
-  setUserImg(img: string) {
-    return img == 'default' ? '../../assets/default-user.png' : img;
   }
 
   ngAfterViewChecked() {

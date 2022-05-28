@@ -5,6 +5,7 @@ import { Artist } from '../../models/Artist';
 import { Event } from '../../models/Event';
 import { EventService } from '../../services/event.service';
 import { ArtistService } from '../../services/artist.service';
+import { ShasicUtils } from '../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,8 @@ import { ArtistService } from '../../services/artist.service';
 export class SearchComponent implements OnInit {
   artists: Artist[] = [];
   events: Event[] = [];
-
+  formatDate = ShasicUtils.formatDate;
+  setArtistImg = ShasicUtils.setArtistImg;
   constructor(
     private sharedService: SharedService,
     private actRoute: ActivatedRoute,
@@ -42,6 +44,7 @@ export class SearchComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -62,6 +65,7 @@ export class SearchComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -78,36 +82,11 @@ export class SearchComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
 
-  /********HELPERS ******/
-
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
-  }
   followArtist(id: number) {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton' + id)!.innerHTML = '· · ·';
@@ -120,6 +99,7 @@ export class SearchComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -136,12 +116,9 @@ export class SearchComponent implements OnInit {
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
-  }
-
-  setBandImg(img: string) {
-    return img == 'default' ? '../../assets/default-band.jpg' : img;
   }
 
   checkBoxArtists() {

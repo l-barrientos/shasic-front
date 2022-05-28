@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { SharedService } from '../../../services/shared.service';
 import { Event } from '../../../models/Event';
-import { Artist } from '../../../models/Artist';
-import { GoogleMap } from '@angular/google-maps';
+import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-event',
@@ -13,6 +12,7 @@ import { GoogleMap } from '@angular/google-maps';
 })
 export class EventComponent implements OnInit {
   loadAll = false;
+  formatDate = ShasicUtils.formatDate;
   event: Event = {
     id: 0,
     eventName: '',
@@ -25,6 +25,8 @@ export class EventComponent implements OnInit {
     following: null,
     followers: null,
   };
+  rol: string = '';
+  editionAllowed = false;
   constructor(
     private router: Router,
     private eventService: EventService,
@@ -33,6 +35,10 @@ export class EventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.rol = localStorage.getItem('rol')!;
+    if (this.rol == 'artist') {
+      this.checkEditionAllowed();
+    }
     this.getEventById();
   }
 
@@ -55,6 +61,7 @@ export class EventComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -63,14 +70,13 @@ export class EventComponent implements OnInit {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.eventService.followEvent(id).subscribe({
-      next: (response) => {
-        this.getEventById();
-      },
       complete: () => {
+        this.getEventById();
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -79,14 +85,33 @@ export class EventComponent implements OnInit {
     this.sharedService.runSpinner(true);
     document.getElementById('followButton')!.innerHTML = '· · ·';
     this.eventService.unfollowEvent(id).subscribe({
-      next: (response) => {
+      complete: () => {
         this.getEventById();
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+        this.sharedService.showError(6000);
+      },
+    });
+  }
+
+  checkEditionAllowed() {
+    this.sharedService.runSpinner(true);
+    const id = parseInt(
+      this.router.url.substring(this.router.url.lastIndexOf('/') + 1)
+    );
+    this.eventService.checkEditionAllowed(id).subscribe({
+      next: (response) => {
+        this.editionAllowed = response.allowed;
       },
       complete: () => {
         this.sharedService.runSpinner(false);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        console.log(error);
+        this.sharedService.showError(6000);
       },
     });
   }
@@ -96,51 +121,4 @@ export class EventComponent implements OnInit {
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
   }
-
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
-  }
-
-  /* initMap(latt: number, lngg: number) {
-    const mapOptions = {
-      zoom: 14,
-      center: { lat: latt, lng: lngg },
-    };
-    this.googleMaps.options = mapOptions;
-
-    let map = new google.maps.Map(document.getElementById('map')!, mapOptions);
-    this.googleMaps.center;
-    const marker = new google.maps.Marker({
-      position: { lat: latt, lng: lngg },
-      map: map,
-    });
-    const infowindow = new google.maps.InfoWindow({
-      content: '<p>Marker Location:' + marker.getPosition() + '</p>',
-    });
-
-    google.maps.event.addListener(marker, 'click', () => {
-      infowindow.open(map, marker);
-    });
-  } */
 }

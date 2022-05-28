@@ -25,7 +25,7 @@
         "
         class="lastMsgReceived col-4"
       >
-        • {{ this.reducePreviewMsg(chat.lastMsg.text) }}
+        • {{ this.reducePreviewMsg(chat.lastMsg.text, 30) }}
       </p>
       <p
         *ngIf="
@@ -35,7 +35,7 @@
         "
         class="lastMsgSent col-4"
       >
-        ✓ {{ this.reducePreviewMsg(chat.lastMsg.text) }}
+        ✓ {{ this.reducePreviewMsg(chat.lastMsg.text, 30) }}
       </p>
       <p *ngIf="chat.lastMsg == null" class="lastMsgNone col-4 text-warning">
         Saluda a {{ chat.fullName }}!!

@@ -18,6 +18,9 @@ import { ChatComponent } from './components/chats/chat/chat.component';
 import { NewEventComponent } from './components/events/new-event/new-event.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ArtistProfileComponent } from './components/artist-profile/artist-profile.component';
+import { EventsCreatedComponent } from './components/events/events-created/events-created.component';
+import { EditEventComponent } from './components/events/edit-event/edit-event.component';
+import { EventsPerformedComponent } from './components/events/events-performed/events-performed.component';
 
 const routes: Routes = [
   // Unlogged User
@@ -36,6 +39,9 @@ const routes: Routes = [
   //Events
   { path: 'events', component: AllEventsComponent },
   { path: 'events/followed', component: FollowedEventsComponent },
+  { path: 'events/created', component: EventsCreatedComponent },
+  { path: 'events/performed', component: EventsPerformedComponent },
+  { path: 'edit-event/:id', component: EditEventComponent },
   { path: 'events/:id', component: EventComponent },
   { path: 'new-event', component: NewEventComponent },
 

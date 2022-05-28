@@ -17,6 +17,10 @@ export class EventService {
   followEventUrl = environment.apiUrl + '/followEvent/';
   unfollowEventUrl = environment.apiUrl + '/unfollowEvent/';
   newEventUrl = environment.apiUrl + '/newEvent';
+  eventsPeformedUrl = environment.apiUrl + '/getEventsPerformed';
+  eventsCreatedUrl = environment.apiUrl + '/getEventsCreated';
+  updateEventUrl = environment.apiUrl + '/updateEvent/';
+  checkEditionAllowedUrl = environment.apiUrl + '/checkEventEdition/';
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {
@@ -34,7 +38,6 @@ export class EventService {
         access_token: localStorage.getItem('access_token')!,
       }),
     };
-
     return this.http.get<Event[]>(this.eventsByUserUrl, this.httpOptions);
   }
 
@@ -71,16 +74,68 @@ export class EventService {
         access_token: localStorage.getItem('access_token')!,
       }),
     };
+    event.eventDate.setDate(event.eventDate.getDate() + 1);
     return this.http.post(
       this.newEventUrl,
       {
         eventName: event.eventName,
-        eventDate: event.eventDate,
+        eventDate: event.eventDate.toISOString().slice(0, 19).replace('T', ' '),
         eventLocation: event.eventLocation,
         ticketsUrl: event.ticketsUrl,
         details: event.details,
         artists: event.artists,
       },
+      this.httpOptions
+    );
+  }
+
+  getEventsPerformed() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<Event[]>(this.eventsPeformedUrl, this.httpOptions);
+  }
+
+  getEventsCreated() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<Event[]>(this.eventsCreatedUrl, this.httpOptions);
+  }
+
+  updateEvent(event: Event, id: number) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    event.eventDate.setDate(event.eventDate.getDate() + 1);
+    return this.http.put(
+      this.updateEventUrl + id,
+      {
+        eventName: event.eventName,
+        eventDate: event.eventDate.toISOString().slice(0, 19).replace('T', ' '),
+        eventLocation: event.eventLocation,
+        ticketsUrl: event.ticketsUrl,
+        details: event.details,
+        artists: event.artists,
+      },
+      this.httpOptions
+    );
+  }
+
+  checkEditionAllowed(id: number) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<any>(
+      this.checkEditionAllowedUrl + id,
       this.httpOptions
     );
   }

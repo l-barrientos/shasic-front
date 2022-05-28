@@ -10,23 +10,24 @@ import { ArtistService } from '../../../services/artist.service';
 import { SharedService } from '../../../services/shared.service';
 import { ImageService } from '../../../services/image.service';
 import { Router } from '@angular/router';
-import { Event } from '../../../models/Event';
-import { ObjectUnsubscribedError } from 'rxjs';
+import { Event } from 'src/app/models/Event';
 import { ShasicUtils } from '../../../helpers/ShasicUtils';
 
 @Component({
-  selector: 'app-new-event',
-  templateUrl: './new-event.component.html',
-  styleUrls: ['./new-event.component.css'],
+  selector: 'app-edit-event',
+  templateUrl: './edit-event.component.html',
+  styleUrls: ['./edit-event.component.css'],
 })
-export class NewEventComponent implements OnInit {
+export class EditEventComponent implements OnInit {
   MIN_DATE = new Date();
-  newEventForm: FormGroup;
+  updateEventForm: FormGroup;
   submitted = false;
-  artistsImported: any[] = [];
+  event: Event;
   artistsChosen: any[] = [];
+  artistsImported: any[] = [];
   filteredArtists: any[] = [];
   addedStatus = false;
+  eventId: number = -1;
   constructor(
     private formBuilder: FormBuilder,
     private eventService: EventService,
@@ -36,17 +37,40 @@ export class NewEventComponent implements OnInit {
     private router: Router,
     private cdRef: ChangeDetectorRef
   ) {
-    this.newEventForm = formBuilder.group({
+    this.updateEventForm = formBuilder.group({
       name: ['', Validators.required],
       location: ['', Validators.required],
       date: ['', Validators.required],
-      eventImage: [''],
       ticketsUrl: [''],
       details: [''],
     });
   }
   ngOnInit(): void {
+    this.getEvent();
     this.getAllArtists();
+  }
+
+  getEvent() {
+    const id = parseInt(
+      this.router.url.substring(this.router.url.lastIndexOf('/') + 1)
+    );
+    this.sharedService.runSpinner(true);
+    this.eventService.getEventById(id).subscribe({
+      next: (response) => {
+        this.event = response;
+        this.eventId = response.id;
+
+        this.refreshForm(response);
+      },
+      complete: () => {
+        this.sharedService.runSpinner(false);
+      },
+      error: (error) => {
+        this.sharedService.runSpinner(false);
+        console.log(error);
+        this.sharedService.showError(6000);
+      },
+    });
   }
 
   getAllArtists() {
@@ -66,37 +90,37 @@ export class NewEventComponent implements OnInit {
     });
   }
 
-  newEvent() {
+  updateEvent() {
     this.submitted = true;
     if (
-      !this.newEventForm.valid ||
+      !this.updateEventForm.valid ||
       !this.checkDate ||
-      !this.validFileExtension ||
-      !this.imagePicked ||
       this.artistsChosen.length == 0
     ) {
       return;
     }
     this.sharedService.runSpinner(true);
     const event: Event = {
-      eventName: this.newEventForm.value.name,
-      eventDate: this.newEventForm.value.date,
-      eventLocation: this.newEventForm.value.location,
-      ticketsUrl: this.newEventForm.value.ticketsUrl,
-      details: this.newEventForm.value.details,
+      eventName: this.updateEventForm.value.name,
+      eventDate: this.updateEventForm.value.date,
+      eventLocation: this.updateEventForm.value.location,
+      ticketsUrl: this.updateEventForm.value.ticketsUrl,
+      details: this.updateEventForm.value.details,
       artists: this.artistsChosen,
       id: 0,
       eventImage: null,
       followers: null,
       following: null,
     };
-    this.eventService.newEvent(event).subscribe({
-      next: (response: any) => {
-        const input = document.getElementById('eventImage') as HTMLInputElement;
-        this.pushImg(response.id, input.files?.item(0));
-      },
+    this.eventService.updateEvent(event, this.eventId).subscribe({
       complete: () => {
-        this.sharedService.runSpinner(false);
+        const input = document.getElementById('eventImage') as HTMLInputElement;
+        if (input?.files?.length != 0) {
+          this.pushImg(this.eventId, input.files?.item(0));
+        } else {
+          this.router.navigate(['/events/' + this.eventId]);
+          this.sharedService.runSpinner(false);
+        }
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
@@ -111,7 +135,7 @@ export class NewEventComponent implements OnInit {
     this.imgService.uploadImage('event', img, eventId).subscribe({
       complete: () => {
         this.sharedService.runSpinner(false);
-        this.router.navigate(['/artist-home']);
+        this.router.navigate(['/events/' + this.eventId]);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
@@ -126,7 +150,7 @@ export class NewEventComponent implements OnInit {
    * Standard validator
    */
   get f(): { [key: string]: AbstractControl } {
-    return this.newEventForm.controls;
+    return this.updateEventForm.controls;
   }
 
   /**
@@ -134,8 +158,8 @@ export class NewEventComponent implements OnInit {
    */
   get checkDate(): boolean {
     if (
-      this.newEventForm.value.date != null &&
-      this.newEventForm.value.date < this.MIN_DATE
+      this.updateEventForm.value.date != null &&
+      this.updateEventForm.value.date < this.MIN_DATE
     ) {
       return false;
     }
@@ -176,8 +200,9 @@ export class NewEventComponent implements OnInit {
       this.filteredArtists = this.artistsImported
         .filter(
           (objA) =>
-            objA.userName.includes(input.value) &&
-            !this.artistsChosen.some((objB) => objB.id == objA.id)
+            objA.userName.toLowerCase().includes(input.value.toLowerCase()) ||
+            (objA.fullName.toLowerCase().includes(input.value.toLowerCase()) &&
+              !this.artistsChosen.some((objB) => objB.id == objA.id))
         )
         .slice(0, 9);
     } else {
@@ -207,6 +232,17 @@ export class NewEventComponent implements OnInit {
    */
   removeChosenArtist(id: number) {
     this.artistsChosen = this.artistsChosen.filter((obj) => obj.id != id);
+  }
+
+  refreshForm(event: Event) {
+    this.updateEventForm.setValue({
+      name: event.eventName,
+      location: event.eventLocation,
+      date: new Date(event.eventDate),
+      ticketsUrl: event.ticketsUrl,
+      details: event.details,
+    });
+    this.artistsChosen = event.artists!;
   }
 
   ngAfterViewChecked() {

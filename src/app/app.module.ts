@@ -42,6 +42,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { EventsCreatedComponent } from './components/events/events-created/events-created.component';
+import { EventsPerformedComponent } from './components/events/events-performed/events-performed.component';
+import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +69,9 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     ArtistLoggedNavbarComponent,
     UserProfileComponent,
     ArtistProfileComponent,
+    EventsCreatedComponent,
+    EventsPerformedComponent,
+    EditEventComponent,
   ],
   imports: [
     BrowserModule,

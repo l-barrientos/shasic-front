@@ -4,7 +4,8 @@ import { Event } from '../../models/Event';
 import { SharedService } from '../../services/shared.service';
 import { Artist } from '../../models/Artist';
 import { ArtistService } from '../../services/artist.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ShasicUtils } from '../../helpers/ShasicUtils';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,8 @@ export class HomeComponent implements OnInit {
   allArtists: Artist[] = [];
   eventsFollowed: Event[] = [];
   allEvents: Event[] = [];
+  formatDate = ShasicUtils.formatDate;
+  setArtistImg = ShasicUtils.setArtistImg;
   constructor(
     private eventService: EventService,
     private sharedService: SharedService,
@@ -38,9 +41,7 @@ export class HomeComponent implements OnInit {
         response.forEach((ev) => {
           ev.eventDate = new Date(ev.eventDate);
         });
-        this.eventsFollowed = response.sort(
-          (objA, objB) => objA.eventDate.getTime() - objB.eventDate.getTime()
-        );
+        this.eventsFollowed = ShasicUtils.sortByDate(response);
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -77,10 +78,12 @@ export class HomeComponent implements OnInit {
         response.forEach((ev: Event) => {
           ev.eventDate = new Date(ev.eventDate);
         });
-        this.allEvents = response.sort(
-          (objA: Event, objB: Event) =>
-            objA.eventDate.getTime() - objB.eventDate.getTime()
-        );
+        this.allEvents = response
+          .filter((obj: any) => obj.eventDate >= new Date())
+          .sort(
+            (objA: Event, objB: Event) =>
+              objA.eventDate.getTime() - objB.eventDate.getTime()
+          );
       },
       complete: () => {
         this.sharedService.runSpinner(false);
@@ -115,40 +118,13 @@ export class HomeComponent implements OnInit {
     h2.classList.add('text-danger');
     h2.innerHTML = 'Se ha producido un error';
     document.getElementById(parentDiv)?.append(h2);
-  }
-
-  setBandImg(img: string) {
-    return img == 'default' ? '../../assets/default-band.jpg' : img;
+    this.sharedService.showError(6000);
   }
 
   ngAfterViewChecked() {
     this.cdRef.detectChanges();
   }
 
-  formatDate(inputDate: Date) {
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    const date = new Date(inputDate);
-    return (
-      date.getDate() +
-      ' de ' +
-      months[date.getMonth()] +
-      ' del ' +
-      date.getFullYear()
-    );
-  }
   navigate(target: string) {
     this.router.navigate([target]);
   }

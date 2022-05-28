@@ -190,9 +190,10 @@ export class RegisterComponent implements OnInit {
       error: (error) => {
         if (error.error == 'emailUsed') {
           this.emailUsed = true;
-        }
-        if (error.error == 'userNameUsed') {
+        } else if (error.error == 'userNameUsed') {
           this.userNameUsed = true;
+        } else {
+          this.sharedService.showError(6000);
         }
         this.sharedService.runSpinner(false);
       },
@@ -215,6 +216,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+        this.sharedService.showError(6000);
         this.sharedService.runSpinner(false);
       },
     });

@@ -17,12 +17,6 @@
   font-size: 3em;
 }
 
-#inputMsg {
-  font-size: 16pt;
-  border-radius: 10px;
-  border-color: #9e73d3;
-}
-
 .chatBox {
   overflow-y: scroll;
   height: 600px;

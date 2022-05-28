@@ -10,7 +10,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of eventsFollowed | slice: 0:4; let i = index"
-        class="card col-xl-3 col-md-3 col-sm-6"
+        class="card col-xl-2 col-md-2 col-sm-6"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img
@@ -21,7 +21,7 @@
         <div class="card-body">
           <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
           <p class="card-text">
-            {{ this.formatDate(event.eventDate) }} <br />
+            {{ formatDate(event.eventDate) }} <br />
             Seguidores: {{ event.followers }}
           </p>
         </div>
@@ -39,12 +39,12 @@
     <div class="row" id="artistByUser">
       <div
         *ngFor="let artist of artistsFollowed | slice: 0:4; let i = index"
-        class="card col-xl-3 col-md-3 col-sm-6"
+        class="card col-xl-2 col-md-2 col-sm-6"
         (click)="this.navigate('/artists/' + artist.userName)"
       >
         <img
           class="card-img-top"
-          src="{{ this.setBandImg(artist.profileImage) }}"
+          src="{{ this.setArtistImg(artist.profileImage) }}"
           alt="{{ artist.fullName }}"
         />
         <div class="card-body">
@@ -65,7 +65,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of allEvents | slice: 0:4; let i = index"
-        class="card col-xl-3 col-md-3 col-sm-6"
+        class="card col-xl-2 col-md-2 col-sm-6"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img
@@ -76,7 +76,7 @@
         <div class="card-body">
           <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
           <p class="card-text">
-            {{ this.formatDate(event.eventDate) }} <br />
+            {{ formatDate(event.eventDate) }} <br />
             Seguidores: {{ event.followers }}
           </p>
         </div>
@@ -92,12 +92,12 @@
     <div class="row" id="allArtists">
       <div
         *ngFor="let artist of allArtists | slice: 0:4; let i = index"
-        class="card col-xl-3 col-md-3 col-sm-6"
+        class="card col-xl-2 col-md-2 col-sm-6"
         (click)="this.navigate('/artists/' + artist.userName)"
       >
         <img
           class="card-img-top"
-          src="{{ this.setBandImg(artist.profileImage) }}"
+          src="{{ this.setArtistImg(artist.profileImage) }}"
           alt="{{ artist.fullName }}"
         />
         <div class="card-body">

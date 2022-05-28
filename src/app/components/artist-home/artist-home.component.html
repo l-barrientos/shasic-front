@@ -1,1 +1,59 @@
 <app-artist-logged-navbar></app-artist-logged-navbar>
+<div class="container">
+  <br />
+  <!-- Created events -->
+  <div *ngIf="eventsCreated.length > 0">
+    <a routerLink="/events/created"
+      ><h3 class="cl-purple">Eventos creados por ti</h3></a
+    >
+    <div class="row" id="eventsByUser">
+      <div
+        *ngFor="let event of eventsCreated | slice: 0:4; let i = index"
+        class="card col-xl-2 col-md-2 col-sm-6"
+        (click)="this.navigate('/events/' + event.id)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ event.eventImage }}"
+          alt="{{ event.eventName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
+          <p class="card-text">
+            {{ formatDate(event.eventDate) }} <br />
+            Seguidores: {{ event.followers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+  </div>
+
+  <!-- Performed events -->
+  <div *ngIf="eventsPerformed.length > 0">
+    <a routerLink="/events/performed"
+      ><h3 class="cl-purple">Eventos en los que participas</h3></a
+    >
+    <div class="row" id="eventsByUser">
+      <div
+        *ngFor="let event of eventsPerformed | slice: 0:4; let i = index"
+        class="card col-xl-2 col-md-2 col-sm-6"
+        (click)="this.navigate('/events/' + event.id)"
+      >
+        <img
+          class="card-img-top"
+          src="{{ event.eventImage }}"
+          alt="{{ event.eventName }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title bg-lightpurple">{{ event.eventName }}</h5>
+          <p class="card-text">
+            {{ formatDate(event.eventDate) }} <br />
+            Seguidores: {{ event.followers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+  </div>
+</div>

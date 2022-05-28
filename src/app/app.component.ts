@@ -10,6 +10,7 @@ export class AppComponent {
   title = 'Shasic';
 
   showSpinner = false;
+  showError = false;
   constructor(
     private sharedService: SharedService,
     private cdRef: ChangeDetectorRef
@@ -18,6 +19,9 @@ export class AppComponent {
   ngOnInit() {
     this.sharedService.sharedSpinner.subscribe((value) => {
       this.showSpinner = value;
+    });
+    this.sharedService.sharedError.subscribe((value) => {
+      this.showError = value;
     });
   }
 
