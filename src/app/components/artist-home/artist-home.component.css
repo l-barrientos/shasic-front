@@ -29,3 +29,13 @@ h2 {
 a {
   text-decoration: none;
 }
+
+.noEvents {
+  text-align: center;
+}
+
+.noEvents button {
+  font-size: 2em;
+  font-weight: bold;
+  padding: 2%;
+}
