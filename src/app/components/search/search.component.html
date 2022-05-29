@@ -1,4 +1,5 @@
 <app-user-logged-navbar></app-user-logged-navbar>
+
 <div id="checkBoxes" *ngIf="events.length > 0 && artists.length > 0">
   <div class="form-check form-switch">
     <input
@@ -12,6 +13,7 @@
       >Artistas</label
     >
   </div>
+  <br />
   <div class="form-check form-switch">
     <input
       class="form-check-input"
@@ -39,7 +41,12 @@
         <h5 class="text-white">
           Personas siguiendo este evento: {{ ev.followers }}
         </h5>
-        <button class="btn btn-warning searchPeopleBtn">BUSCA A ALGUIEN</button>
+        <button
+          class="btn btn-warning searchPeopleBtn"
+          routerLink="/event-chats/{{ ev.id }}"
+        >
+          BUSCA A ALGUIEN
+        </button>
       </div>
       <div class="col-xl-6 col-sm-12 sol-md-12 col2">
         <img
@@ -60,7 +67,7 @@
         <div *ngIf="!ev.following">
           <button
             (click)="followEvent(ev.id)"
-            class="btn btn-primary"
+            class="btn btn-primary notFollowing"
             id="followButton{{ ev.id }}"
           >
             SEGUIR
@@ -106,7 +113,7 @@
         <div *ngIf="!artist.following">
           <button
             (click)="followArtist(artist.id)"
-            class="btn btn-primary"
+            class="btn btn-primary notFollowing"
             id="followButton{{ artist.id }}"
           >
             SEGUIR
