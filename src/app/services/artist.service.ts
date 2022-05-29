@@ -15,6 +15,10 @@ export class ArtistService {
   followArtistUrl = environment.apiUrl + '/followArtist/';
   unfollowArtistUrl = environment.apiUrl + '/unfollowArtist/';
   artistsIdsUrl = environment.apiUrl + '/artistsIds';
+  artistProfileUrl = environment.apiUrl + '/artistProfileInfo';
+  updateProfileUrl = environment.apiUrl + '/artistUpdateProfile';
+  updatePasswordUrl = environment.apiUrl + '/artistUpdatePassword';
+
   httpOptions = {
     headers: new HttpHeaders(),
   };
@@ -82,5 +86,49 @@ export class ArtistService {
       }),
     };
     return this.http.get<[]>(this.artistsIdsUrl, this.httpOptions);
+  }
+
+  getArtistProfile(): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.get<Artist>(this.artistProfileUrl, this.httpOptions);
+  }
+
+  updateProfile(artist: Artist) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.put(
+      this.updateProfileUrl,
+      {
+        userName: artist.userName,
+        email: artist.email,
+        fullName: artist.fullName,
+        bio: artist.bio,
+        location: artist.location,
+      },
+      this.httpOptions
+    );
+  }
+
+  updatePassword(oldPassword: string, newPassword: string) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.put(
+      this.updatePasswordUrl,
+      {
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      },
+      this.httpOptions
+    );
   }
 }

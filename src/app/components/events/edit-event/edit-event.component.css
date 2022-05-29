@@ -89,3 +89,13 @@ h1 {
   font-size: 16pt;
   margin-right: 2%;
 }
+
+.deleteButton {
+  margin-right: 5%;
+  margin-top: 2%;
+  text-align: right;
+}
+
+.deleteModalButtons {
+  text-align: center;
+}

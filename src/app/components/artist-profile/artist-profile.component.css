@@ -1,0 +1,69 @@
+.profileImage > input {
+  display: none;
+  text-align: center;
+}
+
+.profileImage {
+  margin-top: -5%;
+  margin-left: 7%;
+  position: absolute;
+}
+
+.selectImage {
+  cursor: pointer;
+  width: 300px;
+  transition: box-shadow 0.3s, filter 0.3s;
+}
+.selectImage:hover {
+  box-shadow: 4px 4px 14px 4px #9e73d3;
+  filter: brightness(1.3);
+}
+
+.signOutBtnDiv {
+  margin-right: 5%;
+  margin-top: 2%;
+  text-align: right;
+}
+.signOutBtnDiv button {
+  width: 15%;
+  font-size: 1.5em;
+}
+
+h1 {
+  margin-top: -8%;
+  text-align: center;
+  font-size: 4em;
+}
+
+.form-group {
+  text-align: left;
+  margin-left: 25%;
+}
+
+.infoForm label {
+  font-size: 2em;
+}
+
+.infoForm input,
+textarea {
+  font-size: 1.1em;
+}
+
+.infoForm {
+  margin-top: 2%;
+  text-align: center;
+}
+
+.infoForm button {
+  margin-left: 1%;
+  font-size: 1.5em;
+}
+
+.modalButton {
+  font-size: 1.5em;
+}
+
+.modal-footer {
+  display: inline-flex;
+  text-align: left;
+}

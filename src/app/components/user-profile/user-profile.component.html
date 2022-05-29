@@ -31,6 +31,13 @@
 <div class="container">
   <h1 class="cl-purple">Perfil</h1>
   <form [formGroup]="updateInfoForm" class="infoForm" (ngSubmit)="updateInfo()">
+    <p
+      class="text-success"
+      id="profileUpdated"
+      style="display: none; font-size: 1.5em"
+    >
+      Perfil actualizado con éxito
+    </p>
     <!--UserName-->
     <div class="form-group mb-3 col-6">
       <label for="userName" class="text-white">Nombre de usuario</label>
@@ -121,6 +128,7 @@
     <button
       class="btn btn-secondary"
       (click)="refreshForm(user); submittedInfo = false"
+      type="reset"
     >
       Cancelar
     </button>
@@ -150,7 +158,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="passwordForm">
+        <form [formGroup]="passwordForm" (submit)="updatePassword()">
           <!-- Old password -->
           <div class="form-floating mb-3">
             <input
@@ -189,16 +197,24 @@
               required
               [ngClass]="{
                 'is-valid': !fp['newPassword'].invalid && submittedPassword,
-                'is-invalid': fp['newPassword'].invalid && submittedPassword
+                'is-invalid':
+                  (fp['newPassword'].invalid && submittedPassword) ||
+                  (samePassword && submittedPassword)
               }"
             />
             <div
               class="invalid-feedback bg-danger"
               *ngIf="submittedPassword && fp['newPassword'].errors"
             >
-              <div *ngIf="fp['newPassword'].errors['newPassword']">
+              <div *ngIf="fp['newPassword'].errors['required']">
                 Nueva contraseña requerida
               </div>
+            </div>
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="submittedPassword && samePassword"
+            >
+              La nueva contraseña debe ser distinta a la anterior
             </div>
             <label for="newPassword">Nueva contraseña</label>
           </div>
@@ -236,10 +252,18 @@
           </div>
         </form>
       </div>
+      <b
+        id="passwordUpdated"
+        style="display: none"
+        class="text-success text-center"
+      >
+        Contraseña actualizada con éxito
+      </b>
       <div class="modal-footer">
+        <br />
         <button
           type="button"
-          class="btn btn-secondary modalButton"
+          class="btn btn-secondary mr-auto modalButton"
           data-bs-dismiss="modal"
           (click)="this.passwordForm.reset(); this.submittedPassword = false"
           #passwordClose

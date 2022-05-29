@@ -1,4 +1,14 @@
 <app-artist-logged-navbar></app-artist-logged-navbar>
+<div class="deleteButton">
+  <button
+    type="button"
+    class="btn btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#deleteModal"
+  >
+    BORRAR EVENTO
+  </button>
+</div>
 <div class="artistsChosen">
   <h3 class="text-white">Artistas añadidos</h3>
   <div class="text-danger" *ngIf="artistsChosen.length == 0 && submitted">
@@ -19,6 +29,7 @@
     Añadir Artista
   </button>
 </div>
+
 <div class="container">
   <h1 class="cl-purple justify-content-center mb-5">Editar Evento</h1>
   <form [formGroup]="updateEventForm" (ngSubmit)="updateEvent()">
@@ -204,6 +215,56 @@
       </div>
       <div class="modal-footer" id="addedStatus">
         <b class="text-success">Artista añadido ✓</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete event modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">
+          ¿Estás seguro de borrar el evento?
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-danger">
+          Al borrar el evento se perderán también todos los seguidores de este,
+          así como los artistas participantes.
+        </p>
+        <h5>¿Deseas borrarlo de todas formas?</h5>
+        <div class="deleteModalButtons">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            style="margin-right: 5%"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteEvent()"
+            data-bs-dismiss="modal"
+          >
+            BORRAR
+          </button>
+        </div>
       </div>
     </div>
   </div>

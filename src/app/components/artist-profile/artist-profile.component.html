@@ -1,1 +1,297 @@
-<p>artist-profile works!</p>
+<app-artist-logged-navbar></app-artist-logged-navbar>
+<div class="signOutBtnDiv">
+  <button class="btn btn-danger" (click)="signOut()">Cerrar Sesión</button
+  ><br /><br />
+  <!-- Button trigger modal -->
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#passwordModal"
+  >
+    Cambiar Contraseña
+  </button>
+</div>
+
+<!-- ProfileImage -->
+<div class="profileImage">
+  <label for="profileImage">
+    <img
+      class="selectImage img-thumbnail"
+      src="{{ setArtistImg(artist.profileImage) }}"
+    />
+  </label>
+  <input id="profileImage" type="file" name="newImage" accept="image/*" />
+</div>
+<br />
+<div
+  class="invalid-feedback bg-danger select-error"
+  *ngIf="!validFileExtension"
+>
+  El archivo debe tener el formato correcto (*.png, *.jpg, *.jpeg)
+</div>
+
+<div class="container">
+  <h1 class="cl-purple">Perfil</h1>
+  <form [formGroup]="updateInfoForm" class="infoForm" (ngSubmit)="updateInfo()">
+    <p
+      class="text-success"
+      id="profileUpdated"
+      style="display: none; font-size: 1.5em"
+    >
+      Perfil actualizado con éxito
+    </p>
+    <!--UserName-->
+    <div class="form-group mb-3 col-6">
+      <label for="userName" class="text-white">Nombre de usuario</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="userName"
+        id="userName"
+        required
+        [ngClass]="{
+          'is-valid': !f['userName'].invalid && submittedInfo,
+          'is-invalid': (f['userName'].invalid && submittedInfo) || userNameUsed
+        }"
+      />
+      <div
+        class="invalid-feedback bg-danger"
+        *ngIf="submittedInfo && f['userName'].errors"
+      >
+        <div *ngIf="f['userName'].errors['required']">
+          Nombre de usuario requerido
+        </div>
+      </div>
+      <div class="invalid-feedback bg-danger" *ngIf="userNameUsed">
+        Nombre de usuario email ya usado
+      </div>
+    </div>
+
+    <!-- Full name -->
+    <div class="form-group mb-3 col-6">
+      <label for="fullName" class="text-white">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="fullName"
+        id="fullName"
+        required
+        [ngClass]="{
+          'is-valid': !f['fullName'].invalid && submittedInfo,
+          'is-invalid': f['fullName'].invalid && submittedInfo
+        }"
+      />
+      <div
+        class="invalid-feedback bg-danger"
+        *ngIf="submittedInfo && f['fullName'].errors"
+      >
+        <div *ngIf="f['fullName'].errors['required']">Nombre requerido</div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group mb-3 col-6">
+      <label for="email" class="text-white">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="email"
+        id="email"
+        required
+        [ngClass]="{
+          'is-valid': !f['email'].invalid && submittedInfo,
+          'is-invalid': (f['email'].invalid && submittedInfo) || emailUsed
+        }"
+      />
+      <div
+        class="invalid-feedback bg-danger"
+        *ngIf="submittedInfo && f['email'].errors"
+      >
+        <div *ngIf="f['email'].errors['required']">Email requerido</div>
+        <div *ngIf="f['email'].errors['email']">Dirección no válida</div>
+      </div>
+      <div class="invalid-feedback bg-danger" *ngIf="emailUsed">
+        Dirección email ya usada
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form-group mb-3 col-6">
+      <label for="location" class="text-white">Localización</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="location"
+        id="location"
+      />
+    </div>
+
+    <!-- Bio -->
+    <div class="form-group mb-3 col-6">
+      <label for="bio" class="text-white">Biografía</label>
+      <textarea
+        class="form-control"
+        id="bio"
+        formControlName="bio"
+        rows="6"
+      ></textarea>
+    </div>
+
+    <!-- Submit button -->
+    <button
+      class="btn btn-secondary"
+      (click)="refreshForm(artist); submittedInfo = false"
+      type="reset"
+    >
+      Cancelar
+    </button>
+    <button class="btn btn-success" type="submit">Guardar</button>
+  </form>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="passwordModal"
+  tabindex="-1"
+  aria-labelledby="passwordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">
+          Cambio de Contraseña
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordForm" (submit)="updatePassword()">
+          <!-- Old password -->
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              class="form-control"
+              id="oldPassword"
+              formControlName="oldPassword"
+              [ngClass]="{
+                'is-valid': !fp['oldPassword'].invalid && submittedPassword,
+                'is-invalid':
+                  (fp['oldPassword'].invalid && submittedPassword) ||
+                  wrongPassword
+              }"
+            />
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="submittedPassword && fp['oldPassword'].errors"
+            >
+              <div *ngIf="fp['oldPassword'].errors['required']">
+                Contraseña actual requerida
+              </div>
+            </div>
+            <div class="invalid-feedback bg-danger" *ngIf="wrongPassword">
+              Contraseña incorrecta
+            </div>
+            <label for="oldPassword">Contraseña</label>
+          </div>
+
+          <!-- New password -->
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              class="form-control"
+              id="newPassword"
+              formControlName="newPassword"
+              required
+              [ngClass]="{
+                'is-valid': !fp['newPassword'].invalid && submittedPassword,
+                'is-invalid':
+                  (fp['newPassword'].invalid && submittedPassword) ||
+                  (samePassword && submittedPassword)
+              }"
+            />
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="submittedPassword && fp['newPassword'].errors"
+            >
+              <div *ngIf="fp['newPassword'].errors['required']">
+                Nueva contraseña requerida
+              </div>
+            </div>
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="submittedPassword && samePassword"
+            >
+              La nueva contraseña debe ser distinta a la anterior
+            </div>
+            <label for="newPassword">Nueva contraseña</label>
+          </div>
+
+          <!-- Repeated new password -->
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              class="form-control"
+              id="repNewPassword"
+              formControlName="repNewPassword"
+              required
+              [ngClass]="{
+                'is-valid': !fp['repNewPassword'].invalid && submittedPassword,
+                'is-invalid':
+                  (fp['repNewPassword'].invalid && submittedPassword) ||
+                  (!repPassword && submittedPassword)
+              }"
+            />
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="submittedPassword && fp['repNewPassword'].errors"
+            >
+              <div *ngIf="fp['repNewPassword'].errors['required']">
+                Contraseña repetida requerida
+              </div>
+            </div>
+            <div
+              class="invalid-feedback bg-danger"
+              *ngIf="!repPassword && submittedPassword"
+            >
+              Las contraseñas no coinciden
+            </div>
+            <label for="repNewPassword">Repetir nueva ontraseña</label>
+          </div>
+        </form>
+      </div>
+      <b
+        id="passwordUpdated"
+        style="display: none"
+        class="text-success text-center"
+      >
+        Contraseña actualizada con éxito
+      </b>
+      <div class="modal-footer">
+        <br />
+        <button
+          type="button"
+          class="btn btn-secondary mr-auto modalButton"
+          data-bs-dismiss="modal"
+          (click)="this.passwordForm.reset(); this.submittedPassword = false"
+          #passwordClose
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-success modalButton"
+          (click)="updatePassword()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

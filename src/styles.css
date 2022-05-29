@@ -128,5 +128,20 @@ body {
 }
 
 .footer img:hover {
-  filter: brightness(1.3);
+  filter: brightness(1.6);
+}
+
+.notFollowing {
+  background-color: beige;
+}
+
+.navbar-icon:hover {
+  filter: brightness(1.6);
+}
+
+.navbar-brand img {
+  width: 100px;
+}
+.navbar-brand img:hover {
+  filter: brightness(1.6);
 }

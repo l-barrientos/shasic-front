@@ -20,7 +20,8 @@ export class EventService {
   eventsPeformedUrl = environment.apiUrl + '/getEventsPerformed';
   eventsCreatedUrl = environment.apiUrl + '/getEventsCreated';
   updateEventUrl = environment.apiUrl + '/updateEvent/';
-  checkEditionAllowedUrl = environment.apiUrl + '/checkEventEdition/';
+  deleteEventUrl = environment.apiUrl + '/deleteEvent/';
+  deleteArtistEventUrl = environment.apiUrl + '/deleteArtistFromEvent/';
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {
@@ -128,15 +129,21 @@ export class EventService {
     );
   }
 
-  checkEditionAllowed(id: number) {
+  deleteEvent(id: number) {
     this.httpOptions = {
       headers: new HttpHeaders({
         access_token: localStorage.getItem('access_token')!,
       }),
     };
-    return this.http.get<any>(
-      this.checkEditionAllowedUrl + id,
-      this.httpOptions
-    );
+    return this.http.delete(this.deleteEventUrl + id, this.httpOptions);
+  }
+
+  deleteArtistFromEvent(id: number) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.delete(this.deleteArtistEventUrl + id, this.httpOptions);
   }
 }

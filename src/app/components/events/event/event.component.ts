@@ -36,9 +36,7 @@ export class EventComponent implements OnInit {
 
   ngOnInit(): void {
     this.rol = localStorage.getItem('rol')!;
-    if (this.rol == 'artist') {
-      this.checkEditionAllowed();
-    }
+
     this.getEventById();
   }
 
@@ -53,6 +51,7 @@ export class EventComponent implements OnInit {
       next: (response) => {
         this.event = response;
         this.event.artists = response.artists;
+        this.editionAllowed = response.editionAllowed;
       },
 
       complete: () => {
@@ -96,22 +95,24 @@ export class EventComponent implements OnInit {
     });
   }
 
-  checkEditionAllowed() {
-    this.sharedService.runSpinner(true);
+  deleteArtistFromEvent() {
     const id = parseInt(
       this.router.url.substring(this.router.url.lastIndexOf('/') + 1)
     );
-    this.eventService.checkEditionAllowed(id).subscribe({
-      next: (response) => {
-        this.editionAllowed = response.allowed;
-      },
+    this.sharedService.runSpinner(true);
+    this.eventService.deleteArtistFromEvent(id).subscribe({
       complete: () => {
-        this.sharedService.runSpinner(false);
+        this.sharedService.runSpinner(true);
+        if (this.event.artists!.length > 1) {
+          this.getEventById();
+        } else {
+          this.router.navigate(['/artist-home']);
+        }
       },
       error: (error) => {
         this.sharedService.runSpinner(false);
+        this.sharedService.showError(3000);
         console.log(error);
-        this.sharedService.showError(6000);
       },
     });
   }

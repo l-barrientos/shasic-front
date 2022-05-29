@@ -25,6 +25,8 @@ export class ArtistComponent implements OnInit {
     location: null,
     password: null,
   };
+  rol = '';
+  editionAllowed = false;
   formatDate = ShasicUtils.formatDate;
   setArtistImg = ShasicUtils.setArtistImg;
   constructor(
@@ -35,6 +37,7 @@ export class ArtistComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.rol = localStorage.getItem('rol')!;
     this.getArtistInfo();
   }
 
@@ -49,10 +52,8 @@ export class ArtistComponent implements OnInit {
         response.events.forEach((ev: Event) => {
           ev.eventDate = new Date(ev.eventDate);
         });
-        this.artist.events = response.events.sort(
-          (objA: any, objB: any) =>
-            objA.eventDate.getTime() - objB.eventDate.getTime()
-        );
+        this.artist.events = ShasicUtils.sortByDate(response.events);
+        this.editionAllowed = response.editionAllowed;
       },
       complete: () => {
         this.sharedService.runSpinner(false);

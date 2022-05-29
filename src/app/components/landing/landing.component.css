@@ -1,12 +1,9 @@
 p {
-  font-size: 6em;
-  margin-left: 0%;
+  font-size: 5vw;
 }
 
-.img {
-  width: 1100px;
-  position: absolute;
-  margin-top: -30%;
-  margin-left: 25%;
-  object-fit: contain;
+img {
+  width: 50%;
+  display: block;
+  margin-left: auto;
 }

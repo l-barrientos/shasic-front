@@ -1,4 +1,5 @@
-<app-user-logged-navbar></app-user-logged-navbar>
+<app-user-logged-navbar *ngIf="rol == 'user'"></app-user-logged-navbar>
+<app-artist-logged-navbar *ngIf="rol == 'artist'"></app-artist-logged-navbar>
 <div *ngIf="artist.userName" class="container">
   <h1 class="cl-purple">{{ artist.fullName }}</h1>
 
@@ -15,6 +16,14 @@
       <br /><br />
       <h3 class="text-white">Contacto:</h3>
       <h5 class="text-white">{{ artist.email }}</h5>
+      <br />
+      <button
+        class="btn btn-primary"
+        *ngIf="rol == 'artist' && editionAllowed"
+        routerLink="/artist-profile"
+      >
+        EDITAR PERFIL
+      </button>
     </div>
     <div class="col-xl-6 col-md-12 col-md-12 col2">
       <img
@@ -24,7 +33,7 @@
         alt="{{ artist.fullName }}"
       />
       <br />
-      <div *ngIf="artist.following">
+      <div *ngIf="artist.following && rol == 'user'">
         <button
           (click)="unfollowArtist(artist.id)"
           class="btn btn-primary"
@@ -33,10 +42,10 @@
           SIGUIENDO
         </button>
       </div>
-      <div *ngIf="!artist.following">
+      <div *ngIf="!artist.following && rol == 'user'">
         <button
           (click)="followArtist(artist.id)"
-          class="btn btn-primary"
+          class="btn btn-primary notFollowing"
           id="followButton"
         >
           SEGUIR
