@@ -9,7 +9,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of eventsCreated | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img
@@ -37,7 +37,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of eventsPerformed | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img

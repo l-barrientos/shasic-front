@@ -130,6 +130,23 @@ export class EditEventComponent implements OnInit {
     });
   }
 
+  deleteEvent() {
+    const id = parseInt(
+      this.router.url.substring(this.router.url.lastIndexOf('/') + 1)
+    );
+    this.sharedService.runSpinner(true);
+    this.eventService.deleteEvent(id).subscribe({
+      complete: () => {
+        this.sharedService.runSpinner(false);
+        this.router.navigate(['/artist-home']);
+      },
+      error: (error) => {
+        console.log(error);
+        this.sharedService.showError(5000);
+      },
+    });
+  }
+
   pushImg(eventId: number, img: any) {
     this.sharedService.runSpinner(true);
     this.imgService.uploadImage('event', img, eventId).subscribe({

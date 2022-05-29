@@ -11,6 +11,8 @@ export class UserService {
   registerUrl = environment.apiUrl + '/user/register';
   eventUsersUrl = environment.apiUrl + '/eventUsers/';
   userProfileUrl = environment.apiUrl + '/getUserProfile';
+  updatePasswordUrl = environment.apiUrl + '/userUpdatePassword';
+  updateProfileUrl = environment.apiUrl + '/userUpdateProfile';
 
   httpOptions = {
     headers: new HttpHeaders(),
@@ -50,5 +52,39 @@ export class UserService {
       }),
     };
     return this.http.get<User>(this.userProfileUrl, this.httpOptions);
+  }
+
+  updatePassword(oldPassword: string, newPassword: string) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.put(
+      this.updatePasswordUrl,
+      {
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      },
+      this.httpOptions
+    );
+  }
+
+  updateProfile(user: User) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        access_token: localStorage.getItem('access_token')!,
+      }),
+    };
+    return this.http.put(
+      this.updateProfileUrl,
+      {
+        userName: user.userName,
+        email: user.email,
+        fullName: user.fullName,
+        description: user.description,
+      },
+      this.httpOptions
+    );
   }
 }

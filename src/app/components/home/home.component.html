@@ -10,7 +10,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of eventsFollowed | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img
@@ -39,7 +39,7 @@
     <div class="row" id="artistByUser">
       <div
         *ngFor="let artist of artistsFollowed | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/artists/' + artist.userName)"
       >
         <img
@@ -65,7 +65,7 @@
     <div class="row" id="eventsByUser">
       <div
         *ngFor="let event of allEvents | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/events/' + event.id)"
       >
         <img
@@ -92,7 +92,7 @@
     <div class="row" id="allArtists">
       <div
         *ngFor="let artist of allArtists | slice: 0:4; let i = index"
-        class="card col-xl-2 col-md-2 col-sm-6"
+        class="card col-xl-3 col-md-6 col-sm-12"
         (click)="this.navigate('/artists/' + artist.userName)"
       >
         <img

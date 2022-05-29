@@ -39,9 +39,17 @@
       <button
         class="btn btn-primary searchPeopleBtn"
         routerLink="/edit-event/{{ event.id }}"
-        *ngIf="rol == 'artist'"
+        *ngIf="rol == 'artist' && event.editionAllowed"
       >
         EDITAR EVENTO
+      </button>
+      <button
+        class="btn btn-danger searchPeopleBtn"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal"
+        *ngIf="rol == 'artist' && event.performing && !event.editionAllowed"
+      >
+        QUITARME DE ESTE EVENTO
       </button>
     </div>
     <div class="col-xl-6 col-sm-12 sol-md-12 col2">
@@ -63,11 +71,62 @@
       <div *ngIf="!event.following && rol == 'user'">
         <button
           (click)="followEvent(event.id)"
-          class="btn btn-primary"
+          class="btn btn-primary notFollowing"
           id="followButton"
         >
           SEGUIR
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Remove artist from event modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+  *ngIf="rol == 'artist' && event.performing && !event.editionAllowed"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">
+          ¿Estás seguro de quitarte de este evento?
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-danger">
+          Solamente el creador del evento podrá volver a añadire. Además, si no
+          hay más artistas, <b>el evento también se eliminará.</b>
+        </p>
+        <h5>¿Deseas borrarlo de todas formas?</h5>
+        <div class="deleteModalButtons">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            style="margin-right: 5%"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteArtistFromEvent()"
+            data-bs-dismiss="modal"
+          >
+            BORRARME DE EVENTO
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -111,7 +111,7 @@ export class NewEventComponent implements OnInit {
     this.imgService.uploadImage('event', img, eventId).subscribe({
       complete: () => {
         this.sharedService.runSpinner(false);
-        this.router.navigate(['/artist-home']);
+        this.router.navigate(['/events/' + eventId]);
       },
       error: (error) => {
         this.sharedService.runSpinner(false);

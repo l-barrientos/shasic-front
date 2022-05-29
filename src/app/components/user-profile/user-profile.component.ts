@@ -54,7 +54,7 @@ export class UserProfileComponent implements OnInit {
 
     this.passwordForm = this.formBuilder.group({
       oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.pattern]],
+      newPassword: ['', [Validators.required]],
       repNewPassword: ['', [Validators.required]],
     });
   }
@@ -96,12 +96,103 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateInfo() {
+    this.emailUsed = false;
+    this.userNameUsed = false;
     this.submittedInfo = true;
+    if (!this.updateInfoForm.valid) return;
+    this.sharedService.runSpinner(true);
+
+    const userInfo: User = {
+      userName: this.updateInfoForm.value.userName,
+      fullName: this.updateInfoForm.value.fullName,
+      email: this.updateInfoForm.value.email,
+      description: this.updateInfoForm.value.description,
+      id: 0,
+      password: null,
+      profileImage: '',
+    };
+    this.userService.updateProfile(userInfo).subscribe({
+      complete: () => {
+        const input = document.getElementById(
+          'profileImage'
+        ) as HTMLInputElement;
+        if (input?.files?.length != 0) {
+          this.pushImg(input.files?.item(0));
+        } else {
+          this.getUserProfileInfo();
+          this.updatedSuccess();
+          this.sharedService.runSpinner(false);
+        }
+        this.submittedInfo = false;
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.error == 'emailUsed') {
+          this.emailUsed = true;
+        } else if (error.error == 'userNameUsed') {
+          this.userNameUsed = true;
+        } else {
+          this.sharedService.showError(6000);
+        }
+        this.sharedService.runSpinner(false);
+      },
+    });
   }
 
   updatePassword() {
+    this.wrongPassword = false;
     this.submittedPassword = true;
+    if (!this.passwordForm.valid || !this.repPassword || this.samePassword)
+      return;
+    this.sharedService.runSpinner(true);
+
+    this.userService
+      .updatePassword(
+        this.passwordForm.value.oldPassword,
+        this.passwordForm.value.newPassword
+      )
+      .subscribe({
+        complete: async () => {
+          this.sharedService.runSpinner(false);
+          this.submittedPassword = false;
+
+          const passwordUpdated = document.getElementById(
+            'passwordUpdated'
+          )! as HTMLInputElement;
+          passwordUpdated.style.display = 'block';
+          await ShasicUtils.delay(3000);
+          passwordUpdated.style.display = 'none';
+        },
+        error: (error) => {
+          this.sharedService.runSpinner(false);
+          if ((error.error = 'wrongPassword')) {
+            this.wrongPassword = true;
+          } else {
+            this.sharedService.showError(3000);
+            console.log(error);
+          }
+        },
+      });
   }
+
+  pushImg(img: any) {
+    this.sharedService.runSpinner(true);
+    this.imgService.uploadImage('user', img).subscribe({
+      complete: () => {
+        this.getUserProfileInfo();
+        this.sharedService.runSpinner(false);
+        this.updatedSuccess();
+      },
+      error: (error) => {
+        this.getUserProfileInfo();
+        console.log(error);
+        this.sharedService.showError(6000);
+        this.sharedService.runSpinner(false);
+      },
+    });
+  }
+
+  /* VALIDATIONS */
 
   get f(): { [key: string]: AbstractControl } {
     return this.updateInfoForm.controls;
@@ -121,9 +212,28 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  /**
+   * Check password is not the same as the previous password
+   */
+  get samePassword(): boolean {
+    return (
+      this.passwordForm.value.newPassword == this.passwordForm.value.oldPassword
+    );
+  }
+
+  /* FUNCTIONS */
   signOut() {
     localStorage.clear();
     this.router.navigate(['/']);
+  }
+
+  async updatedSuccess() {
+    const profileUpdated = document.getElementById(
+      'profileUpdated'
+    )! as HTMLInputElement;
+    profileUpdated.style.display = 'block';
+    await ShasicUtils.delay(3000);
+    profileUpdated.style.display = 'none';
   }
 
   displayImage() {

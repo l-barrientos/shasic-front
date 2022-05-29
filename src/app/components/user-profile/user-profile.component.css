@@ -66,5 +66,6 @@ textarea {
 }
 
 .modal-footer {
-  text-align: center;
+  display: inline-flex;
+  text-align: left;
 }
