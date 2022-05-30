@@ -194,6 +194,8 @@
               class="form-control"
               id="newPassword"
               formControlName="newPassword"
+              minlength="8"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$"
               required
               [ngClass]="{
                 'is-valid': !fp['newPassword'].invalid && submittedPassword,
@@ -208,6 +210,13 @@
             >
               <div *ngIf="fp['newPassword'].errors['required']">
                 Nueva contraseña requerida
+              </div>
+              <div *ngIf="fp['newPassword'].errors['minlength']">
+                La contraseña debe tener 8 caracteres como mínimo.
+              </div>
+              <div *ngIf="fp['newPassword'].errors['pattern']">
+                La contraseña debe contener al menos una letra minúscula, una
+                mayúscula y un número.
               </div>
             </div>
             <div

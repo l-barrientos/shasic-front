@@ -95,6 +95,8 @@
           id="password"
           placeholder="Password"
           required
+          minlength="8"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$"
           [ngClass]="{
             'is-valid': !f['password'].invalid && submitted,
             'is-invalid': f['password'].invalid && submitted
@@ -106,6 +108,13 @@
         >
           <div *ngIf="f['password'].errors['required']">
             Contraseña requerida
+          </div>
+          <div *ngIf="f['password'].errors['minlength']">
+            La contraseña debe tener 8 caracteres como mínimo
+          </div>
+          <div *ngIf="f['password'].errors['pattern']">
+            La contraseña debe contener al menos una letra minúscula, una
+            mayúscula y un número
           </div>
         </div>
         <label for="password">Contraseña</label>
