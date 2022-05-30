@@ -217,6 +217,7 @@ export class UserProfileComponent implements OnInit {
    */
   get samePassword(): boolean {
     return (
+      this.passwordForm.value.newPassword != '' &&
       this.passwordForm.value.newPassword == this.passwordForm.value.oldPassword
     );
   }
