@@ -11,5 +11,5 @@ export const environment = {
     databaseURL:
       'https://shasic-3241c-default-rtdb.europe-west1.firebasedatabase.app',
   },
-  apiUrl: 'xxxxxxxxxxxxxxxxxxxxx',
+  apiUrl: 'http://api-luis-b.proyectos-afa.cf/api',
 };

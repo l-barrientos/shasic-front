@@ -158,6 +158,8 @@ export class RegisterComponent implements OnInit {
         }
         if (error.error == 'userNameUsed') {
           this.userNameUsed = true;
+        } else {
+          this.sharedService.showError(6000);
         }
         this.sharedService.runSpinner(false);
       },
